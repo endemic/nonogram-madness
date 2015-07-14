@@ -1,0 +1,22 @@
+{
+  "name": "nonogram-madness",
+  "version": "1.0.0",
+  "description": "Japanese logic puzzles",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "game",
+    "puzzle",
+    "logic",
+    "japan",
+    "nonogram",
+    "picross"
+  ],
+  "author": "Nathan Demick",
+  "license": "MIT",
+  "devDependencies": {
+    "arcadia": "file:../arcadia"
+  }
+}
