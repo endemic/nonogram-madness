@@ -14,9 +14,14 @@
     "nonogram",
     "picross"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/endemic/nonogram-madness-arcadia.git"
+  },
   "author": "Nathan Demick",
   "license": "MIT",
   "devDependencies": {
-    "arcadia": "file:../arcadia"
+    "arcadia": "file:../arcadia",
+    "sona": "^1.0.3"
   }
 }
