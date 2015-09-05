@@ -1,8 +1,6 @@
-// var Arcadia = require('arcadia'),
-//     GameScene = require('./game-scene'),
-//     Title;
+/*globals Arcadia, TitleScene, Grid, LEVELS, window, console, localStorage, sona */
 
-var Title = function () {
+var TitleScene = function () {
     Arcadia.Scene.apply(this);
 
     var nonogram = new Arcadia.Label({
@@ -40,7 +38,7 @@ var Title = function () {
             position: { x: 0, y: -3 }
         }),
         action: function () {
-            Arcadia.playSfx('button');
+            sona.play('button');
             Arcadia.changeScene(DifficultySelect);
         }
     });
@@ -58,7 +56,7 @@ var Title = function () {
             position: { x: 0, y: -3 }
         }),
         action: function () {
-            Arcadia.playSfx('button');
+            sona.play('button');
             Arcadia.changeScene(Options);
         }
     });
@@ -76,15 +74,15 @@ var Title = function () {
             position: { x: 0, y: -3 }
         }),
         action: function () {
-            Arcadia.playSfx('button');
+            sona.play('button');
             Arcadia.changeScene(About);
         }
     });
     this.add(aboutButton);
 
-    Arcadia.playMusic('bgm-one');
+    sona.loop('bgm-one');
 };
 
-Title.prototype = new Arcadia.Scene();
+TitleScene.prototype = new Arcadia.Scene();
 
-// module.exports = Title;
+// module.exports = TitleScene;

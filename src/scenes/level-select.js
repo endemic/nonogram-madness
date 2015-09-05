@@ -1,4 +1,4 @@
-var LevelSelect = function (options) {
+var LevelSelectScene = function (options) {
     Arcadia.Scene.apply(this, arguments);
     
     options = options || {};
@@ -20,7 +20,7 @@ var LevelSelect = function (options) {
             position: { x: 0, y: -3 }
         }),
         action: function () {
-            Arcadia.playSfx('button');
+            sona.play('button');
             Arcadia.changeScene(DifficultySelect);
         }
     });
@@ -50,7 +50,7 @@ var LevelSelect = function (options) {
             position: { x: 0, y: -3 }
         }),
         action: function () {
-            Arcadia.playSfx('button');
+            sona.play('button');
             Arcadia.changeScene(Game, {
                 difficulty: _this.difficulty,
                 level: _this.level
@@ -72,7 +72,7 @@ var LevelSelect = function (options) {
             position: { x: 0, y: -3 }
         }),
         action: function () {
-            Arcadia.playSfx('button');
+            sona.play('button');
             _this.previous();
         }
     });
@@ -89,7 +89,7 @@ var LevelSelect = function (options) {
             position: { x: 0, y: -3 }
         }),
         action: function () {
-            Arcadia.playSfx('button');
+            sona.play('button');
             _this.next();
         }
     });
@@ -107,9 +107,9 @@ var LevelSelect = function (options) {
     this.preview.drawPreview(LEVELS[this.difficulty][this.level].clues);
 };
 
-LevelSelect.prototype = new Arcadia.Scene();
+LevelSelectScene.prototype = new Arcadia.Scene();
 
-LevelSelect.prototype.next = function () {
+LevelSelectScene.prototype.next = function () {
     // Show the next level
     if (this.level < LEVELS[this.difficulty].length - 1) {
         this.level += 1;
@@ -117,7 +117,7 @@ LevelSelect.prototype.next = function () {
     }
 };
 
-LevelSelect.prototype.previous = function () {
+LevelSelectScene.prototype.previous = function () {
     // Show the previous level
     if (this.level > 0) {
         this.level -= 1;

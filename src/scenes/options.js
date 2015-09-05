@@ -1,16 +1,16 @@
-var Options = function () {
+/*globals Arcadia, TitleScene, Grid, LEVELS, window, console, localStorage, sona */
+
+var OptionsScene = function () {
     Arcadia.Scene.apply(this);
 
     var title = new Arcadia.Label({
         text: 'Options',
-        font: '55px uni_05_53',
-        color: '#fff',
-        shadow: '0px 0px 10px #000'
+        font: '55px monospace',
+        position: {
+            x: 0,
+            y: -100
+        }
     });
-    title.position = {
-        x: Arcadia.WIDTH / 2,
-        y: 100
-    };
     this.add(title);
 
     var backButton = new Arcadia.Button({
@@ -26,7 +26,7 @@ var Options = function () {
             position: { x: 0, y: -3 }
         }),
         action: function () {
-            Arcadia.playSfx('button');
+            sona.play('button');
             Arcadia.changeScene(Title);
         }
     });
@@ -45,7 +45,7 @@ var Options = function () {
             position: { x: 0, y: -3 }
         }),
         action: function () {
-            Arcadia.playSfx('button');
+            sona.play('button');
 
             if (localStorage.getBoolean('playMusic')) {
                 localStorage.setBoolean('playMusic', false);
@@ -54,7 +54,7 @@ var Options = function () {
             } else {
                 localStorage.setBoolean('playMusic', true);
                 this.text = 'Music ON';
-                Arcadia.playMusic('bgm-one');
+                sona.loop('bgm-one');
             }
         }
     });
@@ -73,7 +73,7 @@ var Options = function () {
             position: { x: 0, y: -3 }
         }),
         action: function () {
-            Arcadia.playSfx('button');
+            sona.play('button');
 
             if (localStorage.getBoolean('playSfx')) {
                 localStorage.setBoolean('playSfx', false);
@@ -87,4 +87,4 @@ var Options = function () {
     this.add(sfxToggle);
 };
 
-Options.prototype = new Arcadia.Scene();
+OptionsScene.prototype = new Arcadia.Scene();

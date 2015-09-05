@@ -18,7 +18,7 @@ var DifficultySelect = function (options) {
             position: { x: 0, y: -3 }
         }),
         action: function () {
-            Arcadia.playSfx('button');
+            sona.play('button');
             Arcadia.changeScene(Title);
         }
     });
@@ -57,7 +57,7 @@ DifficultySelect.prototype.createButton = function (difficulty, index) {
             position: { x: 0, y: -3 }
         }),
         action: function () {
-            Arcadia.playSfx('button');
+            sona.play('button');
             Arcadia.changeScene(LevelSelect, { difficulty: difficulty });
         }
     });
