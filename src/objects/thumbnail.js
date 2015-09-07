@@ -6,14 +6,14 @@ var Thumbnail = function () {
         height: Thumbnail.SIZE
     };
 
-    this.border = '2px white';
-    this.color = null;
+    this.border = '10px white';
+    this.color = 'white';
+    this.shadow = '15px 15px 0 rgba(0, 0, 0, 0.5)';
 
     this.pixels = new Arcadia.Pool();
     this.pixels.factory = function () {
         return new Arcadia.Shape({
-            color: 'white',
-            vertices: 0
+            color: 'black'
         });
     };
     this.add(this.pixels);
@@ -21,7 +21,7 @@ var Thumbnail = function () {
 
 Thumbnail.prototype = new Arcadia.Shape();
 
-Thumbnail.SIZE = 75;
+Thumbnail.SIZE = 150;
 
 Thumbnail.prototype.drawPreview = function (levelIndex, completed) {
     if (LEVELS[levelIndex] === undefined) {
@@ -40,40 +40,37 @@ Thumbnail.prototype.drawPreview = function (levelIndex, completed) {
 
     self = this;
     clues = LEVELS[levelIndex].clues;
-    puzzleSize = LEVELS[levelIndex].size;
+    puzzleSize = Math.sqrt(LEVELS[levelIndex].clues.length);
     pixelSize = Thumbnail.SIZE / puzzleSize;
 
-    clues.forEach(function (clue) {
-        var x = clue[0],
-            y = clue[1],
-            pixel = self.pixels.activate();
+    clues.forEach(function (clue, index) {
+        var x = index % puzzleSize,
+            y = Math.floor(index / puzzleSize),
+            pixel;
+
+        if (clue === 0) {
+            return;
+        }
+
+        pixel = self.pixels.activate();
 
         pixel.size = {
             width: Math.round(pixelSize),
             height: Math.round(pixelSize)
         };
+
         pixel.position = {
             x: -self.size.width / 2 + x * pixelSize + pixelSize / 2,
             y: -self.size.height / 2 + y * pixelSize + pixelSize / 2
         };
     });
-
-    if (completed[levelIndex]) {
-        this._border.color = 'lime';
-    } else {
-        this._border.color = 'white';
-    }
-    this.dirty = true;
 };
 
 Thumbnail.prototype.highlight = function () {
-    this._border.width = 4;
-    this.dirty = true;
-    this.scale = 1.1;
+    this.border = '10px orange';
 };
 
 Thumbnail.prototype.lowlight = function () {
-    this._border.width = 2;
-    this.dirty = true;
-    this.scale = 1;
+    // this.border = '10px black';
+    this.border = '10px white';
 };

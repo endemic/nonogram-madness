@@ -17,6 +17,23 @@
 			#arcadia, #arcadia canvas {
 				-webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 			}
+			#arcadia canvas {
+				background-image: url('assets/images/background.png');
+				background-size: cover;
+				cursor: url('assets/images/cursor.cur'), default;
+			}
+
+			@font-face {
+				font-family: 'uni_05_53';
+				src: url('assets/fonts/uni0553-webfont-webfont.eot');
+				src: url('assets/fonts/uni0553-webfont-webfont.eot?#iefix') format('embedded-opentype'),
+				     url('assets/fonts/uni0553-webfont-webfont.woff') format('woff'),
+				     url('assets/fonts/uni0553-webfont-webfont.ttf') format('truetype'),
+				     url('assets/fonts/uni0553-webfont-webfont.svg#uni_05_53regular') format('svg');
+				font-weight: normal;
+				font-style: normal;
+			}
+			#test { font: 16px 'uni_05_53'; }
 		</style>
 
 	<!-- engine -->
@@ -36,6 +53,7 @@
 
 	<!-- scenes -->
 	<script src="src/scenes/title.js"></script>
+	<script src="src/scenes/level-select.js"></script>
 	<script src="src/scenes/game.js"></script>
 
 	<script>
@@ -49,16 +67,16 @@
 
 			window.sona.load(function () {
 				new Arcadia.Game({
-					width: 375,
-					height: 667,
-					// width: 1920,
-					// height: 1080,
-					scene: GameScene,
+					width: 750,
+					height: 1334,
+					scene: LevelSelectScene,
 					scaleToFit: true
 				});
 			});
 		};
 	</script>
   </head>
-  <body></body>
+  <body>
+  	<div id="test" style="position: absolute; left: -9999px;">need to use a custom font elsewhere first</div>
+  </body>
 </html>

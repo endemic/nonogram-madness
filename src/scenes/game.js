@@ -7,13 +7,12 @@ var GameScene = function (options) {
 
     sona.loop('bgm-tutorial');
 
-    this.difficulty = options.difficulty || 'easy';
-    this.level = options.level || 0;
+    this.puzzleIndex = options.level || 0;
+    this.puzzle = LEVELS[this.puzzleIndex];
+    this.clues = this.puzzle.clues;
 
-    this.clues = LEVELS[this.difficulty][this.level].clues;
-
-    if (this.difficulty === 'random') {
-        this.clues = this.generateRandomPuzzle(this.level);
+    if (this.puzzle.difficulty === 'random') {
+        this.clues = this.generateRandomPuzzle(this.puzzle.title);
     }
 
     this.action = GameScene.MARK;
@@ -211,9 +210,9 @@ GameScene.prototype.markOrFill = function (row, column) {
 GameScene.prototype.generateRandomPuzzle = function (difficulty) {
     var clues, value, percentage;
 
-    if (difficulty === 0) {
+    if (difficulty === 'Easy') {
         percentage = 0.68;
-    } else if (difficulty === 1) {
+    } else if (difficulty === 'Medium') {
         percentage = 0.62;
     } else {
         percentage = 0.55;
