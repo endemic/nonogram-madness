@@ -12,8 +12,9 @@ var Grid = function (options) {
         height: this.cellSize * this.cellCount + Grid.CLUE_AREA_SIZE
     };
 
-    this.color = null;
-    this.border = '2px white';
+    this.color = 'white';
+    this.border = '2px black';
+    this.shadow = '10px 10px 0 rgba(0, 0, 0, 0.5)';
 
     this.calculateBounds();
 
@@ -50,7 +51,7 @@ var Grid = function (options) {
 
         // Draw grid
         context.lineWidth = 2 * Arcadia.PIXEL_RATIO;
-        context.strokeStyle = 'white';
+        context.strokeStyle = 'black';
         context.stroke();
     };
     this.add(this.lines);
@@ -58,9 +59,9 @@ var Grid = function (options) {
 
 Grid.prototype = new Arcadia.Shape();
 
-Grid.MAX_SIZE = 372;
-Grid.CELL_SIZE = 26; // Cells go over ~70% of grid
-Grid.CLUE_AREA_SIZE = 112; // 372 - 26 * 10
+Grid.MAX_SIZE = 750;
+Grid.CELL_SIZE = 52; // Cells go over ~70% of grid
+Grid.CLUE_AREA_SIZE = Grid.MAX_SIZE - (Grid.CELL_SIZE * 10);
 
 Grid.prototype.containsPoint = function (point) {
     return point.x < this.bounds.right &&
