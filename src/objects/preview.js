@@ -1,49 +1,43 @@
-var Preview = function () {
+var Preview = function (options) {
     Arcadia.Shape.apply(this, arguments);
-
-    this.size = {
-        width: 160,
-        height: 160
+    
+    options = options || {};
+    this.gridSize = options.gridSize || 10;
+    this.size = options.size || {
+        width: Preview.SIZE,
+        height: Preview.SIZE
     };
-    this.shadow = '5px 5px 0 rgba(0, 0, 0, 0.5)';
+
+    this.border = '2px black';
 
     this.pixels = new Arcadia.Pool();
     this.pixels.factory = function () {
-        return new Arcadia.Shape({
-            color: '#000'
-        });
+        return new Arcadia.Shape({ color: 'black' });
     };
     this.add(this.pixels);
 };
 
 Preview.prototype = new Arcadia.Shape();
 
-Preview.prototype.drawPreview = function (clues) {
-    this.pixels.deactivateAll();
+Preview.SIZE = 200;
 
-    var index,
-        pixel,
-        x,
-        y,
-        gridSize,
+Preview.prototype.clear = function () {
+    this.pixels.deactivateAll();
+};
+
+Preview.prototype.plot = function (x, y) {
+    var pixel,
         previewSize,
         pixelSize;
 
-    gridSize = Math.sqrt(clues.length);
-    previewSize = Math.floor(this.size.width / gridSize) * gridSize;
-    pixelSize = Math.floor(previewSize / gridSize);
+    previewSize = Math.floor(this.size.width / this.gridSize) * this.gridSize;
+    pixelSize = Math.floor(previewSize / this.gridSize);
 
-    for (index = 0; index < clues.length; index += 1) {
-        if (clues[index] === 1) {
-            x = index % gridSize;
-            y = Math.floor(index / gridSize);
-            pixel = this.pixels.activate();
-            pixel.size = { width: pixelSize, height: pixelSize };
-            pixel.position = {
-                x: -this.size.width / 2 + x * pixelSize + pixelSize / 2,
-                y: -this.size.height / 2 + y * pixelSize + pixelSize / 2
-            };
-        }
-    }
+    pixel = this.pixels.activate();
+    pixel.size = { width: pixelSize, height: pixelSize };
+    pixel.position = {
+        x: -this.size.width / 2 + x * pixelSize + pixelSize / 2,
+        y: -this.size.height / 2 + y * pixelSize + pixelSize / 2
+    };
 };
 

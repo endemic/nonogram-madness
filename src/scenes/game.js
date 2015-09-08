@@ -7,7 +7,7 @@ var GameScene = function (options) {
 
     sona.loop('bgm-tutorial');
 
-    this.puzzleIndex = options.level || 20;
+    this.puzzleIndex = options.level || 30;
     this.puzzle = LEVELS[this.puzzleIndex];
     this.clues = this.puzzle.clues;
 
@@ -23,6 +23,7 @@ var GameScene = function (options) {
         this.state.push(null);
     }
 
+    // TODO: rename this var
     this.timer = 1740;
 
     this.puzzleGrid = new Grid({
@@ -35,6 +36,7 @@ var GameScene = function (options) {
     });
     this.add(this.puzzleGrid);
 
+    // TODO: extract the "fill" block to its own file
     this.filledBlocks = new Arcadia.Pool();
     this.filledBlocks.factory = function () {
         return new Arcadia.Shape({
@@ -53,11 +55,12 @@ var GameScene = function (options) {
     this.filledBlocks.deactivateAll();
 
     // `mark` blocks
+    // TODO: extract the "mark" block to its own file
     this.markedBlocks = new Arcadia.Pool();
     this.markedBlocks.factory = function () {
         return new Arcadia.Shape({
             size: { width: 45, height: 45 },
-            border: '4px black',
+            border: '8px black',
             type: 'mark',
             path: function (context) {
                 // TODO: Pixel ratio
@@ -75,29 +78,50 @@ var GameScene = function (options) {
     }
     this.markedBlocks.deactivateAll();
 
+    var timerBackground = new Arcadia.Shape({
+        size: { width: 340, height: 270 },
+        position: { x: -180, y: -390 },
+        border: '10px black',
+        shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)'
+    });
+    this.add(timerBackground);
+
     var timeLeftLabel = new Arcadia.Label({
-        position: { x: -80, y: -110 },
+        position: { x: 0, y: 90 },
         text: 'time left',
         color: 'black',
-        font: '22px uni_05_53'
+        font: '48px uni_05_53'
     });
-    this.add(timeLeftLabel);
+    timerBackground.add(timeLeftLabel);
 
     this.timerLabel = new Arcadia.Label({
-        position: { x: -80, y: -145 },
+        position: { x: 0, y: -45 },
         text: '30:00',
         color: 'black',
-        font: '40px uni_05_53'
+        font: '88px uni_05_53'
     });
-    this.add(this.timerLabel);
+    timerBackground.add(this.timerLabel);
+
+    var previewBackground = new Arcadia.Shape({
+        size: { width: 340, height: 270 },
+        position: { x: 180, y: -390 },
+        border: '10px black',
+        shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)'
+    });
+    this.add(previewBackground);
 
     var previewLabel = new Arcadia.Label({
-        position: { x: 100, y: -110 },
+        position: { x: 0, y: -110 },
         text: 'preview',
         color: 'black',
-        font: '22px uni_05_53'
+        font: '48px uni_05_53'
     });
-    this.add(previewLabel);
+    previewBackground.add(previewLabel);
+
+    this.preview = new Preview({
+        position: { x: 0, y: 0 }
+    });
+    previewBackground.add(this.preview);
 
     this.setupButtons();
 };
@@ -176,9 +200,10 @@ GameScene.prototype.markOrFill = function (row, column) {
             block = this.filledBlocks.activate();
             block.position.x = column * this.puzzleGrid.cellSize + this.puzzleGrid.bounds.left + block.size.width / 2 + offsetToCenter;
             block.position.y = row * this.puzzleGrid.cellSize + this.puzzleGrid.bounds.top + block.size.height / 2 + offsetToCenter;
-            block.scale = 2;
+            block.scale = 1.5;
             block.tween('scale', 1, 200);
             this.state[index] = block;
+            this.preview.plot(column, row);
             sona.play('fill');
         } else {
             // MISTAKE!
@@ -191,7 +216,7 @@ GameScene.prototype.markOrFill = function (row, column) {
             block = this.markedBlocks.activate();
             block.position.x = column * this.puzzleGrid.cellSize + this.puzzleGrid.bounds.left + block.size.width / 2 + offsetToCenter;
             block.position.y = row * this.puzzleGrid.cellSize + this.puzzleGrid.bounds.top + block.size.height / 2 + offsetToCenter;
-            block.scale = 2;
+            block.scale = 1.3;
             block.tween('scale', 1, 200);
             this.state[index] = block;
             console.log('Trying to mark block');

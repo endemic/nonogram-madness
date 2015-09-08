@@ -4,6 +4,9 @@
 var Grid = function (options) {
     Arcadia.Shape.apply(this, arguments);
 
+    var self = this;
+
+    this.clues = options.clues;
     this.cellCount = options.size;
     this.cellSize = Grid.CELL_SIZE;
 
@@ -18,14 +21,16 @@ var Grid = function (options) {
 
     this.calculateBounds();
 
+    if (options.clues !== undefined) {
+        this.drawClues();
+    }
+
     this.lines = new Arcadia.Shape({
         size: {
             width: this.size.width,
             height: this.size.height
         }
     });
-
-    var self = this;
 
     this.lines.path = function (context) {
         var i,
@@ -114,4 +119,108 @@ Grid.prototype.resize = function (newCellCount) {
     this.lines.size = this.size;
 
     this.calculateBounds();
+};
+
+Grid.prototype.drawClues = function () {
+    var i,
+        x,
+        y,
+        index,
+        label,
+        horizontalClue,
+        verticalClue,
+        horizontalCounter,
+        verticalCounter,
+        previousVertical,
+        previousHorizontal;
+
+    this.verticalClues = [];
+    this.horizontalClues = [];
+
+    for (i = 0; i < this.cellCount; i += 1) {
+        label = new Arcadia.Label({
+            position: {
+                x: -this.size.width / 2 + Grid.CLUE_AREA_SIZE + (i * Grid.CELL_SIZE) + Grid.CELL_SIZE / 2,
+                y: -this.size.height / 2 +  Grid.CLUE_AREA_SIZE / 2
+            },
+            text: '2\n2\n2\n4\n5',
+            color: 'black',
+            font: '40px uni_05_53'
+        });
+
+        this.add(label);
+        this.verticalClues.push(label);
+
+        label = new Arcadia.Label({
+            position: {
+                x: -this.size.width / 2 + Grid.CLUE_AREA_SIZE / 2,
+                y: -this.size.height / 2 + Grid.CLUE_AREA_SIZE + (i * Grid.CELL_SIZE) + Grid.CELL_SIZE / 2
+            },
+            text: '1 2 3 4 5',
+            color: 'black',
+            font: '40px uni_05_53'
+        });
+
+        this.add(label);
+        this.horizontalClues.push(label);
+    }
+
+    for (x = 0; x < this.cellCount; x += 1) {
+        horizontalClue = '';
+        verticalClue = '';
+        horizontalCounter = 0;
+        verticalCounter = 0;
+        previousVertical = false;
+        previousHorizontal = false;
+
+        for (y = 0; y < this.cellCount; y += 1) {
+            // horizontal clues
+            index = x * this.cellCount + y;
+            if (this.clues[index] === 1) {
+                horizontalCounter += 1;
+                previousHorizontal = true;
+            } else if (previousHorizontal) {
+                horizontalClue += horizontalCounter + ' ';
+                horizontalCounter = 0;
+                previousHorizontal = false;
+            }
+        }
+
+        for (y = 0; y < this.cellCount; y += 1) {
+            // vertical clues
+            index = y * this.cellCount + x;
+            if (this.clues[index] === 1) {
+                verticalCounter += 1;
+                previousVertical = true;
+            } else if (previousVertical) {
+                verticalClue += verticalCounter + '\n';
+                verticalCounter = 0;
+                previousVertical = false;
+            }
+        }
+
+        // Check for condition when a row or column ends with filled blocks
+        if (previousHorizontal) {
+            horizontalClue += horizontalCounter + ' ';
+        }
+
+        if (previousVertical) {
+            verticalClue += verticalCounter + '\n';
+        }
+
+        if (horizontalClue === '') {
+            horizontalClue = '0';
+        }
+
+        if (verticalClue === '') {
+            verticalClue = '0\n';
+        }
+
+        while (horizontalClue.length < 14) {
+            horizontalClue = ' ' + horizontalClue;
+        }
+
+        this.verticalClues[x].text = verticalClue;
+        this.horizontalClues[x].text = horizontalClue;
+    }
 };
