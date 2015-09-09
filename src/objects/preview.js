@@ -1,6 +1,9 @@
+/*jslint sloppy: true */
+/*globals Arcadia */
+
 var Preview = function (options) {
     Arcadia.Shape.apply(this, arguments);
-    
+
     options = options || {};
     this.gridSize = options.gridSize || 10;
     this.size = options.size || {
@@ -19,7 +22,7 @@ var Preview = function (options) {
 
 Preview.prototype = new Arcadia.Shape();
 
-Preview.SIZE = 200;
+Preview.SIZE = 180;
 
 Preview.prototype.clear = function () {
     this.pixels.deactivateAll();

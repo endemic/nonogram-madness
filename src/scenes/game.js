@@ -80,7 +80,7 @@ var GameScene = function (options) {
 
     var timerBackground = new Arcadia.Shape({
         size: { width: 340, height: 270 },
-        position: { x: -180, y: -390 },
+        position: { x: -185, y: -390 },
         border: '10px black',
         shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)'
     });
@@ -104,7 +104,7 @@ var GameScene = function (options) {
 
     var previewBackground = new Arcadia.Shape({
         size: { width: 340, height: 270 },
-        position: { x: 180, y: -390 },
+        position: { x: 185, y: -390 },
         border: '10px black',
         shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)'
     });
@@ -119,7 +119,7 @@ var GameScene = function (options) {
     previewBackground.add(previewLabel);
 
     this.preview = new Preview({
-        position: { x: 0, y: 0 }
+        position: { x: 0, y: 20 }
     });
     previewBackground.add(this.preview);
 
@@ -155,6 +155,7 @@ GameScene.prototype.onPointStart = function (points) {
 
     if (row !== null && column !== null) {
         this.markOrFill(row, column);
+        this.puzzleGrid.highlight(column, row);
     }
 
     this.previousRow = row;
@@ -271,6 +272,7 @@ GameScene.prototype.setupButtons = function () {
         label: new Arcadia.Label({
             text: 'mark',
             font: '64px uni_05_53',
+            color: 'orange',
             position: { x: 0, y: -10 }
         }),
         action: function () {
@@ -278,7 +280,7 @@ GameScene.prototype.setupButtons = function () {
             self.action = GameScene.MARK;
             self.fillButton.label.color = 'white';
             this.label.color = 'orange';
-            console.debug('Setting action to `mark`');
+            // console.debug('Setting action to `mark`');
         }
     });
     this.add(this.markButton);
@@ -299,7 +301,7 @@ GameScene.prototype.setupButtons = function () {
             self.action = GameScene.FILL;
             self.markButton.label.color = 'white';
             this.label.color = 'orange';
-            console.debug('Setting action to `fill`');
+            // console.debug('Setting action to `fill`');
         }
     });
     this.add(this.fillButton);

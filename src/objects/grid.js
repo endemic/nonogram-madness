@@ -1,5 +1,5 @@
 /*jslint sloppy: true */
-/*globals Arcadia, window, console, localStorage, sona */
+/*globals Arcadia */
 
 var Grid = function (options) {
     Arcadia.Shape.apply(this, arguments);
@@ -60,6 +60,22 @@ var Grid = function (options) {
         context.stroke();
     };
     this.add(this.lines);
+
+    this.horizontalHighlight = new Arcadia.Shape({
+        color: 'orange',
+        alpha: 0.5,
+        size: { width: Grid.CLUE_AREA_SIZE, height: Grid.CELL_SIZE }
+    });
+    this.add(this.horizontalHighlight);
+    // this.deactivate(this.horizontalHighlight);
+
+    this.verticalHighlight = new Arcadia.Shape({
+        color: 'orange',
+        alpha: 0.5,
+        size: { width: Grid.CELL_SIZE, height: Grid.CLUE_AREA_SIZE }
+    });
+    this.add(this.verticalHighlight);
+    // this.deactivate(this.verticalHighlight);
 };
 
 Grid.prototype = new Arcadia.Shape();
@@ -89,6 +105,18 @@ Grid.prototype.getRowAndColumn = function (point) {
     column = Math.floor((point.x - this.bounds.left) / this.cellSize);
 
     return [row, column];
+};
+
+Grid.prototype.highlight = function (x, y) {
+    this.horizontalHighlight.position = {
+        x: -this.size.width / 2 + Grid.CLUE_AREA_SIZE / 2,
+        y: -this.size.height / 2 + Grid.CLUE_AREA_SIZE + (y * Grid.CELL_SIZE) + Grid.CELL_SIZE / 2
+    };
+
+    this.verticalHighlight.position = {
+        x: -this.size.width / 2 + Grid.CLUE_AREA_SIZE + (x * Grid.CELL_SIZE) + Grid.CELL_SIZE / 2,
+        y: -this.size.height / 2 +  Grid.CLUE_AREA_SIZE / 2
+    };
 };
 
 Grid.prototype.calculateBounds = function () {
@@ -218,6 +246,10 @@ Grid.prototype.drawClues = function () {
 
         while (horizontalClue.length < 14) {
             horizontalClue = ' ' + horizontalClue;
+        }
+
+        while (verticalClue.length < 14) {
+            verticalClue = ' \n' + verticalClue;
         }
 
         this.verticalClues[x].text = verticalClue;
