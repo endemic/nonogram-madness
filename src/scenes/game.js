@@ -1,3 +1,4 @@
+/*jslint sloppy: true */
 /*globals Arcadia, TitleScene, Grid, LEVELS, window, console, localStorage, sona */
 
 var GameScene = function (options) {
@@ -10,6 +11,7 @@ var GameScene = function (options) {
     this.puzzleIndex = options.level || 30;
     this.puzzle = LEVELS[this.puzzleIndex];
     this.clues = this.puzzle.clues;
+    this.secondsLeft = 1739; // ~ 29 * 60
 
     if (this.puzzle.difficulty === 'random') {
         this.clues = this.generateRandomPuzzle(this.puzzle.title);
@@ -23,9 +25,6 @@ var GameScene = function (options) {
         this.state.push(null);
     }
 
-    // TODO: rename this var
-    this.timer = 1740;
-
     this.puzzleGrid = new Grid({
         size: Math.sqrt(this.clues.length),
         clues: this.clues,
@@ -36,15 +35,9 @@ var GameScene = function (options) {
     });
     this.add(this.puzzleGrid);
 
-    // TODO: extract the "fill" block to its own file
     this.filledBlocks = new Arcadia.Pool();
     this.filledBlocks.factory = function () {
-        return new Arcadia.Shape({
-            size: { width: 42, height: 42 },
-            border: '5px black',
-            color: '#665945',
-            type: 'fill'
-        });
+        return new Block({ type: 'fill' });
     };
     this.add(this.filledBlocks);
 
@@ -54,22 +47,9 @@ var GameScene = function (options) {
     }
     this.filledBlocks.deactivateAll();
 
-    // `mark` blocks
-    // TODO: extract the "mark" block to its own file
     this.markedBlocks = new Arcadia.Pool();
     this.markedBlocks.factory = function () {
-        return new Arcadia.Shape({
-            size: { width: 45, height: 45 },
-            border: '8px black',
-            type: 'mark',
-            path: function (context) {
-                // TODO: Pixel ratio
-                context.moveTo(-this.size.width / 2 + 2, this.size.height / 2 - 2);
-                context.lineTo(this.size.width / 2 - 2, -this.size.height / 2 + 2);
-                context.moveTo(this.size.width / 2 - 2, this.size.height / 2 - 2);
-                context.lineTo(-this.size.width / 2 + 2, -this.size.height / 2 + 2);
-            }
-        });
+        return new Block({ type: 'mark' });
     };
     this.add(this.markedBlocks);
 
@@ -132,15 +112,15 @@ GameScene.FILL = 1;
 GameScene.MARK = 2;
 
 GameScene.prototype.update = function (delta) {
-    Arcadia.Scene.prototype.update.call(this, delta);
-
-    this.timer -= delta;
-
     var minutes,
         seconds;
 
-    minutes = Math.round(this.timer / 60);
-    seconds = Math.round(this.timer % 60);
+    Arcadia.Scene.prototype.update.call(this, delta);
+
+    this.secondsLeft -= delta;
+
+    minutes = Math.round(this.secondsLeft / 60);
+    seconds = Math.round(this.secondsLeft % 60);
     // TODO break this out into two labels, to prevent text jumping
     this.timerLabel.text = minutes + ':' + seconds;
 };
@@ -175,6 +155,7 @@ GameScene.prototype.onPointMove = function (points) {
 
     if (row !== null && column !== null) {
         this.markOrFill(row, column);
+        this.puzzleGrid.highlight(column, row);
     }
 
     this.previousRow = row;
@@ -182,22 +163,27 @@ GameScene.prototype.onPointMove = function (points) {
 };
 
 GameScene.prototype.onPointEnd = function (points) {
-    // do something here?
+    this.puzzleGrid.highlight(null, null);
 };
 
 GameScene.prototype.markOrFill = function (row, column) {
-    var index = row * 10 + column; // TODO: get rid of this magic number
-    var valid = this.clues[index] === 1;
-    var existingBlock = this.state[index];
-    var block;
-    var offsetToCenter = 3;
+    var index,
+        valid,
+        block,
+        existingBlock,
+        offsetToCenter;
+
+    index = row * 10 + column; // TODO: get rid of this magic number (10)
+    valid = this.clues[index] === 1;
+    existingBlock = this.state[index];
+    offsetToCenter = 3;
 
     if (this.action === GameScene.FILL) {
-        if (existingBlock && existingBlock.type === 'fill') {
-            console.log('already filled');
-            // Play "click" sound (or remove the block)
+        if (existingBlock) {
+            // Already either marked or filled
             sona.play('invalid');
         } else if (valid) {
+            // Fill
             block = this.filledBlocks.activate();
             block.position.x = column * this.puzzleGrid.cellSize + this.puzzleGrid.bounds.left + block.size.width / 2 + offsetToCenter;
             block.position.y = row * this.puzzleGrid.cellSize + this.puzzleGrid.bounds.top + block.size.height / 2 + offsetToCenter;
@@ -207,29 +193,27 @@ GameScene.prototype.markOrFill = function (row, column) {
             this.preview.plot(column, row);
             sona.play('fill');
         } else {
-            // MISTAKE!
-            // Subtract time, etc.
-            console.debug('wrong answer!');
+            // Invalid move
+            this.secondsLeft -= 60;
             sona.play('error');
         }
     } else if (this.action === GameScene.MARK) {
         if (!existingBlock) {
+            // Mark
             block = this.markedBlocks.activate();
             block.position.x = column * this.puzzleGrid.cellSize + this.puzzleGrid.bounds.left + block.size.width / 2 + offsetToCenter;
             block.position.y = row * this.puzzleGrid.cellSize + this.puzzleGrid.bounds.top + block.size.height / 2 + offsetToCenter;
             block.scale = 1.3;
             block.tween('scale', 1, 200);
             this.state[index] = block;
-            console.log('Trying to mark block');
             sona.play('mark');
         } else if (existingBlock && existingBlock.type === 'mark') {
+            // Remove previous mark
             this.markedBlocks.deactivate(existingBlock);
             this.state[index] = null;
-            console.log('removing mark');
             sona.play('mark');
         } else {
-            // block is filled; make "click" noise
-            console.log('block already filled');
+            // Block is already filled
             sona.play('invalid');
         }
     }
@@ -344,7 +328,7 @@ GameScene.prototype.setupButtons = function () {
         action: function () {
             sona.play('button');
             if (confirm('Are you sure you want to quit?')) {
-                Arcadia.changeScene(Title);
+                Arcadia.changeScene(LevelSelectScene);
             }
         }
     }));
