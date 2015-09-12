@@ -1,81 +1,100 @@
-/*globals Arcadia, TitleScene, Grid, LEVELS, window, console, localStorage, sona */
+/*jslint sloppy: true */
+/*globals Arcadia, sona, LevelSelectScene, OptionsScene, AboutScene */
 
 var TitleScene = function () {
     Arcadia.Scene.apply(this);
 
-    var nonogram = new Arcadia.Label({
-        text: 'Nonogram',
-        font: '65px uni_05_53',
-        color: '#fff',
-        shadow: '0px 0px 10px #000'
-    });
-    nonogram.position = {
-        x: Arcadia.WIDTH / 2,
-        y: 100
-    };
-    this.add(nonogram);
-    var madness = new Arcadia.Label({
-        text: 'Madness',
-        font: '75px uni_05_53',
-        color: '#fff',
-        shadow: '0px 0px 10px #000'
-    });
-    madness.position = {
-        x: Arcadia.WIDTH / 2,
-        y: 190
-    };
-    this.add(madness);
+    var titleLineOne,
+        titleLineTwo,
+        playButton,
+        rulesButton,
+        optionsButton,
+        aboutButton;
 
-    var startButton = new Arcadia.Button({
-        position: { x: Arcadia.WIDTH / 2, y: 400 },
-        size: { width: 180, height: 50 },
-        border: '5px solid #000',
+    titleLineOne = new Arcadia.Label({
+        text: 'nonogram',
+        font: '128px uni_05_53',
+        shadow: '10px 10px 0 rgba(0, 0, 0, 0.5)',
+        position: { x: 0, y: -this.size.height / 2 + 275 }
+    });
+    this.add(titleLineOne);
+
+    titleLineTwo = new Arcadia.Label({
+        text: 'madness',
+        font: '140px uni_05_53',
+        shadow: '10px 10px 0 rgba(0, 0, 0, 0.5)',
+        position: { x: 0, y: -this.size.height / 2 + 400 }
+    });
+    this.add(titleLineTwo);
+
+    playButton = new Arcadia.Button({
+        position: { x: 0, y: 0 },
+        size: { width: 350, height: 90 },
         color: '#665945',
-        shadow: '5px 5px 0 rgba(0, 0, 0, 0.5)',
+        border: '10px black',
+        shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)',
         label: new Arcadia.Label({
-            text: 'Start',
-            font: '35px uni_05_53',
-            position: { x: 0, y: -3 }
+            text: 'play',
+            font: '64px uni_05_53',
+            position: { x: 0, y: -10 }
         }),
         action: function () {
             sona.play('button');
-            Arcadia.changeScene(DifficultySelect);
+            Arcadia.changeScene(LevelSelectScene);
         }
     });
-    this.add(startButton);
+    this.add(playButton);
 
-    var optionsButton = new Arcadia.Button({
-        position: { x: Arcadia.WIDTH / 2, y: 470 },
-        size: { width: 180, height: 50 },
-        border: '5px solid #000',
+    rulesButton = new Arcadia.Button({
+        position: { x: 0, y: playButton.position.y + 120 },
+        size: { width: 350, height: 90 },
         color: '#665945',
-        shadow: '5px 5px 0 rgba(0, 0, 0, 0.5)',
+        border: '10px black',
+        shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)',
         label: new Arcadia.Label({
-            text: 'Options',
-            font: '35px uni_05_53',
-            position: { x: 0, y: -3 }
+            text: 'rules',
+            font: '64px uni_05_53',
+            position: { x: 0, y: -10 }
         }),
         action: function () {
             sona.play('button');
-            Arcadia.changeScene(Options);
+            Arcadia.changeScene(LevelSelectScene);
+        }
+    });
+    this.add(rulesButton);
+
+    optionsButton = new Arcadia.Button({
+        position: { x: 0, y: rulesButton.position.y + 120 },
+        size: { width: 350, height: 90 },
+        color: '#665945',
+        border: '10px black',
+        shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)',
+        label: new Arcadia.Label({
+            text: 'options',
+            font: '64px uni_05_53',
+            position: { x: 0, y: -10 }
+        }),
+        action: function () {
+            sona.play('button');
+            Arcadia.changeScene(OptionsScene);
         }
     });
     this.add(optionsButton);
 
-    var aboutButton = new Arcadia.Button({
-        position: { x: Arcadia.WIDTH / 2, y: 540 },
-        size: { width: 180, height: 50 },
-        border: '5px solid #000',
+    aboutButton = new Arcadia.Button({
+        position: { x: 0, y: optionsButton.position.y + 120 },
+        size: { width: 350, height: 90 },
         color: '#665945',
-        shadow: '5px 5px 0 rgba(0, 0, 0, 0.5)',
+        border: '10px black',
+        shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)',
         label: new Arcadia.Label({
-            text: 'About',
-            font: '35px uni_05_53',
-            position: { x: 0, y: -3 }
+            text: 'about',
+            font: '64px uni_05_53',
+            position: { x: 0, y: -10 }
         }),
         action: function () {
             sona.play('button');
-            Arcadia.changeScene(About);
+            Arcadia.changeScene(AboutScene);
         }
     });
     this.add(aboutButton);
@@ -84,5 +103,3 @@ var TitleScene = function () {
 };
 
 TitleScene.prototype = new Arcadia.Scene();
-
-// module.exports = TitleScene;
