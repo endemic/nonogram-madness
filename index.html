@@ -48,6 +48,7 @@
 	<script src="src/data/levels.js"></script>
 
 	<!-- objects -->
+	<script src="src/objects/block.js"></script>
 	<script src="src/objects/grid.js"></script>
 	<script src="src/objects/thumbnail.js"></script>
 	<script src="src/objects/preview.js"></script>
@@ -63,14 +64,19 @@
 				{ url: 'assets/sounds/button.mp3', id: 'button' },
 				{ url: 'assets/sounds/fill.mp3', id: 'fill' },
 				{ url: 'assets/sounds/mark.mp3', id: 'mark' },
-				{ url: 'assets/sounds/win.mp3', id: 'win' }
+				{ url: 'assets/sounds/win.mp3', id: 'g' },
+				{ url: 'assets/sounds/error.mp3', id: 'error' },
+				{ url: 'assets/sounds/invalid.mp3', id: 'invalid' }
+				// { url: 'assets/music/1.mp3', id: 'bgm-one' },
+				// { url: 'assets/music/2.mp3', id: 'bgm-two' },
+				// { url: 'assets/music/tutorial.mp3', id: 'bgm-tutorial' }
 			]);
 
 			window.sona.load(function () {
 				new Arcadia.Game({
 					width: 750,
 					height: 1334,
-					scene: GameScene,
+					scene: TitleScene,
 					scaleToFit: true
 				});
 			});

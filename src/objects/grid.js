@@ -63,7 +63,7 @@ var Grid = function (options) {
 
     this.horizontalHighlight = new Arcadia.Shape({
         color: 'orange',
-        alpha: 0.5,
+        alpha: 0,
         size: { width: Grid.CLUE_AREA_SIZE, height: Grid.CELL_SIZE }
     });
     this.add(this.horizontalHighlight);
@@ -71,7 +71,7 @@ var Grid = function (options) {
 
     this.verticalHighlight = new Arcadia.Shape({
         color: 'orange',
-        alpha: 0.5,
+        alpha: 0,
         size: { width: Grid.CELL_SIZE, height: Grid.CLUE_AREA_SIZE }
     });
     this.add(this.verticalHighlight);
@@ -83,6 +83,7 @@ Grid.prototype = new Arcadia.Shape();
 Grid.MAX_SIZE = 750;
 Grid.CELL_SIZE = 52; // Cells go over ~70% of grid
 Grid.CLUE_AREA_SIZE = Grid.MAX_SIZE - (Grid.CELL_SIZE * 10);
+Grid.HIGHLIGHT_ALPHA = 0.5;
 
 Grid.prototype.containsPoint = function (point) {
     return point.x < this.bounds.right &&
@@ -108,6 +109,15 @@ Grid.prototype.getRowAndColumn = function (point) {
 };
 
 Grid.prototype.highlight = function (x, y) {
+    if (x === null && y === null) {
+        this.horizontalHighlight.alpha = 0;
+        this.verticalHighlight.alpha = 0;
+        return;
+    }
+
+    this.horizontalHighlight.alpha = Grid.HIGHLIGHT_ALPHA;
+    this.verticalHighlight.alpha = Grid.HIGHLIGHT_ALPHA;
+
     this.horizontalHighlight.position = {
         x: -this.size.width / 2 + Grid.CLUE_AREA_SIZE / 2,
         y: -this.size.height / 2 + Grid.CLUE_AREA_SIZE + (y * Grid.CELL_SIZE) + Grid.CELL_SIZE / 2
