@@ -17,11 +17,11 @@
 - [ ] Add tutorial; baked into first few puzzles
 - [ ] "play" on title screen takes you right to next (first) puzzle
 - [ ] Add "rules" reference scene
-- [ ] Add "options" scene
+- [x] Add "options" scene
 	* music on/off
 	* sfx on/off
 	* reset data
-- [ ] Add "about" scene
+- [x] Add "about" scene
 	* credits - puzzle by nikoli
 	* copyright
 	* rate on various app stores

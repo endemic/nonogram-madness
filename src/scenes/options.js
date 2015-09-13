@@ -1,48 +1,57 @@
-/*globals Arcadia, TitleScene, Grid, LEVELS, window, console, localStorage, sona */
+/*jslint sloppy: true */
+/*globals Arcadia, TitleScene, localStorage, confirm, sona */
 
 var OptionsScene = function () {
     Arcadia.Scene.apply(this);
 
-    var title = new Arcadia.Label({
+    var titleLabel,
+        backButton,
+        musicToggleButton,
+        sfxToggleButton,
+        dataResetButton;
+
+    // TODO: allow "free" mode which doesn't penalize if a mistake is made
+
+    titleLabel = new Arcadia.Label({
         text: 'Options',
-        font: '55px monospace',
+        font: '96px uni_05_53',
+        shadow: '10px 10px 0 rgba(0, 0, 0, 0.5)',
         position: {
             x: 0,
-            y: -100
+            y: -450
         }
     });
-    this.add(title);
+    this.add(titleLabel);
 
-    var backButton = new Arcadia.Button({
-        position: { x: 65, y: 30 },
-        size: { width: 100, height: 30 },
-        border: '5px solid #000',
+    backButton = new Arcadia.Button({
+        position: { x: -this.size.width / 2 + 140, y: -this.size.height / 2 + 60 },
+        size: { width: 220, height: 70 },
+        border: '10px black',
         color: '#665945',
-        shadow: '5px 5px 0 #000',
+        shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)',
         label: new Arcadia.Label({
-            text: '< back',
-            color: '#fff',
-            font: '20px uni_05_53',
-            position: { x: 0, y: -3 }
+            text: '← title',
+            color: 'white',
+            font: '48px uni_05_53',
+            position: { x: 0, y: -5 }
         }),
         action: function () {
             sona.play('button');
-            Arcadia.changeScene(Title);
+            Arcadia.changeScene(TitleScene);
         }
     });
     this.add(backButton);
 
-    var musicToggle = new Arcadia.Button({
-        position: { x: Arcadia.WIDTH / 2, y: 400 },
-        size: { width: 190, height: 40 },
-        border: '5px solid #000',
+    musicToggleButton = new Arcadia.Button({
+        position: { x: 0, y: 0 },
+        size: { width: 420, height: 90 },
         color: '#665945',
-        shadow: '5px 5px 0 #000',
+        border: '10px black',
+        shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)',
         label: new Arcadia.Label({
             text: (localStorage.getBoolean('playMusic') ? 'Music ON' : 'Music OFF'),
-            color: '#fff',
-            font: '30px uni_05_53',
-            position: { x: 0, y: -3 }
+            font: '64px uni_05_53',
+            position: { x: 0, y: -10 }
         }),
         action: function () {
             sona.play('button');
@@ -50,7 +59,7 @@ var OptionsScene = function () {
             if (localStorage.getBoolean('playMusic')) {
                 localStorage.setBoolean('playMusic', false);
                 this.text = 'Music OFF';
-                Arcadia.stopMusic();
+                sona.stop('bgm-one');
             } else {
                 localStorage.setBoolean('playMusic', true);
                 this.text = 'Music ON';
@@ -58,19 +67,18 @@ var OptionsScene = function () {
             }
         }
     });
-    this.add(musicToggle);
+    this.add(musicToggleButton);
 
-    var sfxToggle = new Arcadia.Button({
-        position: { x: Arcadia.WIDTH / 2, y: 470 },
-        size: { width: 190, height: 40 },
-        border: '5px solid #000',
+    sfxToggleButton = new Arcadia.Button({
+        position: { x: 0, y: musicToggleButton.position.y + 120 },
+        size: { width: 420, height: 90 },
         color: '#665945',
-        shadow: '5px 5px 0 #000',
+        border: '10px black',
+        shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)',
         label: new Arcadia.Label({
             text: (localStorage.getBoolean('playSfx') ? 'Sound ON' : 'Sound OFF'),
-            color: '#fff',
-            font: '30px uni_05_53',
-            position: { x: 0, y: -3 }
+            font: '64px uni_05_53',
+            position: { x: 0, y: -10 }
         }),
         action: function () {
             sona.play('button');
@@ -84,7 +92,28 @@ var OptionsScene = function () {
             }
         }
     });
-    this.add(sfxToggle);
+    this.add(sfxToggleButton);
+
+    dataResetButton = new Arcadia.Button({
+        position: { x: 0, y: sfxToggleButton.position.y + 120 },
+        size: { width: 420, height: 90 },
+        color: '#665945',
+        border: '10px black',
+        shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)',
+        label: new Arcadia.Label({
+            text: 'Reset data',
+            font: '64px uni_05_53',
+            position: { x: 0, y: -10 }
+        }),
+        action: function () {
+            sona.play('button');
+
+            if (confirm('Reset all saved data?')) {
+                // TODO: figure out what this does
+            }
+        }
+    });
+    this.add(dataResetButton);
 };
 
 OptionsScene.prototype = new Arcadia.Scene();
