@@ -13,10 +13,12 @@
 - [ ] Add icons next to the mark/fill button text
 - [ ] Center mark/fill icons
 - [ ] Only draw preview in level select if user has completed the puzzle
-- [ ] Lay out the title scene UI
+- [x] Lay out the title scene UI
 - [ ] Add tutorial; baked into first few puzzles
 - [ ] "play" on title screen takes you right to next (first) puzzle
-- [ ] Add "rules" reference scene
+- [ ] Don't allow clicking on hidden puzzle thumbnails (level select)
+- [ ] Can't win random puzzles
+- [x] Add "rules" reference scene
 - [x] Add "options" scene
 	* music on/off
 	* sfx on/off

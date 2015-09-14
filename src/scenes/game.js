@@ -221,7 +221,9 @@ GameScene.prototype.markOrFill = function (row, column) {
 };
 
 GameScene.prototype.generateRandomPuzzle = function (difficulty) {
-    var clues, value, percentage;
+    var clues,
+        value,
+        percentage;
 
     if (difficulty === 'Easy') {
         percentage = 0.68;
@@ -230,6 +232,8 @@ GameScene.prototype.generateRandomPuzzle = function (difficulty) {
     } else {
         percentage = 0.55;
     }
+
+    clues = [];
 
     while (clues.length < 100) {
         if (Math.random() < percentage) {

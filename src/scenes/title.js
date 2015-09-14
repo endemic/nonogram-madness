@@ -1,5 +1,5 @@
 /*jslint sloppy: true */
-/*globals Arcadia, sona, LevelSelectScene, OptionsScene, AboutScene */
+/*globals Arcadia, sona, LevelSelectScene, RulesScene, OptionsScene, AboutScene */
 
 var TitleScene = function () {
     Arcadia.Scene.apply(this);
@@ -58,7 +58,7 @@ var TitleScene = function () {
         }),
         action: function () {
             sona.play('button');
-            Arcadia.changeScene(LevelSelectScene);
+            Arcadia.changeScene(RulesScene);
         }
     });
     this.add(rulesButton);

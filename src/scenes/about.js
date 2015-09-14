@@ -41,7 +41,7 @@ var AboutScene = function () {
 
     detailLabel = new Arcadia.Label({
         text: '(c) 2015 Ganbaru Games\n\n \
-Programmed by Nathan Demick\n\n \
+Designed and programmed\nby Nathan Demick\n\n \
 "Nonogram" concept by\nNon Ishida & Tetsuya Nishio',
         font: '36px uni_05_53',
         shadow: '10px 10px 0 rgba(0, 0, 0, 0.5)',
@@ -52,32 +52,32 @@ Programmed by Nathan Demick\n\n \
     });
     this.add(detailLabel);
 
-    rateButton = new Arcadia.Button({
-        position: { x: 0, y: 0 },
-        size: { width: 420, height: 90 },
-        color: '#665945',
-        border: '10px black',
-        shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)',
-        label: new Arcadia.Label({
-            text: 'Rate this app!',
-            font: '64px uni_05_53',
-            position: { x: 0, y: -10 }
-        }),
-        action: function () {
-            var store;
-            if (Arcadia.ENV.android) {
-                store = 'Google Play';
-            } else if (Arcadia.ENV.ios) {
-                store = 'the App Store';
-            }
-            if (window.confirm('Rate in ' + store + '?')) {
-                // TODO: obtain real link
-                window.open('somewhere', '_blank');
-            }
-        }
-    });
-
     if (Arcadia.ENV.cordova) {
+        rateButton = new Arcadia.Button({
+            position: { x: 0, y: 0 },
+            size: { width: 420, height: 90 },
+            color: '#665945',
+            border: '10px black',
+            shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)',
+            label: new Arcadia.Label({
+                text: 'Rate this app!',
+                font: '64px uni_05_53',
+                position: { x: 0, y: -10 }
+            }),
+            action: function () {
+                var store;
+                if (Arcadia.ENV.android) {
+                    store = 'Google Play';
+                } else if (Arcadia.ENV.ios) {
+                    store = 'the App Store';
+                }
+                if (window.confirm('Rate in ' + store + '?')) {
+                    // TODO: obtain real link
+                    window.open('somewhere', '_blank');
+                }
+            }
+        });
+
         this.add(rateButton);
     }
 };
