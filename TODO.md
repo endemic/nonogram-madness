@@ -9,15 +9,7 @@
 - [x] Play SFX when attempting to fill a marked block
 - [x] Play SFX when attempting to fill a filled block
 - [x] Play SFX when attempting to mark a filled block
-- [ ] Dim clues that are already completed
-- [ ] Add icons next to the mark/fill button text
-- [ ] Center mark/fill icons
-- [ ] Only draw preview in level select if user has completed the puzzle
 - [x] Lay out the title scene UI
-- [ ] Add tutorial; baked into first few puzzles
-- [ ] "play" on title screen takes you right to next (first) puzzle
-- [ ] Don't allow clicking on hidden puzzle thumbnails (level select)
-- [ ] Can't win random puzzles
 - [x] Add "rules" reference scene
 - [x] Add "options" scene
 	* music on/off
@@ -26,7 +18,18 @@
 - [x] Add "about" scene
 	* credits - puzzle by nikoli
 	* copyright
-	* rate on various app stores
+- [ ] Dim clues that are already completed
+- [ ] Add icons next to the mark/fill button text
+- [ ] Center mark/fill icons
+- [ ] Only draw preview in level select if user has completed the puzzle
+- [ ] Add tutorial; baked into first few puzzles
+- [ ] "play" on title screen takes you right to next (first) puzzle
+- [ ] Don't allow clicking on hidden puzzle thumbnails (level select)
+- [x] Can't win random puzzles
+
+## Cordova
+
+- [ ] Add actual link to rate on various app stores
 
 ## Arcadia
 

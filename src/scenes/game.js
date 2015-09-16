@@ -18,12 +18,8 @@ var GameScene = function (options) {
     }
 
     this.action = GameScene.MARK;
-    this.state = [];
-
-    var i = this.clues.length;
-    while (i--) {
-        this.state.push(null);
-    }
+    this.puzzleSize = Math.sqrt(this.clues.length);
+    this.state = Array(this.clues.length);
 
     this.puzzleGrid = new Grid({
         size: Math.sqrt(this.clues.length),
@@ -108,8 +104,8 @@ var GameScene = function (options) {
 
 GameScene.prototype = new Arcadia.Scene();
 
-GameScene.FILL = 1;
-GameScene.MARK = 2;
+GameScene.FILL = 'fill';
+GameScene.MARK = 'mark';
 
 GameScene.prototype.update = function (delta) {
     var minutes,
@@ -173,10 +169,10 @@ GameScene.prototype.markOrFill = function (row, column) {
         existingBlock,
         offsetToCenter;
 
-    index = row * 10 + column; // TODO: get rid of this magic number (10)
+    index = row * this.puzzleSize + column;
     valid = this.clues[index] === 1;
     existingBlock = this.state[index];
-    offsetToCenter = 3;
+    offsetToCenter = 5;
 
     if (this.action === GameScene.FILL) {
         if (existingBlock) {
@@ -192,6 +188,8 @@ GameScene.prototype.markOrFill = function (row, column) {
             this.state[index] = block;
             this.preview.plot(column, row);
             sona.play('fill');
+
+            this.checkWinCondition();
         } else {
             // Invalid move
             this.secondsLeft -= 60;
@@ -207,7 +205,7 @@ GameScene.prototype.markOrFill = function (row, column) {
             block.tween('scale', 1, 200);
             this.state[index] = block;
             sona.play('mark');
-        } else if (existingBlock && existingBlock.type === 'mark') {
+        } else if (existingBlock && existingBlock.type === GameScene.MARK) {
             // Remove previous mark
             this.markedBlocks.deactivate(existingBlock);
             this.state[index] = null;
@@ -218,6 +216,35 @@ GameScene.prototype.markOrFill = function (row, column) {
         }
     }
 
+};
+
+GameScene.prototype.checkWinCondition = function () {
+    var success = true,
+        self = this;
+
+    this.clues.forEach(function (clue, index) {
+        if (clue === 0 || !success) {
+            return;
+        }
+
+        if (!self.state[index]) {
+            success = false;
+        }
+
+        if (self.state[index].type !== GameScene.FILL) {
+            success = false;
+        }
+    });
+
+    if (success) {
+        alert('You won!');
+        Arcadia.changeScene(LevelSelectScene);
+    }
+};
+
+
+Grid.prototype.checkCompleteness = function (row, column) {
+    // body...
 };
 
 GameScene.prototype.generateRandomPuzzle = function (difficulty) {
@@ -268,7 +295,6 @@ GameScene.prototype.setupButtons = function () {
             self.action = GameScene.MARK;
             self.fillButton.label.color = 'white';
             this.label.color = 'orange';
-            // console.debug('Setting action to `mark`');
         }
     });
     this.add(this.markButton);
