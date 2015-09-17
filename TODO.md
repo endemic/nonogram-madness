@@ -25,6 +25,7 @@
 - [ ] Add tutorial; baked into first few puzzles
 - [ ] "play" on title screen takes you right to next (first) puzzle
 - [ ] Don't allow clicking on hidden puzzle thumbnails (level select)
+- [ ] Change preview to draw cached image, rather than a bunch of "pixel" objects
 - [x] Can't win random puzzles
 
 ## Cordova

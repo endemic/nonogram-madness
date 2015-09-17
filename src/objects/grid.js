@@ -248,12 +248,12 @@ Grid.prototype.drawClues = function () {
 
         if (horizontalClue === '') {
             horizontalClue = '0';
-            this.horizontalClues[x].color = 'grey';
+            this.horizontalClues[x].color = 'lightgrey';
         }
 
         if (verticalClue === '') {
             verticalClue = '0\n';
-            this.verticalClues[x].color = 'grey';
+            this.verticalClues[x].color = 'lightgrey';
         }
 
         while (horizontalClue.length < 14) {

@@ -189,6 +189,7 @@ GameScene.prototype.markOrFill = function (row, column) {
             this.preview.plot(column, row);
             sona.play('fill');
 
+            this.checkCompleteness(row, column);
             this.checkWinCondition();
         } else {
             // Invalid move
@@ -227,11 +228,7 @@ GameScene.prototype.checkWinCondition = function () {
             return;
         }
 
-        if (!self.state[index]) {
-            success = false;
-        }
-
-        if (self.state[index].type !== GameScene.FILL) {
+        if (!self.state[index] || self.state[index].type !== GameScene.FILL) {
             success = false;
         }
     });
@@ -243,8 +240,43 @@ GameScene.prototype.checkWinCondition = function () {
 };
 
 
-Grid.prototype.checkCompleteness = function (row, column) {
-    // body...
+GameScene.prototype.checkCompleteness = function (row, column) {
+    var i,
+        rowIndex,
+        columnIndex,
+        rowTotal = 0,
+        columnTotal = 0,
+        completedRowTotal = 0,
+        completedColumnTotal = 0;
+
+    for (i = 0; i < this.puzzleSize; i += 1) {
+        rowIndex = row * this.puzzleSize + i;
+        columnIndex = i * this.puzzleSize + column;
+
+        if (this.state[rowIndex] && this.state[rowIndex].type === GameScene.FILL) {
+            completedRowTotal += 1;
+        }
+
+        if (this.state[columnIndex] && this.state[columnIndex].type === GameScene.FILL) {
+            completedColumnTotal += 1;
+        }
+
+        if (this.clues[rowIndex] === 1) {
+            rowTotal += 1;
+        }
+
+        if (this.clues[columnIndex] === 1) {
+            columnTotal += 1;
+        }
+    }
+
+    if (rowTotal === completedRowTotal) {
+        this.puzzleGrid.horizontalClues[row].color = 'lightgrey';
+    }
+
+    if (columnTotal === completedColumnTotal) {
+        this.puzzleGrid.verticalClues[column].color = 'lightgrey';
+    }
 };
 
 GameScene.prototype.generateRandomPuzzle = function (difficulty) {
