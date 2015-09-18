@@ -31,12 +31,11 @@ Thumbnail.SIZE = 150;
 Thumbnail.prototype.drawPreview = function (levelIndex, completed) {
     if (LEVELS[levelIndex] === undefined) {
         this.alpha = 0;
-    } else {
-        this.alpha = 1;
+        return;
     }
 
-    if (this.alpha === 0) {
-        return;
+    if (this.alpha < 1) {
+        this.alpha = 1;
     }
 
     this.pixels.deactivateAll();
@@ -47,14 +46,15 @@ Thumbnail.prototype.drawPreview = function (levelIndex, completed) {
         pixelSize;
 
     self = this;
-    puzzleSize = Math.sqrt(LEVELS[levelIndex].clues.length);
-    pixelSize = this.size.width / puzzleSize;
 
-    if (!completed) {
+    if (!completed[levelIndex]) {
         clues = INCOMPLETE.clues;
     } else {
         clues = LEVELS[levelIndex].clues;
     }
+
+    puzzleSize = Math.sqrt(clues.length);
+    pixelSize = this.size.width / puzzleSize;
 
     clues.forEach(function (clue, index) {
         var x = index % puzzleSize,

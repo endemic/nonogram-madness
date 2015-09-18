@@ -65,7 +65,7 @@ var RulesScene = function () {
 
     detailLabel = new Arcadia.Label({
         text: text.join(''),
-        alignment: 'left',
+        // alignment: 'left',
         font: '36px uni_05_53',
         shadow: '10px 10px 0 rgba(0, 0, 0, 0.5)',
         position: {

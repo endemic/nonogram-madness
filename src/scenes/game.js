@@ -8,7 +8,10 @@ var GameScene = function (options) {
 
     sona.loop('bgm-tutorial');
 
-    this.puzzleIndex = options.level || 30;
+    this.puzzleIndex = options.level;
+    if (this.puzzleIndex === undefined) {
+        this.puzzleIndex = 30;
+    }
     this.puzzle = LEVELS[this.puzzleIndex];
     this.clues = this.puzzle.clues;
     this.secondsLeft = 1739; // ~ 29 * 60
@@ -221,7 +224,8 @@ GameScene.prototype.markOrFill = function (row, column) {
 
 GameScene.prototype.checkWinCondition = function () {
     var success = true,
-        self = this;
+        self = this,
+        completed;
 
     this.clues.forEach(function (clue, index) {
         if (clue === 0 || !success) {
@@ -234,8 +238,14 @@ GameScene.prototype.checkWinCondition = function () {
     });
 
     if (success) {
-        alert('You won!');
-        Arcadia.changeScene(LevelSelectScene);
+        completed = localStorage.getObject('completed') || Array(LEVELS.length);
+        completed[this.puzzleIndex] = true;
+        localStorage.setObject('completed', completed);
+
+        window.setTimeout(function () {
+            window.alert('You won!');
+            Arcadia.changeScene(LevelSelectScene);
+        }, 1000);
     }
 };
 

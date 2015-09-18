@@ -323,7 +323,7 @@ LevelSelectScene.prototype.onPointEnd = function (points) {
 
         thumbnail.lowlight();
 
-        if (thumbnail.collidesWith(cursor)) {
+        if (thumbnail.collidesWith(cursor) && thumbnail.alpha === 1) {
             sona.play('button');
 
             thumbnail.highlight();

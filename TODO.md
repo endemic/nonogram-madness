@@ -18,13 +18,14 @@
 - [x] Add "about" scene
 	* credits - puzzle by nikoli
 	* copyright
-- [ ] Dim clues that are already completed
+- [x] Dim clues that are already completed
 - [ ] Add icons next to the mark/fill button text
-- [ ] Center mark/fill icons
-- [ ] Only draw preview in level select if user has completed the puzzle
+- [x] Center mark/fill icons
+- [x] Only draw preview in level select if user has completed the puzzle
+- [x] Mark levels completed if you actually complete them
 - [ ] Add tutorial; baked into first few puzzles
 - [ ] "play" on title screen takes you right to next (first) puzzle
-- [ ] Don't allow clicking on hidden puzzle thumbnails (level select)
+- [x] Don't allow clicking on hidden puzzle thumbnails (level select)
 - [ ] Change preview to draw cached image, rather than a bunch of "pixel" objects
 - [x] Can't win random puzzles
 
@@ -37,7 +38,7 @@
 - [ ] Updating label text doesn't seem to use correct line height
 - [ ] Update Arcadia to draw borders either entirely outside or entirely inside shapes
 - [ ] Deactivating doesn't seem to be working correctly
-- [ ] descenders in custom fonts don't always get drawn
+- [x] descenders in custom fonts don't always get drawn
 - [ ] "shake" effect
 
 if(_fxShakeDuration > 0)
