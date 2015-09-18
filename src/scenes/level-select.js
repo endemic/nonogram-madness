@@ -12,7 +12,7 @@ var LevelSelectScene = function (options) {
         playButton,
         self = this;
 
-    this.selectedLevel = 0;
+    this.selectedLevel = parseInt(localStorage.getItem('selectedLevel'), 10) || 0;
     this.currentPage = parseInt(localStorage.getItem('currentPage'), 10) || 0;
     this.perPage = 9;
     this.totalPages = Math.ceil(LEVELS.length / this.perPage);
@@ -92,6 +92,10 @@ var LevelSelectScene = function (options) {
     });
 
     this.activeThumbnailPage = 0;
+
+    // Highlight the selected level thumbnail
+    this.previousThumbnail = this.thumbnails[this.activeThumbnailPage][this.selectedLevel - this.currentPage * this.perPage];
+    this.previousThumbnail.highlight();
 
     backButton = new Arcadia.Button({
         position: { x: -this.size.width / 2 + 140, y: -this.size.height / 2 + 60 },
@@ -185,6 +189,7 @@ LevelSelectScene.prototype = new Arcadia.Scene();
 
 LevelSelectScene.prototype.next = function () {
     var offset = -Arcadia.WIDTH,
+        thumbnail,
         self = this;
 
     if (this.currentPage < this.totalPages - 1) {
@@ -227,8 +232,14 @@ LevelSelectScene.prototype.next = function () {
             }, delay);
         });
 
+        thumbnail = this.thumbnails[this.activeThumbnailPage][0];
+        thumbnail.highlight();
+        this.previousThumbnail.lowlight();
+        this.previousThumbnail = thumbnail;
+        this.selectedLevel = this.currentPage * this.perPage;
         this.updatePageLabel();
         localStorage.setItem('currentPage', this.currentPage);
+        localStorage.setItem('selectedLevel', this.selectedLevel);
 
         window.setTimeout(function () {
             self.nextButton.disabled = false;
@@ -245,6 +256,7 @@ LevelSelectScene.prototype.next = function () {
 
 LevelSelectScene.prototype.previous = function () {
     var offset = Arcadia.WIDTH,
+        thumbnail,
         self = this;
 
     if (this.currentPage > 0) {
@@ -287,8 +299,14 @@ LevelSelectScene.prototype.previous = function () {
             }, delay);
         });
 
+        thumbnail = this.thumbnails[this.activeThumbnailPage][0];
+        thumbnail.highlight();
+        this.previousThumbnail.lowlight();
+        this.previousThumbnail = thumbnail;
+        this.selectedLevel = this.currentPage * this.perPage;
         this.updatePageLabel();
         localStorage.setItem('currentPage', this.currentPage);
+        localStorage.setItem('selectedLevel', this.selectedLevel);
 
         window.setTimeout(function () {
             self.previousButton.disabled = false;
@@ -305,9 +323,14 @@ LevelSelectScene.prototype.previous = function () {
 
 LevelSelectScene.prototype.updatePageLabel = function () {
     this.pageLabel.text = (this.currentPage + 1) + '/' + this.totalPages;
-    this.puzzleLabel.text = 'Puzzle #' + this.selectedLevel;
+    this.puzzleLabel.text = 'Puzzle #' + (this.selectedLevel + 1);  // 0-based index
     this.difficultyLabel.text = 'Difficulty: ' + LEVELS[this.selectedLevel].difficulty;
-    this.puzzleNameLabel.text = LEVELS[this.selectedLevel].title;
+
+    if (this.completed[this.selectedLevel]) {
+        this.puzzleNameLabel.text = LEVELS[this.selectedLevel].title;
+    } else {
+        this.puzzleNameLabel.text = '???';
+    }
 };
 
 LevelSelectScene.prototype.onPointEnd = function (points) {
@@ -315,21 +338,19 @@ LevelSelectScene.prototype.onPointEnd = function (points) {
         cursor = {
             size: { width: 1, height: 1 },
             position: points[0]
-        };
+        },
+        thumbnails = this.thumbnails[this.activeThumbnailPage];
 
     // Determine if tap/click touched a thumbnail
-    this.thumbnails[this.activeThumbnailPage].forEach(function (thumbnail, index) {
-        var selected = self.currentPage * self.perPage + index;
-
-        thumbnail.lowlight();
-
+    thumbnails.forEach(function (thumbnail, index) {
         if (thumbnail.collidesWith(cursor) && thumbnail.alpha === 1) {
             sona.play('button');
 
             thumbnail.highlight();
-
-            self.selectedLevel = selected;
-
+            self.previousThumbnail.lowlight();
+            self.previousThumbnail = thumbnail;
+            self.selectedLevel = self.currentPage * self.perPage + index;
+            localStorage.setItem('selectedLevel', self.selectedLevel);
             self.updatePageLabel();
         }
     });

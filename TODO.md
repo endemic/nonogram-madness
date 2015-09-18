@@ -16,18 +16,19 @@
 	* sfx on/off
 	* reset data
 - [x] Add "about" scene
-	* credits - puzzle by nikoli
+	* credits - puzzle by nikoli (no it's not)
 	* copyright
 - [x] Dim clues that are already completed
-- [ ] Add icons next to the mark/fill button text
+- [x] Don't allow clicking on hidden puzzle thumbnails (level select)
+- [x] Can't win random puzzles
 - [x] Center mark/fill icons
 - [x] Only draw preview in level select if user has completed the puzzle
 - [x] Mark levels completed if you actually complete them
+- [x] Auto-select first puzzle when moving to new page (level select)
+- [ ] Add icons next to the mark/fill button text
 - [ ] Add tutorial; baked into first few puzzles
 - [ ] "play" on title screen takes you right to next (first) puzzle
-- [x] Don't allow clicking on hidden puzzle thumbnails (level select)
 - [ ] Change preview to draw cached image, rather than a bunch of "pixel" objects
-- [x] Can't win random puzzles
 
 ## Cordova
 
