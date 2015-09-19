@@ -15,12 +15,47 @@ var Thumbnail = function (options) {
     this.color = 'white';
     this.shadow = '15px 15px 0 rgba(0, 0, 0, 0.5)';
 
-    this.pixels = new Arcadia.Pool();
-    this.pixels.factory = function () {
-        return new Arcadia.Shape({
-            color: 'black'
+    this.pixels = new Arcadia.Shape({
+        size: {
+            width: this.size.width,
+            height: this.size.height
+        }
+    });
+
+    this.pixels.path = function (context) {
+        var puzzleSize,
+            pixelSize,
+            originX,
+            originY,
+            self = this;
+
+        if (!this.clues) {
+            return;
+        }
+
+        puzzleSize = Math.sqrt(this.clues.length);
+        pixelSize = this.size.width / puzzleSize;
+
+        originX = -self.size.width / 2;
+        originY = -self.size.height / 2;
+
+        context.fillStyle = 'black';
+
+        this.clues.forEach(function (clue, index) {
+            var x = index % puzzleSize,
+                y = Math.floor(index / puzzleSize);
+
+            if (clue === 0) {
+                return;
+            }
+
+            context.fillRect(originX + (x * pixelSize),
+                             originY + (y * pixelSize),
+                             pixelSize,
+                             pixelSize);
         });
     };
+
     this.add(this.pixels);
 };
 
@@ -29,6 +64,8 @@ Thumbnail.prototype = new Arcadia.Shape();
 Thumbnail.SIZE = 150;
 
 Thumbnail.prototype.drawPreview = function (levelIndex, completed) {
+    var clues;
+
     if (LEVELS[levelIndex] === undefined) {
         this.alpha = 0;
         return;
@@ -38,45 +75,14 @@ Thumbnail.prototype.drawPreview = function (levelIndex, completed) {
         this.alpha = 1;
     }
 
-    this.pixels.deactivateAll();
-
-    var self,
-        clues,
-        puzzleSize,
-        pixelSize;
-
-    self = this;
-
     if (!completed[levelIndex]) {
         clues = INCOMPLETE.clues;
     } else {
         clues = LEVELS[levelIndex].clues;
     }
 
-    puzzleSize = Math.sqrt(clues.length);
-    pixelSize = this.size.width / puzzleSize;
-
-    clues.forEach(function (clue, index) {
-        var x = index % puzzleSize,
-            y = Math.floor(index / puzzleSize),
-            pixel;
-
-        if (clue === 0) {
-            return;
-        }
-
-        pixel = self.pixels.activate();
-
-        pixel.size = {
-            width: Math.round(pixelSize),
-            height: Math.round(pixelSize)
-        };
-
-        pixel.position = {
-            x: -self.size.width / 2 + x * pixelSize + pixelSize / 2,
-            y: -self.size.height / 2 + y * pixelSize + pixelSize / 2
-        };
-    });
+    this.pixels.clues = clues;
+    this.pixels.dirty = true;
 };
 
 Thumbnail.prototype.highlight = function () {

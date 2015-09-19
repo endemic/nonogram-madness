@@ -28,7 +28,9 @@
 - [ ] Add icons next to the mark/fill button text
 - [ ] Add tutorial; baked into first few puzzles
 - [ ] "play" on title screen takes you right to next (first) puzzle
-- [ ] Change preview to draw cached image, rather than a bunch of "pixel" objects
+- [x] Change preview to draw cached image, rather than a bunch of "pixel" objects
+- [ ] Preview doesn't take puzzle size into account; assumes 10x10
+- [ ] Add "-N minutes" label message
 
 ## Cordova
 
