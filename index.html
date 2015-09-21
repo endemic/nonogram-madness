@@ -41,6 +41,7 @@
 	<script src="node_modules/sona/dist/sona.js"></script>
 
 	<!-- polyfills, etc. -->
+	<script src="src/lib/arcadia-extensions.js"></script>
 	<script src="src/lib/storage-extensions.js"></script>
 	<script src="src/lib/polyfills.js"></script>
 
@@ -79,7 +80,7 @@
 				new Arcadia.Game({
 					width: 750,
 					height: 1334,
-					scene: LevelSelectScene,
+					scene: GameScene,
 					scaleToFit: true
 				});
 			});
