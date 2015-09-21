@@ -39,8 +39,20 @@ var TitleScene = function () {
             position: { x: 0, y: -10 }
         }),
         action: function () {
+            var completed,
+                incompleteLevel;
+
             sona.play('button');
-            Arcadia.changeScene(LevelSelectScene);
+            completed = localStorage.getObject('completed') || Array(LEVELS.length);
+            incompleteLevel = completed.indexOf(null);
+
+            if (incompleteLevel === -1) {
+                Arcadia.changeScene(LevelSelectScene);
+            } else if (Arcadia.isLocked() && incompleteLevel >= 15) {
+                Arcadia.changeScene(UnlockScene);
+            } else {
+                Arcadia.changeScene(GameScene, { level: incompleteLevel });
+            }
         }
     });
     this.add(playButton);
