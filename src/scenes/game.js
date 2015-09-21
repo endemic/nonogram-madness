@@ -1,10 +1,14 @@
 /*jslint sloppy: true */
-/*globals Arcadia, TitleScene, Grid, LEVELS, window, console, localStorage, sona */
+/*globals Arcadia, TitleScene, Grid, LEVELS, window, console, localStorage,
+LevelSelectScene, Block, Preview, sona */
 
 var GameScene = function (options) {
     Arcadia.Scene.apply(this, arguments);
 
-    var self = this;
+    var timerBackground,
+        timeLeftLabel,
+        previewBackground,
+        previewLabel;
 
     sona.loop('bgm-tutorial');
 
@@ -22,7 +26,7 @@ var GameScene = function (options) {
 
     this.action = GameScene.MARK;
     this.puzzleSize = Math.sqrt(this.clues.length);
-    this.state = Array(this.clues.length);
+    this.state = new Array(this.clues.length);
 
     this.puzzleGrid = new Grid({
         size: Math.sqrt(this.clues.length),
@@ -57,7 +61,7 @@ var GameScene = function (options) {
     }
     this.markedBlocks.deactivateAll();
 
-    var timerBackground = new Arcadia.Shape({
+    timerBackground = new Arcadia.Shape({
         size: { width: 340, height: 270 },
         position: { x: -185, y: -390 },
         border: '10px black',
@@ -65,7 +69,7 @@ var GameScene = function (options) {
     });
     this.add(timerBackground);
 
-    var timeLeftLabel = new Arcadia.Label({
+    timeLeftLabel = new Arcadia.Label({
         position: { x: 0, y: 90 },
         text: 'time left',
         color: 'black',
@@ -81,7 +85,7 @@ var GameScene = function (options) {
     });
     timerBackground.add(this.timerLabel);
 
-    var previewBackground = new Arcadia.Shape({
+    previewBackground = new Arcadia.Shape({
         size: { width: 340, height: 270 },
         position: { x: 185, y: -390 },
         border: '10px black',
@@ -89,7 +93,7 @@ var GameScene = function (options) {
     });
     this.add(previewBackground);
 
-    var previewLabel = new Arcadia.Label({
+    previewLabel = new Arcadia.Label({
         position: { x: 0, y: -110 },
         text: 'preview',
         color: 'black',
@@ -98,7 +102,8 @@ var GameScene = function (options) {
     previewBackground.add(previewLabel);
 
     this.preview = new Preview({
-        position: { x: 0, y: 20 }
+        position: { x: 0, y: 20 },
+        puzzleSize: this.puzzleSize
     });
     previewBackground.add(this.preview);
 
@@ -161,8 +166,9 @@ GameScene.prototype.onPointMove = function (points) {
     this.previousColumn = column;
 };
 
-GameScene.prototype.onPointEnd = function (points) {
+GameScene.prototype.onPointEnd = function () {
     this.puzzleGrid.highlight(null, null);
+    this.actionLock = 'none';
 };
 
 GameScene.prototype.markOrFill = function (row, column) {
@@ -200,8 +206,9 @@ GameScene.prototype.markOrFill = function (row, column) {
             sona.play('error');
         }
     } else if (this.action === GameScene.MARK) {
-        if (!existingBlock) {
+        if (!existingBlock && this.actionLock !== 'remove') {
             // Mark
+            this.actionLock = 'mark';
             block = this.markedBlocks.activate();
             block.position.x = column * this.puzzleGrid.cellSize + this.puzzleGrid.bounds.left + block.size.width / 2 + offsetToCenter;
             block.position.y = row * this.puzzleGrid.cellSize + this.puzzleGrid.bounds.top + block.size.height / 2 + offsetToCenter;
@@ -209,8 +216,9 @@ GameScene.prototype.markOrFill = function (row, column) {
             block.tween('scale', 1, 200);
             this.state[index] = block;
             sona.play('mark');
-        } else if (existingBlock && existingBlock.type === GameScene.MARK) {
+        } else if (existingBlock && existingBlock.type === GameScene.MARK && this.actionLock !== 'mark') {
             // Remove previous mark
+            this.actionLock = 'remove';
             this.markedBlocks.deactivate(existingBlock);
             this.state[index] = null;
             sona.play('mark');
@@ -238,7 +246,7 @@ GameScene.prototype.checkWinCondition = function () {
     });
 
     if (success) {
-        completed = localStorage.getObject('completed') || Array(LEVELS.length);
+        completed = localStorage.getObject('completed') || new Array(LEVELS.length);
         completed[this.puzzleIndex] = true;
         localStorage.setObject('completed', completed);
 
@@ -318,7 +326,9 @@ GameScene.prototype.generateRandomPuzzle = function (difficulty) {
 };
 
 GameScene.prototype.setupButtons = function () {
-    var self = this;
+    var self = this,
+        markIcon,
+        fillIcon;
 
     this.markButton = new Arcadia.Button({
         position: { x: -185, y: 600 },
@@ -330,7 +340,7 @@ GameScene.prototype.setupButtons = function () {
             text: 'mark',
             font: '64px uni_05_53',
             color: 'orange',
-            position: { x: 0, y: -10 }
+            position: { x: 40, y: -10 }
         }),
         action: function () {
             sona.play('button');
@@ -339,6 +349,13 @@ GameScene.prototype.setupButtons = function () {
             this.label.color = 'orange';
         }
     });
+    markIcon = new Arcadia.Shape({
+        size: { width: 50, height: 50 },
+        position: { x: -90, y: 0 },
+        border: '2px black'
+    });
+    markIcon.add(new Block({ type: 'mark' }));
+    this.markButton.add(markIcon);
     this.add(this.markButton);
 
     this.fillButton = new Arcadia.Button({
@@ -350,16 +367,21 @@ GameScene.prototype.setupButtons = function () {
         label: new Arcadia.Label({
             text: 'fill',
             font: '64px uni_05_53',
-            position: { x: 0, y: -10 }
+            position: { x: 30, y: -10 }
         }),
         action: function () {
             sona.play('button');
             self.action = GameScene.FILL;
             self.markButton.label.color = 'white';
             this.label.color = 'orange';
-            // console.debug('Setting action to `fill`');
         }
     });
+    fillIcon = new Arcadia.Shape({
+        size: { width: 52, height: 52 },
+        position: { x: -60, y: 0 }
+    });
+    fillIcon.add(new Block({ type: 'fill' }));
+    this.fillButton.add(fillIcon);
     this.add(this.fillButton);
 
     // "Clear" button
@@ -375,11 +397,13 @@ GameScene.prototype.setupButtons = function () {
             position: { x: 0, y: -10 }
         }),
         action: function () {
+            var i;
+
             sona.play('button');
             // Reset state
             self.filledBlocks.deactivateAll();
             self.markedBlocks.deactivateAll();
-            for (var i = 0; i < self.state.length; i += 1) {
+            for (i = 0; i < self.state.length; i += 1) {
                 self.state[i] = null;
             }
         }
@@ -399,7 +423,7 @@ GameScene.prototype.setupButtons = function () {
         }),
         action: function () {
             sona.play('button');
-            if (confirm('Are you sure you want to quit?')) {
+            if (window.confirm('Are you sure you want to quit?')) {
                 Arcadia.changeScene(LevelSelectScene);
             }
         }
