@@ -34,10 +34,10 @@ var Thumbnail = function (options) {
         }
 
         puzzleSize = Math.sqrt(this.clues.length);
-        pixelSize = this.size.width / puzzleSize;
+        pixelSize = this.size.width / puzzleSize * Arcadia.PIXEL_RATIO;
 
-        originX = -self.size.width / 2;
-        originY = -self.size.height / 2;
+        originX = -self.size.width / 2 * Arcadia.PIXEL_RATIO;
+        originY = -self.size.height / 2 * Arcadia.PIXEL_RATIO;
 
         context.fillStyle = 'black';
 
