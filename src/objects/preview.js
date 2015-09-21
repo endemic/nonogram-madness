@@ -5,7 +5,7 @@ var Preview = function (options) {
     Arcadia.Shape.apply(this, arguments);
 
     options = options || {};
-    this.gridSize = options.gridSize || 10;
+    this.puzzleSize = options.puzzleSize || 10;
     this.size = options.size || {
         width: Preview.SIZE,
         height: Preview.SIZE
@@ -33,8 +33,8 @@ Preview.prototype.plot = function (x, y) {
         previewSize,
         pixelSize;
 
-    previewSize = Math.floor(this.size.width / this.gridSize) * this.gridSize;
-    pixelSize = Math.floor(previewSize / this.gridSize);
+    previewSize = Math.floor(this.size.width / this.puzzleSize) * this.puzzleSize;
+    pixelSize = Math.floor(previewSize / this.puzzleSize);
 
     pixel = this.pixels.activate();
     pixel.size = { width: pixelSize, height: pixelSize };
