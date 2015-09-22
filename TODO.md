@@ -30,12 +30,12 @@
 - [x] Add icons next to the mark/fill button text
 - [x] "play" on title screen takes you right to next (first) puzzle
 - [x] "lock" the mark action, where it doesn't try to toggle blocks
-- [ ] Add tutorial; baked into first few puzzles
-- [ ] when automatically going to game, ensure that returning to level select
+- [x] when automatically going to game, ensure that returning to level select
 	  puts you on the right page/selected puzzle
-- [ ] Add "-N minutes" label message when wrong guess
-- [ ] Add zero-padding to minutes/seconds timer label
+- [x] Add zero-padding to minutes/seconds timer label
 - [ ] Add a "success!" end puzzle modal
+- [ ] Add "-N minutes" label message when wrong guess
+- [ ] Add tutorial; baked into first few puzzles
 
 ## Cordova
 

@@ -2,13 +2,8 @@
 /*globals Arcadia, TitleScene, Grid, LEVELS, window, console, localStorage,
 LevelSelectScene, Block, Preview, sona */
 
-var GameScene = function (options) {
+var GameScene = function constructor(options) {
     Arcadia.Scene.apply(this, arguments);
-
-    var timerBackground,
-        timeLeftLabel,
-        previewBackground,
-        previewLabel;
 
     sona.loop('bgm-tutorial');
 
@@ -19,6 +14,10 @@ var GameScene = function (options) {
     this.puzzle = LEVELS[this.puzzleIndex];
     this.clues = this.puzzle.clues;
     this.secondsLeft = 1739; // ~ 29 * 60
+
+    // TODO: base `showTutorial` off the level we've written hints for
+    this.showTutorial = options.showTutorial || false;
+    this.tutorialStep = 0;
 
     if (this.puzzle.difficulty === 'random') {
         this.clues = this.generateRandomPuzzle(this.puzzle.title);
@@ -61,53 +60,18 @@ var GameScene = function (options) {
     }
     this.markedBlocks.deactivateAll();
 
-    timerBackground = new Arcadia.Shape({
-        size: { width: 340, height: 270 },
-        position: { x: -185, y: -390 },
-        border: '10px black',
-        shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)'
-    });
-    this.add(timerBackground);
+    this.drawUi();
 
-    timeLeftLabel = new Arcadia.Label({
-        position: { x: 0, y: 90 },
-        text: 'time left',
-        color: 'black',
-        font: '48px uni_05_53'
-    });
-    timerBackground.add(timeLeftLabel);
-
-    this.timerLabel = new Arcadia.Label({
-        position: { x: 0, y: -45 },
-        text: '30:00',
-        color: 'black',
-        font: '88px uni_05_53'
-    });
-    timerBackground.add(this.timerLabel);
-
-    previewBackground = new Arcadia.Shape({
-        size: { width: 340, height: 270 },
-        position: { x: 185, y: -390 },
-        border: '10px black',
-        shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)'
-    });
-    this.add(previewBackground);
-
-    previewLabel = new Arcadia.Label({
-        position: { x: 0, y: -110 },
-        text: 'preview',
-        color: 'black',
-        font: '48px uni_05_53'
-    });
-    previewBackground.add(previewLabel);
-
-    this.preview = new Preview({
-        position: { x: 0, y: 20 },
-        puzzleSize: this.puzzleSize
-    });
-    previewBackground.add(this.preview);
-
-    this.setupButtons();
+    if (this.tutorial) {
+        this.activate(this.tutorialLabelBackground);
+        this.displayTutorial();
+        this.hint = new Arcadia.Shape({
+           color: 'orange',
+           alpha: 0,
+           size: { width: Grid.CELL_SIZE, height: Grid.CELL_SIZE }
+       });
+       this.add(this.hint);
+    }
 };
 
 GameScene.prototype = new Arcadia.Scene();
@@ -115,21 +79,101 @@ GameScene.prototype = new Arcadia.Scene();
 GameScene.FILL = 'fill';
 GameScene.MARK = 'mark';
 
-GameScene.prototype.update = function (delta) {
+GameScene.prototype.update = function update(delta) {
     var minutes,
-        seconds;
+        seconds,
+        indices;
 
     Arcadia.Scene.prototype.update.call(this, delta);
 
     this.secondsLeft -= delta;
 
-    minutes = Math.round(this.secondsLeft / 60);
-    seconds = Math.round(this.secondsLeft % 60);
+    minutes = this.zeroPad(Math.round(this.secondsLeft / 60), 2);
+    seconds = this.zeroPad(Math.round(this.secondsLeft % 60), 2);
     // TODO break this out into two labels, to prevent text jumping
     this.timerLabel.text = minutes + ':' + seconds;
+
+    if (this.showTutorial) {
+        // check for player filling certain blocks
+        switch (this.tutorialStep) {
+        case 0:
+            indices = [1, 2, 3, 4, 5];
+            break;
+        case 1:
+            indices = [1, 2, 3, 4, 5];
+            break;
+        case 2:
+            indices = [1, 2, 3, 4, 5];
+            break;
+        case 4:
+            indices = [1, 2, 3, 4, 5];
+            break;
+        }
+
+        success = indices.every(function (index) {
+            return self.state[index] && self.state[index].type === GameScene.FILL;
+        });
+
+        if (success) {
+            this.tutorialStep += 1;
+            this.displayTutorial();
+        }
+    }
 };
 
-GameScene.prototype.onPointStart = function (points) {
+GameScene.prototype.zeroPad = function zeroPad(string, length) {
+    string = String(string);
+    length = parseInt(length, 10);
+
+    while (string.length < length) {
+        string = '0' + string;
+    }
+
+    return string;
+};
+
+GameScene.prototype.displayTutorial = function () {
+    var text,
+        action;
+
+    action = Arcadia.ENV.mobile ? 'Tap' : 'Click';
+
+    text = [
+        'intentionally left blank',
+        action + ' and drag to\ndraw a rectangle on\ntop of each number.',
+        'Each number\nequals the area\nof its rectangle.',
+        'Rectangles cover\nonly one number.',
+        'Rectangles\ncan\'t overlap!'
+    ];
+
+    this.hint.alpha = 0.5;
+
+    this.tutorialLabel.text = text[this.tutorialStep];
+
+    switch (this.tutorialStep) {
+        case 1:
+            this.hint.position = { x: 36.5, y: 33.5 };
+            this.hint.size = { width: 109.5, height: 109.5 };
+        break;
+        case 2:
+            this.hint.position = { x: 36.5, y: 124.75 };
+            this.hint.size = { width: 109.5, height: 73 };
+        break;
+        case 3:
+            this.hint.position = { x: -54.75, y: 124.75 };
+            this.hint.size = { width: 73, height: 73 };
+        break;
+        case 4:
+            this.hint.position = { x: -54.75, y: 33.5 };
+            this.hint.size = { width: 73, height: 109.5 };
+        break;
+        default:
+            this.hint.alpha = 0;
+        break;
+    }
+};
+
+GameScene.prototype.onPointStart = function onPointStart(points) {
     var values, row, column;
 
     // Determine if within grid bounds
@@ -146,7 +190,7 @@ GameScene.prototype.onPointStart = function (points) {
     this.previousColumn = column;
 };
 
-GameScene.prototype.onPointMove = function (points) {
+GameScene.prototype.onPointMove = function onPointMove(points) {
     var values, row, column;
 
     values = this.puzzleGrid.getRowAndColumn(points[0]);
@@ -171,7 +215,7 @@ GameScene.prototype.onPointEnd = function () {
     this.actionLock = 'none';
 };
 
-GameScene.prototype.markOrFill = function (row, column) {
+GameScene.prototype.markOrFill = function markOrFill(row, column) {
     var index,
         valid,
         block,
@@ -230,7 +274,7 @@ GameScene.prototype.markOrFill = function (row, column) {
 
 };
 
-GameScene.prototype.checkWinCondition = function () {
+GameScene.prototype.checkWinCondition = function checkWinCondition() {
     var success = true,
         self = this,
         completed;
@@ -258,7 +302,7 @@ GameScene.prototype.checkWinCondition = function () {
 };
 
 
-GameScene.prototype.checkCompleteness = function (row, column) {
+GameScene.prototype.checkCompleteness = function checkCompleteness(row, column) {
     var i,
         rowIndex,
         columnIndex,
@@ -297,7 +341,7 @@ GameScene.prototype.checkCompleteness = function (row, column) {
     }
 };
 
-GameScene.prototype.generateRandomPuzzle = function (difficulty) {
+GameScene.prototype.generateRandomPuzzle = function generateRandomPuzzle(difficulty) {
     var clues,
         value,
         percentage;
@@ -325,10 +369,60 @@ GameScene.prototype.generateRandomPuzzle = function (difficulty) {
     return clues;
 };
 
-GameScene.prototype.setupButtons = function () {
+GameScene.prototype.drawUi = function drawUi() {
     var self = this,
+        timerBackground,
+        timeLeftLabel,
+        previewBackground,
+        previewLabel,
         markIcon,
         fillIcon;
+
+    timerBackground = new Arcadia.Shape({
+        size: { width: 340, height: 270 },
+        position: { x: -185, y: -390 },
+        border: '10px black',
+        shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)'
+    });
+    this.add(timerBackground);
+
+    timeLeftLabel = new Arcadia.Label({
+        position: { x: 0, y: 90 },
+        text: 'time left',
+        color: 'black',
+        font: '48px uni_05_53'
+    });
+    timerBackground.add(timeLeftLabel);
+
+    this.timerLabel = new Arcadia.Label({
+        position: { x: 0, y: -45 },
+        text: '30:00',
+        color: 'black',
+        font: '88px uni_05_53'
+    });
+    timerBackground.add(this.timerLabel);
+
+    previewBackground = new Arcadia.Shape({
+        size: { width: 340, height: 270 },
+        position: { x: 185, y: -390 },
+        border: '10px black',
+        shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)'
+    });
+    this.add(previewBackground);
+
+    previewLabel = new Arcadia.Label({
+        position: { x: 0, y: -110 },
+        text: 'preview',
+        color: 'black',
+        font: '48px uni_05_53'
+    });
+    previewBackground.add(previewLabel);
+
+    this.preview = new Preview({
+        position: { x: 0, y: 20 },
+        puzzleSize: this.puzzleSize
+    });
+    previewBackground.add(this.preview);
 
     this.markButton = new Arcadia.Button({
         position: { x: -185, y: 600 },

@@ -12,9 +12,9 @@ var LevelSelectScene = function (options) {
         playButton,
         self = this;
 
-    this.selectedLevel = parseInt(localStorage.getItem('selectedLevel'), 10) || 0;
-    this.currentPage = parseInt(localStorage.getItem('currentPage'), 10) || 0;
+    this.selectedLevel = parseInt(localStorage.getItem('selectedLevel'), 10) || options.level || 0;
     this.perPage = 9;
+    this.currentPage = Math.floor(this.selectedLevel / this.perPage);
     this.totalPages = Math.ceil(LEVELS.length / this.perPage);
     this.completed = localStorage.getObject('completed') || Array(LEVELS.length);
 
@@ -238,7 +238,6 @@ LevelSelectScene.prototype.next = function () {
         this.previousThumbnail = thumbnail;
         this.selectedLevel = this.currentPage * this.perPage;
         this.updatePageLabel();
-        localStorage.setItem('currentPage', this.currentPage);
         localStorage.setItem('selectedLevel', this.selectedLevel);
 
         window.setTimeout(function () {
@@ -305,7 +304,6 @@ LevelSelectScene.prototype.previous = function () {
         this.previousThumbnail = thumbnail;
         this.selectedLevel = this.currentPage * this.perPage;
         this.updatePageLabel();
-        localStorage.setItem('currentPage', this.currentPage);
         localStorage.setItem('selectedLevel', this.selectedLevel);
 
         window.setTimeout(function () {
