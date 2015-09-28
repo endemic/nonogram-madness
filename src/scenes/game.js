@@ -2,7 +2,7 @@
 /*globals Arcadia, TitleScene, Grid, LEVELS, window, console, localStorage,
 LevelSelectScene, Block, Preview, sona */
 
-var GameScene = function constructor(options) {
+var GameScene = function GameScene(options) {
     Arcadia.Scene.apply(this, arguments);
 
     sona.loop('bgm-tutorial');
@@ -33,7 +33,8 @@ var GameScene = function constructor(options) {
         position: {
             x: 0,
             y: this.size.height / 2 - Grid.MAX_SIZE / 2 - 140
-        }
+        },
+        zIndex: 5
     });
     this.add(this.puzzleGrid);
 
@@ -60,17 +61,29 @@ var GameScene = function constructor(options) {
     }
     this.markedBlocks.deactivateAll();
 
+    this.errorMessages = new Arcadia.Pool();
+    this.errorMessages.factory = function () {
+        return new Arcadia.Label({
+            color: 'black',
+            font: '48px uni_05_53',
+            reset: function () {
+                this.alpha = 1;
+            }
+        });
+    };
+    this.add(this.errorMessages);
+
     this.drawUi();
 
     if (this.tutorial) {
         this.activate(this.tutorialLabelBackground);
         this.displayTutorial();
         this.hint = new Arcadia.Shape({
-           color: 'orange',
-           alpha: 0,
-           size: { width: Grid.CELL_SIZE, height: Grid.CELL_SIZE }
-       });
-       this.add(this.hint);
+            color: 'orange',
+            alpha: 0,
+            size: { width: Grid.CELL_SIZE, height: Grid.CELL_SIZE }
+        });
+        this.add(this.hint);
     }
 };
 
@@ -82,7 +95,9 @@ GameScene.MARK = 'mark';
 GameScene.prototype.update = function update(delta) {
     var minutes,
         seconds,
-        indices;
+        indices,
+        success,
+        self = this;
 
     Arcadia.Scene.prototype.update.call(this, delta);
 
@@ -97,7 +112,7 @@ GameScene.prototype.update = function update(delta) {
         // check for player filling certain blocks
         switch (this.tutorialStep) {
         case 0:
-            indices = [1, 2, 3, 4, 5];
+            indices = [0, 5, 10, 15, 20];
             break;
         case 1:
             indices = [1, 2, 3, 4, 5];
@@ -151,24 +166,24 @@ GameScene.prototype.displayTutorial = function () {
     this.tutorialLabel.text = text[this.tutorialStep];
 
     switch (this.tutorialStep) {
-        case 1:
-            this.hint.position = { x: 36.5, y: 33.5 };
-            this.hint.size = { width: 109.5, height: 109.5 };
+    case 1:
+        this.hint.position = { x: 36.5, y: 33.5 };
+        this.hint.size = { width: 109.5, height: 109.5 };
         break;
-        case 2:
-            this.hint.position = { x: 36.5, y: 124.75 };
-            this.hint.size = { width: 109.5, height: 73 };
+    case 2:
+        this.hint.position = { x: 36.5, y: 124.75 };
+        this.hint.size = { width: 109.5, height: 73 };
         break;
-        case 3:
-            this.hint.position = { x: -54.75, y: 124.75 };
-            this.hint.size = { width: 73, height: 73 };
+    case 3:
+        this.hint.position = { x: -54.75, y: 124.75 };
+        this.hint.size = { width: 73, height: 73 };
         break;
-        case 4:
-            this.hint.position = { x: -54.75, y: 33.5 };
-            this.hint.size = { width: 73, height: 109.5 };
+    case 4:
+        this.hint.position = { x: -54.75, y: 33.5 };
+        this.hint.size = { width: 73, height: 109.5 };
         break;
-        default:
-            this.hint.alpha = 0;
+    default:
+        this.hint.alpha = 0;
         break;
     }
 };
@@ -220,7 +235,9 @@ GameScene.prototype.markOrFill = function markOrFill(row, column) {
         valid,
         block,
         existingBlock,
-        offsetToCenter;
+        offsetToCenter,
+        message,
+        self = this;
 
     index = row * this.puzzleSize + column;
     valid = this.clues[index] === 1;
@@ -247,6 +264,11 @@ GameScene.prototype.markOrFill = function markOrFill(row, column) {
         } else {
             // Invalid move
             this.secondsLeft -= 60;
+            message = this.errorMessages.activate();
+            message.text = '-1 minute';
+            message.position.x = column * this.puzzleGrid.cellSize + this.puzzleGrid.bounds.left;
+            message.position.y = row * this.puzzleGrid.cellSize + this.puzzleGrid.bounds.top;
+            message.tween('alpha', 0, 1200, 'linearNone', function () { self.errorMessages.deactivate(message); });
             sona.play('error');
         }
     } else if (this.action === GameScene.MARK) {
@@ -387,10 +409,10 @@ GameScene.prototype.drawUi = function drawUi() {
     this.add(timerBackground);
 
     timeLeftLabel = new Arcadia.Label({
-        position: { x: 0, y: 90 },
+        position: { x: 0, y: 50 },
         text: 'time left',
         color: 'black',
-        font: '48px uni_05_53'
+        font: '64px uni_05_53'
     });
     timerBackground.add(timeLeftLabel);
 

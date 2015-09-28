@@ -2,7 +2,7 @@
 
 ==================
 
-- [x] Finish UI placement in game scene 
+- [x] Finish UI placement in game scene
 - [x] Draw clue labels
 - [x] Draw preview of current progress in game scene
 - [x] Add highlighting to currently selected row/col
@@ -36,6 +36,7 @@
 - [ ] Add a "success!" end puzzle modal
 - [ ] Add "-N minutes" label message when wrong guess
 - [ ] Add tutorial; baked into first few puzzles
+- [x] Dim prev/next buttons on level select if scene instantiates on first/last page
 
 ## Cordova
 

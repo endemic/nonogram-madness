@@ -179,6 +179,16 @@ var LevelSelectScene = function (options) {
     this.add(this.previousButton);
     this.add(this.nextButton);
 
+    if (this.currentPage === this.totalPages - 1) {
+        this.nextButton.disabled = true;
+        this.nextButton.alpha = 0.5;
+    }
+
+    if (this.currentPage === 0) {
+        this.previousButton.disabled = true;
+        this.previousButton.alpha = 0.5;
+    }
+
     if (options.selectedLevel !== undefined) {
         this.selectedLevel = options.selectedLevel;
         this.thumbnails[this.selectedLevel - this.perPage * this.currentPage].highlight();
