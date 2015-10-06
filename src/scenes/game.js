@@ -5,18 +5,20 @@ LevelSelectScene, Block, Preview, sona */
 var GameScene = function GameScene(options) {
     Arcadia.Scene.apply(this, arguments);
 
-    sona.loop('bgm-tutorial');
+    this.startMusic();
 
     this.puzzleIndex = options.level;
+    // TODO: remove
     if (this.puzzleIndex === undefined) {
-        this.puzzleIndex = 30;
+        this.puzzleIndex = 0;
     }
     this.puzzle = LEVELS[this.puzzleIndex];
     this.clues = this.puzzle.clues;
     this.secondsLeft = 1739; // ~ 29 * 60
 
-    // TODO: base `showTutorial` off the level we've written hints for
-    this.showTutorial = options.showTutorial || false;
+    // TODO: eventually enable this? motivation is low
+    //this.showTutorial = TUTORIALS[this.puzzleIndex] !== undefined;
+    this.showTutorial = false;
     this.tutorialStep = 0;
 
     if (this.puzzle.difficulty === 'random') {
@@ -37,6 +39,18 @@ var GameScene = function GameScene(options) {
         zIndex: 5
     });
     this.add(this.puzzleGrid);
+
+    this.errorMessages = new Arcadia.Pool();
+    this.errorMessages.factory = function () {
+        return new Arcadia.Label({
+            color: 'black',
+            font: '48px uni_05_53',
+            reset: function () {
+                this.alpha = 1;
+            }
+        });
+    };
+    this.add(this.errorMessages);
 
     this.filledBlocks = new Arcadia.Pool();
     this.filledBlocks.factory = function () {
@@ -61,29 +75,34 @@ var GameScene = function GameScene(options) {
     }
     this.markedBlocks.deactivateAll();
 
-    this.errorMessages = new Arcadia.Pool();
-    this.errorMessages.factory = function () {
-        return new Arcadia.Label({
-            color: 'black',
-            font: '48px uni_05_53',
-            reset: function () {
-                this.alpha = 1;
-            }
-        });
-    };
-    this.add(this.errorMessages);
-
     this.drawUi();
 
-    if (this.tutorial) {
-        this.activate(this.tutorialLabelBackground);
-        this.displayTutorial();
+    if (this.showTutorial) {
+        this.tutorialLabelBackground = new Arcadia.Shape({
+            border: '10px black',
+            shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)',
+            size: { width: Grid.MAX_SIZE / 1.2, height: 110 },
+            position: { x: 0, y: -170 }
+        });
+        this.add(this.tutorialLabelBackground);
+
+        this.tutorialLabel = new Arcadia.Label({
+            color: 'black',
+            text: 'this text replaced by data in TUTORIALS var',
+            font: '36px uni_05_53'
+        });
+        this.tutorialLabelBackground.add(this.tutorialLabel);
+
         this.hint = new Arcadia.Shape({
             color: 'orange',
-            alpha: 0,
-            size: { width: Grid.CELL_SIZE, height: Grid.CELL_SIZE }
+            alpha: 1,
+            size: { width: Grid.CELL_SIZE, height: Grid.CELL_SIZE },
+            position: { x: 0, y: 0 },
+            zIndex: 4
         });
         this.add(this.hint);
+
+        this.displayTutorial();
     }
 };
 
@@ -105,25 +124,13 @@ GameScene.prototype.update = function update(delta) {
 
     minutes = this.zeroPad(Math.round(this.secondsLeft / 60), 2);
     seconds = this.zeroPad(Math.round(this.secondsLeft % 60), 2);
+
     // TODO break this out into two labels, to prevent text jumping
     this.timerLabel.text = minutes + ':' + seconds;
 
     if (this.showTutorial) {
         // check for player filling certain blocks
-        switch (this.tutorialStep) {
-        case 0:
-            indices = [0, 5, 10, 15, 20];
-            break;
-        case 1:
-            indices = [1, 2, 3, 4, 5];
-            break;
-        case 2:
-            indices = [1, 2, 3, 4, 5];
-            break;
-        case 4:
-            indices = [1, 2, 3, 4, 5];
-            break;
-        }
+        indices = TUTORIALS[this.puzzleIndex]['indices'][this.tutorialStep] || [];
 
         success = indices.every(function (index) {
             return self.state[index] && self.state[index].type === GameScene.FILL;
@@ -148,44 +155,11 @@ GameScene.prototype.zeroPad = function zeroPad(string, length) {
 };
 
 GameScene.prototype.displayTutorial = function () {
-    var text,
-        action;
-
-    action = Arcadia.ENV.mobile ? 'Tap' : 'Click';
-
-    text = [
-        'intentionally left blank',
-        action + ' and drag to\ndraw a rectangle on\ntop of each number.',
-        'Each number\nequals the area\nof its rectangle.',
-        'Rectangles cover\nonly one number.',
-        'Rectangles\ncan\'t overlap!'
-    ];
+    this.tutorialLabel.text = TUTORIALS[this.puzzleIndex]['text'][this.tutorialStep] || [];
 
     this.hint.alpha = 0.5;
-
-    this.tutorialLabel.text = text[this.tutorialStep];
-
-    switch (this.tutorialStep) {
-    case 1:
-        this.hint.position = { x: 36.5, y: 33.5 };
-        this.hint.size = { width: 109.5, height: 109.5 };
-        break;
-    case 2:
-        this.hint.position = { x: 36.5, y: 124.75 };
-        this.hint.size = { width: 109.5, height: 73 };
-        break;
-    case 3:
-        this.hint.position = { x: -54.75, y: 124.75 };
-        this.hint.size = { width: 73, height: 73 };
-        break;
-    case 4:
-        this.hint.position = { x: -54.75, y: 33.5 };
-        this.hint.size = { width: 73, height: 109.5 };
-        break;
-    default:
-        this.hint.alpha = 0;
-        break;
-    }
+    this.hint.position = TUTORIALS[this.puzzleIndex]['hints'][this.tutorialStep]['position'];
+    this.hint.size = TUTORIALS[this.puzzleIndex]['hints'][this.tutorialStep]['size'];
 };
 
 GameScene.prototype.onPointStart = function onPointStart(points) {
@@ -268,7 +242,14 @@ GameScene.prototype.markOrFill = function markOrFill(row, column) {
             message.text = '-1 minute';
             message.position.x = column * this.puzzleGrid.cellSize + this.puzzleGrid.bounds.left;
             message.position.y = row * this.puzzleGrid.cellSize + this.puzzleGrid.bounds.top;
-            message.tween('alpha', 0, 1200, 'linearNone', function () { self.errorMessages.deactivate(message); });
+            message.tween('position', {
+                x: message.position.x,
+                y: message.position.y - 50
+            }, 700, 'expoOut', function () {
+                message.tween('alpha', 0, 300, 'linearNone', function () {
+                    self.errorMessages.deactivate(message);
+                });
+            });
             sona.play('error');
         }
     } else if (this.action === GameScene.MARK) {
@@ -389,6 +370,27 @@ GameScene.prototype.generateRandomPuzzle = function generateRandomPuzzle(difficu
     }
 
     return clues;
+};
+
+GameScene.prototype.startMusic = function startMusic() {
+    if (localStorage.getBoolean('playMusic') === false) {
+        return;
+    }
+
+    if (Math.random() < 0.5) {
+        this.bgm = 'bgm-one';
+    } else {
+        this.bgm = 'bgm-two';
+    }
+
+    sona.loop(this.bgm);
+};
+
+GameScene.prototype.stopMusic = function stopMusic() {
+    if (localStorage.getBoolean('playMusic') === false) {
+        return;
+    }
+    sona.stop(this.bgm);
 };
 
 GameScene.prototype.drawUi = function drawUi() {
@@ -540,6 +542,7 @@ GameScene.prototype.drawUi = function drawUi() {
         action: function () {
             sona.play('button');
             if (window.confirm('Are you sure you want to quit?')) {
+                self.stopMusic();
                 Arcadia.changeScene(LevelSelectScene);
             }
         }

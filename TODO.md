@@ -2,6 +2,12 @@
 
 ==================
 
+- [ ] Add a "success!" end puzzle modal
+	- [ ] Buttons to go directly to the next puzzle, or back to level select
+- [x] Add "-N minutes" label message when wrong guess
+	- [x] Animate its y-position as well
+- [ ] Determine which levels are free
+  - [ ] First 15
 - [x] Finish UI placement in game scene
 - [x] Draw clue labels
 - [x] Draw preview of current progress in game scene
@@ -33,20 +39,26 @@
 - [x] when automatically going to game, ensure that returning to level select
 	  puts you on the right page/selected puzzle
 - [x] Add zero-padding to minutes/seconds timer label
-- [ ] Add a "success!" end puzzle modal
-- [ ] Add "-N minutes" label message when wrong guess
-- [ ] Add tutorial; baked into first few puzzles
 - [x] Dim prev/next buttons on level select if scene instantiates on first/last page
 
 ## Cordova
 
 - [ ] Add actual link to rate on various app stores
 
+## Future
+
+- [ ] Add tutorial; baked into first few puzzles
+	- [ ] Add a 'tutorial data' object, which gives clues/text for each step
+
 ## Arcadia
 
 - [ ] Updating label text doesn't seem to use correct line height
 - [ ] Update Arcadia to draw borders either entirely outside or entirely inside shapes
-- [ ] Deactivating doesn't seem to be working correctly
+- [ ] Change buttons to use an 'respond to input' boolean property, instead of 
+	  creating/destroying their own even listeners. The scene's "onPoint{whatever}"
+	  method gets called, and passes down the point object to all its children that
+	  'respond to input' and are active
+- [x] Deactivating doesn't seem to be working correctly
 - [x] descenders in custom fonts don't always get drawn
 - [ ] "shake" effect
 

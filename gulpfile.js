@@ -9,10 +9,10 @@ gulp.task('default', function () {
 
 gulp.task('concat', function () {
     var src = [
-        'data/*.js',
-        'lib/*.js',
-        'objects/*.js',
-        'scenes/*.js'
+        'src/data/*.js',
+        'src/lib/*.js',
+        'src/objects/*.js',
+        'src/scenes/*.js'
     ];
     return gulp.src(src).pipe(concat('nonogram-madness.js'))
                         .pipe(gulp.dest('dist'));

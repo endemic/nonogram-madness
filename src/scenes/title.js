@@ -9,7 +9,8 @@ var TitleScene = function () {
         playButton,
         rulesButton,
         optionsButton,
-        aboutButton;
+        aboutButton,
+        self = this;
 
     titleLineOne = new Arcadia.Label({
         text: 'nonogram',
@@ -43,6 +44,7 @@ var TitleScene = function () {
                 incompleteLevel;
 
             sona.play('button');
+            self.stopMusic();
             completed = localStorage.getObject('completed') || Array(LEVELS.length);
             incompleteLevel = completed.indexOf(null);
 
@@ -70,6 +72,7 @@ var TitleScene = function () {
         }),
         action: function () {
             sona.play('button');
+            self.stopMusic();
             Arcadia.changeScene(RulesScene);
         }
     });
@@ -88,6 +91,7 @@ var TitleScene = function () {
         }),
         action: function () {
             sona.play('button');
+            self.stopMusic();
             Arcadia.changeScene(OptionsScene);
         }
     });
@@ -106,12 +110,34 @@ var TitleScene = function () {
         }),
         action: function () {
             sona.play('button');
+            self.stopMusic();
             Arcadia.changeScene(AboutScene);
         }
     });
     this.add(aboutButton);
 
-    sona.loop('bgm-one');
+    this.startMusic();
 };
 
 TitleScene.prototype = new Arcadia.Scene();
+
+TitleScene.prototype.startMusic = function startMusic() {
+    if (localStorage.getBoolean('playMusic') === false) {
+        return;
+    }
+
+    if (Math.random() < 0.5) {
+        this.bgm = 'bgm-one';
+    } else {
+        this.bgm = 'bgm-two';
+    }
+
+    sona.loop(this.bgm);
+};
+
+TitleScene.prototype.stopMusic = function stopMusic() {
+    if (localStorage.getBoolean('playMusic') === false) {
+        return;
+    }
+    sona.stop(this.bgm);
+};
