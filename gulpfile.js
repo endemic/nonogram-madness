@@ -4,7 +4,7 @@ var gulp = require('gulp'),
     rename = require('gulp-rename');
 
 gulp.task('default', function () {
-    console.log('stuff');
+    console.log('Gulp tasks: `concat`, `compress`, `cordova`, `web`');
 });
 
 gulp.task('concat', function () {
@@ -36,4 +36,28 @@ gulp.task('cordova', ['concat', 'compress'], function () {
 
     gulp.src(['assets/**'])
         .pipe(gulp.dest('cordova/www/assets'));
+});
+
+gulp.task('web', ['concat', 'compress'], function () {
+    gulp.src(['dist/nonogram-madness.min.js'], { base: 'dist' })
+        .pipe(gulp.dest('../../websites/ganbarugames.com/nonogram/javascript'));
+
+    gulp.src(['node_modules/arcadia/dist/arcadia.js'], { base: 'node_modules/arcadia/dist' })
+        .pipe(gulp.dest('../../websites/ganbarugames.com/nonogram/javascript'));
+
+    gulp.src(['node_modules/sona/dist/sona.js'], { base: 'node_modules/sona/dist' })
+        .pipe(gulp.dest('../../websites/ganbarugames.com/nonogram/javascript'));
+
+    gulp.src(['assets/**'])
+        .pipe(gulp.dest('../../websites/ganbarugames.com/nonogram/assets'));
+
+    gulp.src(['dist/index.html'], { base: 'dist' })
+        .pipe(gulp.dest('../../websites/ganbarugames.com/nonogram'));
+
+    // Copy appcache/webapp manifests
+    // gulp.src(['dist/manifest.appcache'], { base: 'dist' })
+    //     .pipe(gulp.dest('../../websites/ganbarugames.com/nonogram'));
+
+    // gulp.src(['manifest.json'])
+    //     .pipe(gulp.dest('../../websites/ganbarugames.com/nonogram'));
 });

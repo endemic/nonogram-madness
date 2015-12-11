@@ -188,11 +188,6 @@ var LevelSelectScene = function (options) {
         this.previousButton.disabled = true;
         this.previousButton.alpha = 0.5;
     }
-
-    if (options.selectedLevel !== undefined) {
-        this.selectedLevel = options.selectedLevel;
-        this.thumbnails[this.selectedLevel - this.perPage * this.currentPage].highlight();
-    }
 };
 
 LevelSelectScene.prototype = new Arcadia.Scene();
