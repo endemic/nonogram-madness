@@ -58,6 +58,6 @@ gulp.task('web', ['concat', 'compress'], function () {
     // gulp.src(['dist/manifest.appcache'], { base: 'dist' })
     //     .pipe(gulp.dest('../../websites/ganbarugames.com/nonogram'));
 
-    // gulp.src(['manifest.json'])
-    //     .pipe(gulp.dest('../../websites/ganbarugames.com/nonogram'));
+    gulp.src(['manifest.json'])
+        .pipe(gulp.dest('../../websites/ganbarugames.com/nonogram'));
 });
