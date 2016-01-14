@@ -67,7 +67,7 @@ var OptionsScene = function () {
             }
         }
     });
-    this.add(musicToggleButton);
+    // this.add(musicToggleButton);
 
     sfxToggleButton = new Arcadia.Button({
         position: { x: 0, y: musicToggleButton.position.y + 120 },

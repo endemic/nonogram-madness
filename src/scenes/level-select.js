@@ -337,6 +337,8 @@ LevelSelectScene.prototype.updatePageLabel = function () {
 };
 
 LevelSelectScene.prototype.onPointEnd = function (points) {
+    Arcadia.Scene.prototype.onPointEnd.call(this, points);
+    
     var self = this,
         cursor = {
             size: { width: 1, height: 1 },

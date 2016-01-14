@@ -17,8 +17,8 @@ var GameScene = function GameScene(options) {
     this.secondsLeft = 1739; // ~ 29 * 60
 
     // TODO: eventually enable this? motivation is low
-    //this.showTutorial = TUTORIALS[this.puzzleIndex] !== undefined;
-    this.showTutorial = false;
+    this.showTutorial = TUTORIALS[this.puzzleIndex] !== undefined;
+    // this.showTutorial = false;
     this.tutorialStep = 0;
 
     if (this.puzzle.difficulty === 'random') {
@@ -163,7 +163,11 @@ GameScene.prototype.displayTutorial = function () {
 };
 
 GameScene.prototype.onPointStart = function onPointStart(points) {
-    var values, row, column;
+    Arcadia.Scene.prototype.onPointStart.call(this, points);
+
+    var values,
+        row,
+        column;
 
     // Determine if within grid bounds
     values = this.puzzleGrid.getRowAndColumn(points[0]);
@@ -180,7 +184,11 @@ GameScene.prototype.onPointStart = function onPointStart(points) {
 };
 
 GameScene.prototype.onPointMove = function onPointMove(points) {
-    var values, row, column;
+    Arcadia.Scene.prototype.onPointMove.call(this, points);
+
+    var values,
+        row,
+        column;
 
     values = this.puzzleGrid.getRowAndColumn(points[0]);
     row = values[0];
@@ -199,7 +207,9 @@ GameScene.prototype.onPointMove = function onPointMove(points) {
     this.previousColumn = column;
 };
 
-GameScene.prototype.onPointEnd = function () {
+GameScene.prototype.onPointEnd = function (points) {
+    Arcadia.Scene.prototype.onPointEnd.call(this, points);
+
     this.puzzleGrid.highlight(null, null);
     this.actionLock = 'none';
 };

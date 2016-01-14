@@ -7,6 +7,8 @@ var AboutScene = function () {
     var titleLabel,
         backButton,
         detailLabel,
+        sfxToggleButton,
+        dataResetButton,
         rateButton;
 
     titleLabel = new Arcadia.Label({
@@ -52,9 +54,55 @@ Designed and programmed\nby Nathan Demick\n\n \
     });
     this.add(detailLabel);
 
+    sfxToggleButton = new Arcadia.Button({
+        position: { x: 0, y: 100 },
+        size: { width: 420, height: 90 },
+        color: '#665945',
+        border: '10px black',
+        shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)',
+        label: new Arcadia.Label({
+            text: (localStorage.getBoolean('playSfx') ? 'Sound ON' : 'Sound OFF'),
+            font: '64px uni_05_53',
+            position: { x: 0, y: -10 }
+        }),
+        action: function () {
+            sona.play('button');
+
+            if (localStorage.getBoolean('playSfx')) {
+                localStorage.setBoolean('playSfx', false);
+                this.text = 'Sound OFF';
+            } else {
+                localStorage.setBoolean('playSfx', true);
+                this.text = 'Sound ON';
+            }
+        }
+    });
+    this.add(sfxToggleButton);
+
+    dataResetButton = new Arcadia.Button({
+        position: { x: 0, y: sfxToggleButton.position.y + 120 },
+        size: { width: 420, height: 90 },
+        color: '#665945',
+        border: '10px black',
+        shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)',
+        label: new Arcadia.Label({
+            text: 'Reset data',
+            font: '64px uni_05_53',
+            position: { x: 0, y: -10 }
+        }),
+        action: function () {
+            sona.play('button');
+
+            if (confirm('Reset all saved data?')) {
+                // TODO: figure out what this does
+            }
+        }
+    });
+    this.add(dataResetButton);
+
     if (Arcadia.ENV.cordova) {
         rateButton = new Arcadia.Button({
-            position: { x: 0, y: 0 },
+            position: { x: 0, y: dataResetButton.position.y + 120 },
             size: { width: 420, height: 90 },
             color: '#665945',
             border: '10px black',

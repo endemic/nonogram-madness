@@ -2,8 +2,10 @@
 
 ==================
 
-- [ ] Add a "success!" end puzzle modal
-	- [ ] Buttons to go directly to the next puzzle, or back to level select
+- [ ] Add the "win" jingle -- keep the alert
+- [ ] Finish the tutorial
+- [ ] Test Cordova project
+
 - [x] Add "-N minutes" label message when wrong guess
 	- [x] Animate its y-position as well
 - [ ] Determine which levels are free
@@ -49,6 +51,8 @@
 
 - [ ] Add tutorial; baked into first few puzzles
 	- [ ] Add a 'tutorial data' object, which gives clues/text for each step
+- [ ] Add a "success!" end puzzle modal
+	- [ ] Buttons to go directly to the next puzzle, or back to level select
 
 ## Arcadia
 
