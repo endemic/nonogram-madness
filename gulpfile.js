@@ -29,10 +29,13 @@ gulp.task('compress', function () {
 
 gulp.task('cordova', ['concat', 'compress'], function () {
     gulp.src(['dist/nonogram-madness.min.js'], { base: 'dist' })
-        .pipe(gulp.dest('cordova/www/js'));
+        .pipe(gulp.dest('cordova/www/javascript'));
 
     gulp.src(['node_modules/arcadia/dist/arcadia.js'], { base: 'node_modules/arcadia/dist' })
-        .pipe(gulp.dest('cordova/www/js'));
+        .pipe(gulp.dest('cordova/www/javascript'));
+
+    gulp.src(['node_modules/sona/dist/sona.js'], { base: 'node_modules/sona/dist' })
+        .pipe(gulp.dest('cordova/www/javascript'));
 
     gulp.src(['assets/**'])
         .pipe(gulp.dest('cordova/www/assets'));
