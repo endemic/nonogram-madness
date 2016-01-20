@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Nonogram Madness</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!-- App manifest -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Standalone app tags -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="assets/icons/192.png">
+
+    <!-- Proprietary Apple tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Shikaku">
+
+    <link rel="apple-touch-startup-image" href="assets/images/splash.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="assets/icons/120.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/180.png">
+
+    <style type="text/css">
+      body {
+        margin: 0;
+        padding: 0;
+        background-size: 100% 100%;
+        cursor: pointer;
+      }
+      body,
+      #arcadia,
+      #arcadia canvas {
+          -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+          -webkit-touch-callout: none;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          user-select: none;
+      }
+      #arcadia canvas {
+        background-image: url('assets/images/background.png');
+        background-size: 100% 100%;
+        cursor: url('assets/images/cursor.cur'), default;
+      }
+
+      @font-face {
+        font-family: 'uni_05_53';
+        src: url('assets/fonts/uni0553-webfont-webfont.eot');
+        src: url('assets/fonts/uni0553-webfont-webfont.eot?#iefix') format('embedded-opentype'),
+             url('assets/fonts/uni0553-webfont-webfont.woff') format('woff'),
+             url('assets/fonts/uni0553-webfont-webfont.ttf') format('truetype'),
+             url('assets/fonts/uni0553-webfont-webfont.svg#uni_05_53regular') format('svg');
+        font-weight: normal;
+        font-style: normal;
+      }
+      #test { font: 16px 'uni_05_53'; }
+    </style>
+
+    <script src="javascript/arcadia.js"></script>
+    <script src="javascript/sona.js"></script>
+    <script src="javascript/nonogram-madness.min.js"></script>
+
+    <script>
+        window.onload = function () {
+            window.sona = new Sona([
+                { url: 'assets/sounds/button.mp3', id: 'button' },
+                { url: 'assets/sounds/fill.mp3', id: 'fill' },
+                { url: 'assets/sounds/mark.mp3', id: 'mark' },
+                { url: 'assets/sounds/win.mp3', id: 'g' },
+                { url: 'assets/sounds/error.mp3', id: 'error' },
+                { url: 'assets/sounds/invalid.mp3', id: 'invalid' },
+                { url: 'assets/music/1.mp3', id: 'bgm-one' },
+                { url: 'assets/music/2.mp3', id: 'bgm-two' },
+                { url: 'assets/music/tutorial.mp3', id: 'bgm-tutorial' }
+            ]);
+
+            window.sona.load(function () {
+                new Arcadia.Game({
+                    width: 750,
+                    height: 1334,
+                    scene: TitleScene,
+                    scaleToFit: true
+                });
+            });
+        };
+    </script>
+    </head>
+    <body>
+        <div id="test" style="position: absolute; left: -9999px;">need to use a custom font elsewhere first</div>
+    </body>
+</html>
