@@ -290,7 +290,8 @@ GameScene.prototype.markOrFill = function markOrFill(row, column) {
 GameScene.prototype.checkWinCondition = function checkWinCondition() {
     var success = true,
         self = this,
-        completed;
+        completed,
+        incompleteLevel;
 
     this.clues.forEach(function (clue, index) {
         if (clue === 0 || !success) {
@@ -306,10 +307,24 @@ GameScene.prototype.checkWinCondition = function checkWinCondition() {
         completed = localStorage.getObject('completed') || new Array(LEVELS.length);
         completed[this.puzzleIndex] = true;
         localStorage.setObject('completed', completed);
+        incompleteLevel = completed.indexOf(null);
 
         window.setTimeout(function () {
-            window.alert('You won!');
-            Arcadia.changeScene(LevelSelectScene);
+            sona.play('win');
+
+            if (window.confirm('Success! Next puzzle?')) {
+                sona.play('button');
+
+                if (incompleteLevel === -1) {
+                    Arcadia.changeScene(LevelSelectScene);
+                } else if (Arcadia.isLocked() && incompleteLevel >= 15) {
+                    Arcadia.changeScene(UnlockScene);
+                } else {
+                    Arcadia.changeScene(GameScene, { level: incompleteLevel });
+                }
+            } else {
+                Arcadia.changeScene(LevelSelectScene);
+            }
         }, 1000);
     }
 };
@@ -526,13 +541,18 @@ GameScene.prototype.drawUi = function drawUi() {
         }),
         action: function () {
             var i;
-
             sona.play('button');
-            // Reset state
-            self.filledBlocks.deactivateAll();
-            self.markedBlocks.deactivateAll();
-            for (i = 0; i < self.state.length; i += 1) {
-                self.state[i] = null;
+
+            if (window.confirm('Reset puzzle?')) {
+                sona.play('button');
+                // Reset state
+                self.filledBlocks.deactivateAll();
+                self.markedBlocks.deactivateAll();
+                for (i = 0; i < self.state.length; i += 1) {
+                    self.state[i] = null;
+                }
+            } else {
+                sona.play('button');
             }
         }
     }));
@@ -553,7 +573,10 @@ GameScene.prototype.drawUi = function drawUi() {
             sona.play('button');
             if (window.confirm('Are you sure you want to quit?')) {
                 self.stopMusic();
+                sona.play('button');
                 Arcadia.changeScene(LevelSelectScene);
+            } else {
+                sona.play('button');
             }
         }
     }));

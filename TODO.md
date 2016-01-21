@@ -2,14 +2,18 @@
 
 ==================
 
-- [ ] Add the "win" jingle -- keep the alert
+- [x] Add the "win" jingle -- keep the alert
 - [ ] Finish the tutorial
-- [ ] Test Cordova project
+- [x] Test Cordova project
+- [x] Determine which levels are free (first 15)
+- [ ] Test IAP
+- [x] Change "Rate this app!" button to "Feedback"
+- [ ] Add real app store link to "Feedback" button
+- [ ] Add icons/splash screens to Cordova prj
+- [ ] Bug w/ prev button when starting on page 0
 
 - [x] Add "-N minutes" label message when wrong guess
 	- [x] Animate its y-position as well
-- [ ] Determine which levels are free
-  - [ ] First 15
 - [x] Finish UI placement in game scene
 - [x] Draw clue labels
 - [x] Draw preview of current progress in game scene

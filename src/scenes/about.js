@@ -108,7 +108,7 @@ Designed and programmed\nby Nathan Demick\n\n \
             border: '10px black',
             shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)',
             label: new Arcadia.Label({
-                text: 'Rate this app!',
+                text: 'Feedback',
                 font: '64px uni_05_53',
                 position: { x: 0, y: -10 }
             }),

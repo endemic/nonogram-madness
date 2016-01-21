@@ -25,8 +25,9 @@
         body {
             margin: 0;
             padding: 0;
-            background-size: 100% 100%;
-            cursor: pointer;
+            background-image: url('assets/images/background.png');
+            background-size: auto 100%;
+            cursor: url('assets/images/cursor.cur'), default;
         }
         body,
         #arcadia,
@@ -37,12 +38,6 @@
             -moz-user-select: none;
             user-select: none;
         }
-        #arcadia canvas {
-            background-image: url('assets/images/background.png');
-            background-size: 100% 100%;
-            cursor: url('assets/images/cursor.cur'), default;
-        }
-
         @font-face {
             font-family: 'uni_05_53';
             src: url('assets/fonts/uni0553-webfont-webfont.eot');
@@ -91,7 +86,7 @@
                 { url: 'assets/sounds/button.mp3', id: 'button' },
                 { url: 'assets/sounds/fill.mp3', id: 'fill' },
                 { url: 'assets/sounds/mark.mp3', id: 'mark' },
-                { url: 'assets/sounds/win.mp3', id: 'g' },
+                { url: 'assets/sounds/win.mp3', id: 'win' },
                 { url: 'assets/sounds/error.mp3', id: 'error' },
                 { url: 'assets/sounds/invalid.mp3', id: 'invalid' },
                 // { url: 'assets/music/1.mp3', id: 'bgm-one' },
@@ -106,6 +101,8 @@
                     scene: TitleScene,
                     scaleToFit: true
                 });
+
+                UnlockScene.initializeStore();
             });
         };
     </script>

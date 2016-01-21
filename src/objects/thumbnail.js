@@ -75,6 +75,10 @@ Thumbnail.prototype.drawPreview = function (levelIndex, completed) {
         this.alpha = 1;
     }
 
+    if (Arcadia.isLocked() && levelIndex > 15) {
+        this.border = '10px red';
+    }
+
     if (!completed[levelIndex]) {
         clues = INCOMPLETE.clues;
     } else {
