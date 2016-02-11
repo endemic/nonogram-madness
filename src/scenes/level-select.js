@@ -246,13 +246,14 @@ LevelSelectScene.prototype.next = function () {
         localStorage.setItem('selectedLevel', this.selectedLevel);
 
         window.setTimeout(function () {
-            self.nextButton.disabled = false;
             if (self.currentPage < self.totalPages - 1) {
+                self.nextButton.disabled = false;
                 self.nextButton.alpha = 1;
             }
         }, LevelSelectScene.TOTAL_TRANSITION_DURATION);
 
         if (this.previousButton.alpha < 1) {
+            this.previousButton.disabled = false;
             this.previousButton.alpha = 1;
         }
     }
@@ -312,13 +313,14 @@ LevelSelectScene.prototype.previous = function () {
         localStorage.setItem('selectedLevel', this.selectedLevel);
 
         window.setTimeout(function () {
-            self.previousButton.disabled = false;
             if (self.currentPage > 0) {
+                self.previousButton.disabled = false;
                 self.previousButton.alpha = 1;
             }
         }, LevelSelectScene.TOTAL_TRANSITION_DURATION);
 
         if (this.nextButton.alpha < 1) {
+            self.previousButton.disabled = false;
             this.nextButton.alpha = 1;
         }
     }

@@ -25,7 +25,7 @@ var GameScene = function GameScene(options) {
         this.clues = this.generateRandomPuzzle(this.puzzle.title);
     }
 
-    this.action = GameScene.MARK;
+    this.action = GameScene.FILL;
     this.puzzleSize = Math.sqrt(this.clues.length);
     this.state = new Array(this.clues.length);
 
@@ -482,7 +482,6 @@ GameScene.prototype.drawUi = function drawUi() {
         label: new Arcadia.Label({
             text: 'mark',
             font: '64px uni_05_53',
-            color: 'orange',
             position: { x: 40, y: -10 }
         }),
         action: function () {
@@ -510,6 +509,7 @@ GameScene.prototype.drawUi = function drawUi() {
         label: new Arcadia.Label({
             text: 'fill',
             font: '64px uni_05_53',
+            color: 'orange',
             position: { x: 30, y: -10 }
         }),
         action: function () {
