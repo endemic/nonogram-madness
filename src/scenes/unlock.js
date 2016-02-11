@@ -1,37 +1,44 @@
-/*globals Arcadia, LevelSelectScene, CreditsScene, localStorage, store, window */
-'use strict';
+/*globals Arcadia, LevelSelectScene, CreditsScene, localStorage,
+store, window, sona */
 
 var UnlockScene = function () {
+    'use strict';
+
     Arcadia.Scene.apply(this, arguments);
 
     var noButton,
         restoreButton,
         yesButton,
-        description;
+        description,
+        text;
 
     // Should never occur; for testing on desktop only
     window.PRODUCT_DATA = window.PRODUCT_DATA || { price: '$999' };
 
+    text = [
+        'I hope you\'ve enjoyed',
+        'solving nonograms so far.',
+        'Would you like to',
+        'unlock 105 more puzzles',
+        'for only ' + window.PRODUCT_DATA.price + '?'
+    ];
+
     description = new Arcadia.Label({
-        position: {
-            x: 0,
-            y: 150
-        },
-        font: '20px uni_05_53',
-        text: 'I hope you\'ve enjoyed\nsolving puzzles so far.\nWould you like to\nunlock 105 more \nfor only ' + window.PRODUCT_DATA.price + '?'
+        position: { x: 0, y: -150 },
+        font: '48px uni_05_53',
+        shadow: '10px 10px 0 rgba(0, 0, 0, 0.5)',
+        text: text.join('\n')
     });
     this.add(description);
 
     yesButton = new Arcadia.Button({
-        position: {
-            x: Arcadia.WIDTH / 2,
-            y: Arcadia.HEIGHT - 250
-        },
-        color: null,
-        border: '2px #fff',
-        padding: 15,
+        position: { x: 0, y: 100 },
+        size: { width: 200, height: 90 },
         text: 'Yeah!',
-        font: '20px monospace',
+        font: '48px uni_05_53',
+        color: '#665945',
+        border: '10px black',
+        shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)',
         action: function () {
             sona.play('button');
             window.store.order(UnlockScene.PRODUCT_ID);
@@ -40,15 +47,13 @@ var UnlockScene = function () {
     this.add(yesButton);
 
     noButton = new Arcadia.Button({
-        position: {
-            x: 0,
-            y: -200
-        },
-        color: null,
-        border: '2px #fff',
-        padding: 15,
+        position: { x: 0, y: 225 },
+        size: { width: 200, height: 90 },
         text: 'Nah.',
-        font: '20px monospace',
+        font: '48px uni_05_53',
+        color: '#665945',
+        border: '10px black',
+        shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)',
         action: function () {
             sona.play('button');
             Arcadia.changeScene(CreditsScene);
@@ -57,15 +62,13 @@ var UnlockScene = function () {
     this.add(noButton);
 
     restoreButton = new Arcadia.Button({
-        position: {
-            x: 0,
-            y: -100
-        },
-        color: null,
-        border: '2px #fff',
-        padding: 15,
+        position: { x: 0, y: 425 },
+        size: { width: 500, height: 90 },
         text: 'Restore purchase',
-        font: '20px monospace',
+        font: '48px uni_05_53',
+        color: '#665945',
+        border: '10px black',
+        shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)',
         action: function () {
             sona.play('button');
             window.store.order(UnlockScene.PRODUCT_ID);
