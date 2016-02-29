@@ -23,8 +23,7 @@ var CreditsScene = function () {
         shadow: '10px 10px 0 rgba(0, 0, 0, 0.5)',
         text: [
             'Programming by Nathan Demick',
-            'Puzzle concept by Nikoli',
-            '© 2015 Ganbaru Games',
+            '(c) 2010-2016 Ganbaru Games',
             'http://ganbarugames.com'
         ].join('\n')
     });

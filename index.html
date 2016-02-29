@@ -25,7 +25,7 @@
         body {
             margin: 0;
             padding: 0;
-            background-image: url('assets/images/background.png');
+            background: url('assets/images/background.png') #000;
             background-size: auto 100%;
             cursor: url('assets/images/cursor.cur'), default;
         }
@@ -60,22 +60,21 @@
     <script src="src/lib/storage-extensions.js"></script>
     <script src="src/lib/polyfills.js"></script>
 
-    <!-- puzzle data -->
-    <script src="src/data/levels.js"></script>
-    <script src="src/data/tutorials.js"></script>
-
     <!-- objects -->
     <script src="src/objects/block.js"></script>
     <script src="src/objects/grid.js"></script>
     <script src="src/objects/thumbnail.js"></script>
     <script src="src/objects/preview.js"></script>
 
+    <!-- puzzle data -->
+    <script src="src/data/levels.js"></script>
+    <script src="src/data/tutorials.js"></script>
+
     <!-- scenes -->
     <script src="src/scenes/title.js"></script>
     <script src="src/scenes/level-select.js"></script>
     <script src="src/scenes/game.js"></script>
     <script src="src/scenes/about.js"></script>
-    <script src="src/scenes/options.js"></script>
     <script src="src/scenes/rules.js"></script>
     <script src="src/scenes/credits.js"></script>
     <script src="src/scenes/unlock.js"></script>
@@ -98,7 +97,9 @@
                 new Arcadia.Game({
                     width: 750,
                     height: 1334,
-                    scene: TitleScene,
+                    // width: 375,
+                    // height: 667,
+                    scene: LevelSelectScene,
                     scaleToFit: true
                 });
 

@@ -75,7 +75,7 @@ Thumbnail.prototype.drawPreview = function (levelIndex, completed) {
         this.alpha = 1;
     }
 
-    if (Arcadia.isLocked() && levelIndex > 15) {
+    if (Arcadia.isLocked() && levelIndex > Arcadia.FREE_LEVEL_COUNT) {
         this.border = '10px red';
     }
 

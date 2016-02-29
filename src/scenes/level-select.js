@@ -9,6 +9,7 @@ var LevelSelectScene = function (options) {
 
     var title,
         backButton,
+        unlockButton,
         playButton,
         self = this;
 
@@ -115,6 +116,27 @@ var LevelSelectScene = function (options) {
         }
     });
     this.add(backButton);
+
+    if (Arcadia.isLocked()) {
+        unlockButton = new Arcadia.Button({
+            position: { x: this.size.width / 2 - 140, y: -this.size.height / 2 + 60 },
+            size: { width: 220, height: 70 },
+            border: '10px black',
+            color: '#665945',
+            shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)',
+            label: new Arcadia.Label({
+                text: 'unlock',
+                color: 'white',
+                font: '48px uni_05_53',
+                position: { x: 0, y: -5 }
+            }),
+            action: function () {
+                sona.play('button');
+                Arcadia.changeScene(UnlockScene);
+            }
+        });
+        this.add(unlockButton);
+    }
 
     title = new Arcadia.Label({
         text: 'Choose\nPuzzle',
