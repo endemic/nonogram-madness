@@ -3,8 +3,15 @@
 ==================
 
 [ ] Change dimensions of game to 375x667
-[x] Add "unlock" button to upper right of level select
 [ ] Test IAP
+[x] Selecting locked level then unselecting removes the red border
+[ ] Fix problem with referencing Grid within the TUTORIAL data structure
+[ ] Go back to old icon with green columns?
+[ ] Get rid of gulp, I don't trust its `cordova` job
+[x] Remove the utf8 arrows in "back" buttons
+[x] You are able to play locked levels
+[x] Remove the confirmation modals for "reset" and "quit" in GameScene
+[x] Add "unlock" button to upper right of level select
 
 [x] Finish the first tutorial
 	[x] tutorial layout

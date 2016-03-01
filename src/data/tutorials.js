@@ -1,11 +1,7 @@
-var action,
-    actionGerund,
-    TUTORIALS;
-
-action = Arcadia.ENV.mobile ? 'tap' : 'click';
-actionGerund = Arcadia.ENV.mobile ? 'tapping' : 'clicking';
-
-TUTORIALS = [
+var action = Arcadia.ENV.mobile ? 'tap' : 'click';
+var actionGerund = Arcadia.ENV.mobile ? 'tapping' : 'clicking';
+var CELL_SIZE = 52;
+var TUTORIALS = [
     /* LEVEL 1 */
     {
         // blocks that need to be filled before moving on
@@ -19,11 +15,11 @@ TUTORIALS = [
         ],
         // Where hints are displayed to player
         hints: [
-            { position: { x: 11, y: 265 }, size: { width: Grid.CELL_SIZE, height: Grid.CELL_SIZE * 5 } },
-            { position: { x: 115, y: 163 }, size: { width: Grid.CELL_SIZE * 3, height: Grid.CELL_SIZE } },
-            { position: { x: 115, y: 370 }, size: { width: Grid.CELL_SIZE * 3, height: Grid.CELL_SIZE } },
-            { position: { x: 165, y: 293 }, size: { width: Grid.CELL_SIZE, height: Grid.CELL_SIZE * 2 } },
-            { position: { x: 115, y: 265 }, size: { width: Grid.CELL_SIZE, height: Grid.CELL_SIZE } }
+            { position: { x: 11, y: 265 }, size: { width: CELL_SIZE, height: CELL_SIZE * 5 } },
+            { position: { x: 115, y: 163 }, size: { width: CELL_SIZE * 3, height: CELL_SIZE } },
+            { position: { x: 115, y: 370 }, size: { width: CELL_SIZE * 3, height: CELL_SIZE } },
+            { position: { x: 165, y: 293 }, size: { width: CELL_SIZE, height: CELL_SIZE * 2 } },
+            { position: { x: 115, y: 265 }, size: { width: CELL_SIZE, height: CELL_SIZE } }
         ],
         // text displayed to player
         text: [
@@ -48,11 +44,11 @@ TUTORIALS = [
         ],
         // Where hints are displayed to player
         hints: [
-            { position: { x: 11, y: 265 }, size: { width: Grid.CELL_SIZE, height: Grid.CELL_SIZE * 5 } },
-            { position: { x: 140, y: 370 }, size: { width: Grid.CELL_SIZE * 4, height: Grid.CELL_SIZE } },
-            { position: { x: 11 + Grid.CELL_SIZE * 1, y: 265 }, size: { width: Grid.CELL_SIZE, height: Grid.CELL_SIZE * 3 } },
-            { position: { x: 11 + Grid.CELL_SIZE * 2, y: 293 }, size: { width: Grid.CELL_SIZE, height: Grid.CELL_SIZE * 2 } },
-            { position: { x: 11 + Grid.CELL_SIZE * 3, y: 320 }, size: { width: Grid.CELL_SIZE, height: Grid.CELL_SIZE * 1 } }
+            { position: { x: 11, y: 265 }, size: { width: CELL_SIZE, height: CELL_SIZE * 5 } },
+            { position: { x: 140, y: 370 }, size: { width: CELL_SIZE * 4, height: CELL_SIZE } },
+            { position: { x: 11 + CELL_SIZE * 1, y: 265 }, size: { width: CELL_SIZE, height: CELL_SIZE * 3 } },
+            { position: { x: 11 + CELL_SIZE * 2, y: 293 }, size: { width: CELL_SIZE, height: CELL_SIZE * 2 } },
+            { position: { x: 11 + CELL_SIZE * 3, y: 320 }, size: { width: CELL_SIZE, height: CELL_SIZE * 1 } }
         ],
         // text displayed to player
         text: [

@@ -521,19 +521,13 @@ GameScene.prototype.drawUi = function drawUi() {
             position: { x: 0, y: -10 }
         }),
         action: function () {
-            var i;
             sona.play('button');
 
-            if (window.confirm('Reset puzzle?')) {
-                sona.play('button');
-                // Reset state
-                self.filledBlocks.deactivateAll();
-                self.markedBlocks.deactivateAll();
-                for (i = 0; i < self.state.length; i += 1) {
-                    self.state[i] = null;
-                }
-            } else {
-                sona.play('button');
+            // Reset state
+            self.filledBlocks.deactivateAll();
+            self.markedBlocks.deactivateAll();
+            for (var i = 0; i < self.state.length; i += 1) {
+                self.state[i] = null;
             }
         }
     }));
@@ -552,13 +546,7 @@ GameScene.prototype.drawUi = function drawUi() {
         }),
         action: function () {
             sona.play('button');
-            if (window.confirm('Are you sure you want to quit?')) {
-                self.stopMusic();
-                sona.play('button');
-                Arcadia.changeScene(LevelSelectScene);
-            } else {
-                sona.play('button');
-            }
+            Arcadia.changeScene(LevelSelectScene);
         }
     }));
 

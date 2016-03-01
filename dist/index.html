@@ -38,7 +38,7 @@
           user-select: none;
       }
       #arcadia canvas {
-        background-image: url('assets/images/background.png');
+        background: url('assets/images/background.png') #000;
         background-size: 100% 100%;
         cursor: url('assets/images/cursor.cur'), default;
       }
@@ -68,10 +68,7 @@
                 { url: 'assets/sounds/mark.mp3', id: 'mark' },
                 { url: 'assets/sounds/win.mp3', id: 'g' },
                 { url: 'assets/sounds/error.mp3', id: 'error' },
-                { url: 'assets/sounds/invalid.mp3', id: 'invalid' },
-                { url: 'assets/music/1.mp3', id: 'bgm-one' },
-                { url: 'assets/music/2.mp3', id: 'bgm-two' },
-                { url: 'assets/music/tutorial.mp3', id: 'bgm-tutorial' }
+                { url: 'assets/sounds/invalid.mp3', id: 'invalid' }
             ]);
 
             window.sona.load(function () {

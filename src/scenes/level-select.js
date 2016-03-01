@@ -105,7 +105,7 @@ var LevelSelectScene = function (options) {
         color: '#665945',
         shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)',
         label: new Arcadia.Label({
-            text: '← title',
+            text: '< title',
             color: 'white',
             font: '48px uni_05_53',
             position: { x: 0, y: -5 }
@@ -160,7 +160,11 @@ var LevelSelectScene = function (options) {
         }),
         action: function () {
             sona.play('button');
-            Arcadia.changeScene(GameScene, { level: self.selectedLevel });
+            if (Arcadia.isLocked() && self.selectedLevel >= Arcadia.FREE_LEVEL_COUNT) {
+                Arcadia.changeScene(UnlockScene);
+            } else {
+                Arcadia.changeScene(GameScene, { level: self.selectedLevel });
+            }
         }
     });
     this.add(playButton);

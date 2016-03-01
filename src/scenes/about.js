@@ -29,7 +29,7 @@ var AboutScene = function () {
         color: '#665945',
         shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)',
         label: new Arcadia.Label({
-            text: '← title',
+            text: '< title',
             color: 'white',
             font: '48px uni_05_53',
             position: { x: 0, y: -5 }
