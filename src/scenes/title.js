@@ -44,13 +44,14 @@ var TitleScene = function () {
                 incompleteLevel;
 
             sona.play('button');
-            self.stopMusic();
+            // self.stopMusic();
             completed = localStorage.getObject('completed') || Array(LEVELS.length);
             incompleteLevel = completed.indexOf(null);
 
+            // TOOO: Extract this code from here & game scene
             if (incompleteLevel === -1) {
                 Arcadia.changeScene(LevelSelectScene);
-            } else if (Arcadia.isLocked() && incompleteLevel >= 15) {
+            } else if (Arcadia.isLocked() && incompleteLevel >= Arcadia.FREE_LEVEL_COUNT) {
                 Arcadia.changeScene(UnlockScene);
             } else {
                 Arcadia.changeScene(GameScene, { level: incompleteLevel });
@@ -78,6 +79,7 @@ var TitleScene = function () {
     });
     this.add(rulesButton);
 
+    /*
     optionsButton = new Arcadia.Button({
         position: { x: 0, y: rulesButton.position.y + 120 },
         size: { width: 350, height: 90 },
@@ -95,10 +97,11 @@ var TitleScene = function () {
             Arcadia.changeScene(OptionsScene);
         }
     });
-    this.add(optionsButton);
+*/
+    // this.add(optionsButton);
 
     aboutButton = new Arcadia.Button({
-        position: { x: 0, y: optionsButton.position.y + 120 },
+        position: { x: 0, y: rulesButton.position.y + 120 },
         size: { width: 350, height: 90 },
         color: '#665945',
         border: '10px black',
@@ -110,18 +113,21 @@ var TitleScene = function () {
         }),
         action: function () {
             sona.play('button');
-            self.stopMusic();
+            // self.stopMusic();
             Arcadia.changeScene(AboutScene);
         }
     });
     this.add(aboutButton);
 
-    this.startMusic();
+    // this.startMusic();
 };
 
 TitleScene.prototype = new Arcadia.Scene();
 
 TitleScene.prototype.startMusic = function startMusic() {
+    // TODO: eventually re-implement music
+    return;
+
     if (localStorage.getBoolean('playMusic') === false) {
         return;
     }
@@ -136,6 +142,9 @@ TitleScene.prototype.startMusic = function startMusic() {
 };
 
 TitleScene.prototype.stopMusic = function stopMusic() {
+    // TODO: Eventually re-implement music
+    return;
+    
     if (localStorage.getBoolean('playMusic') === false) {
         return;
     }

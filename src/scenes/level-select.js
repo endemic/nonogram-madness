@@ -9,6 +9,7 @@ var LevelSelectScene = function (options) {
 
     var title,
         backButton,
+        unlockButton,
         playButton,
         self = this;
 
@@ -104,7 +105,7 @@ var LevelSelectScene = function (options) {
         color: '#665945',
         shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)',
         label: new Arcadia.Label({
-            text: '← title',
+            text: '< title',
             color: 'white',
             font: '48px uni_05_53',
             position: { x: 0, y: -5 }
@@ -115,6 +116,27 @@ var LevelSelectScene = function (options) {
         }
     });
     this.add(backButton);
+
+    if (Arcadia.isLocked()) {
+        unlockButton = new Arcadia.Button({
+            position: { x: this.size.width / 2 - 140, y: -this.size.height / 2 + 60 },
+            size: { width: 220, height: 70 },
+            border: '10px black',
+            color: '#665945',
+            shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)',
+            label: new Arcadia.Label({
+                text: 'unlock',
+                color: 'white',
+                font: '48px uni_05_53',
+                position: { x: 0, y: -5 }
+            }),
+            action: function () {
+                sona.play('button');
+                Arcadia.changeScene(UnlockScene);
+            }
+        });
+        this.add(unlockButton);
+    }
 
     title = new Arcadia.Label({
         text: 'Choose\nPuzzle',
@@ -138,7 +160,11 @@ var LevelSelectScene = function (options) {
         }),
         action: function () {
             sona.play('button');
-            Arcadia.changeScene(GameScene, { level: self.selectedLevel });
+            if (Arcadia.isLocked() && self.selectedLevel >= Arcadia.FREE_LEVEL_COUNT) {
+                Arcadia.changeScene(UnlockScene);
+            } else {
+                Arcadia.changeScene(GameScene, { level: self.selectedLevel });
+            }
         }
     });
     this.add(playButton);
@@ -246,13 +272,14 @@ LevelSelectScene.prototype.next = function () {
         localStorage.setItem('selectedLevel', this.selectedLevel);
 
         window.setTimeout(function () {
-            self.nextButton.disabled = false;
             if (self.currentPage < self.totalPages - 1) {
+                self.nextButton.disabled = false;
                 self.nextButton.alpha = 1;
             }
         }, LevelSelectScene.TOTAL_TRANSITION_DURATION);
 
         if (this.previousButton.alpha < 1) {
+            this.previousButton.disabled = false;
             this.previousButton.alpha = 1;
         }
     }
@@ -312,13 +339,14 @@ LevelSelectScene.prototype.previous = function () {
         localStorage.setItem('selectedLevel', this.selectedLevel);
 
         window.setTimeout(function () {
-            self.previousButton.disabled = false;
             if (self.currentPage > 0) {
+                self.previousButton.disabled = false;
                 self.previousButton.alpha = 1;
             }
         }, LevelSelectScene.TOTAL_TRANSITION_DURATION);
 
         if (this.nextButton.alpha < 1) {
+            self.previousButton.disabled = false;
             this.nextButton.alpha = 1;
         }
     }
@@ -337,6 +365,8 @@ LevelSelectScene.prototype.updatePageLabel = function () {
 };
 
 LevelSelectScene.prototype.onPointEnd = function (points) {
+    Arcadia.Scene.prototype.onPointEnd.call(this, points);
+    
     var self = this,
         cursor = {
             size: { width: 1, height: 1 },

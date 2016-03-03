@@ -64,7 +64,7 @@ Thumbnail.prototype = new Arcadia.Shape();
 Thumbnail.SIZE = 150;
 
 Thumbnail.prototype.drawPreview = function (levelIndex, completed) {
-    var clues;
+    this.currentlyDrawnLevel = levelIndex;
 
     if (LEVELS[levelIndex] === undefined) {
         this.alpha = 0;
@@ -74,6 +74,12 @@ Thumbnail.prototype.drawPreview = function (levelIndex, completed) {
     if (this.alpha < 1) {
         this.alpha = 1;
     }
+
+    if (Arcadia.isLocked() && levelIndex > Arcadia.FREE_LEVEL_COUNT) {
+        this.border = '10px red';
+    }
+
+    var clues;
 
     if (!completed[levelIndex]) {
         clues = INCOMPLETE.clues;
@@ -91,4 +97,8 @@ Thumbnail.prototype.highlight = function () {
 
 Thumbnail.prototype.lowlight = function () {
     this.border = '10px white';
+
+    if (Arcadia.isLocked() && this.currentlyDrawnLevel > Arcadia.FREE_LEVEL_COUNT) {
+        this.border = '10px red';
+    }
 };
