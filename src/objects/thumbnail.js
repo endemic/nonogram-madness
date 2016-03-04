@@ -11,9 +11,9 @@ var Thumbnail = function (options) {
         height: Thumbnail.SIZE
     };
 
-    this.border = '10px white';
+    this.border = '5px white';
     this.color = 'white';
-    this.shadow = '15px 15px 0 rgba(0, 0, 0, 0.5)';
+    this.shadow = '8px 8px 0 rgba(0, 0, 0, 0.5)';
 
     this.pixels = new Arcadia.Shape({
         size: {
@@ -51,8 +51,8 @@ var Thumbnail = function (options) {
 
             context.fillRect(originX + (x * pixelSize),
                              originY + (y * pixelSize),
-                             pixelSize,
-                             pixelSize);
+                             pixelSize + 1,  // Adding extra width/height here to prevent
+                             pixelSize + 1); // faint, white lines between pixels
         });
     };
 
@@ -61,7 +61,7 @@ var Thumbnail = function (options) {
 
 Thumbnail.prototype = new Arcadia.Shape();
 
-Thumbnail.SIZE = 150;
+Thumbnail.SIZE = 75;
 
 Thumbnail.prototype.drawPreview = function (levelIndex, completed) {
     this.currentlyDrawnLevel = levelIndex;
@@ -75,8 +75,8 @@ Thumbnail.prototype.drawPreview = function (levelIndex, completed) {
         this.alpha = 1;
     }
 
-    if (Arcadia.isLocked() && levelIndex > Arcadia.FREE_LEVEL_COUNT) {
-        this.border = '10px red';
+    if (Arcadia.isLocked && levelIndex > Arcadia.FREE_LEVEL_COUNT) {
+        this.border = '5px red';
     }
 
     var clues;
@@ -92,13 +92,13 @@ Thumbnail.prototype.drawPreview = function (levelIndex, completed) {
 };
 
 Thumbnail.prototype.highlight = function () {
-    this.border = '10px orange';
+    this.border = '5px orange';
 };
 
 Thumbnail.prototype.lowlight = function () {
-    this.border = '10px white';
+    this.border = '5px white';
 
-    if (Arcadia.isLocked() && this.currentlyDrawnLevel > Arcadia.FREE_LEVEL_COUNT) {
-        this.border = '10px red';
+    if (Arcadia.isLocked && this.currentlyDrawnLevel > Arcadia.FREE_LEVEL_COUNT) {
+        this.border = '5px red';
     }
 };

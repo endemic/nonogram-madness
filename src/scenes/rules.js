@@ -35,26 +35,26 @@ var RulesScene = function () {
 
     titleLabel = new Arcadia.Label({
         text: 'Rules',
-        font: '96px uni_05_53',
-        shadow: '10px 10px 0 rgba(0, 0, 0, 0.5)',
+        font: '48px uni_05_53',
+        shadow: '5px 5px 0 rgba(0, 0, 0, 0.5)',
         position: {
             x: 0,
-            y: -450
+            y: -225
         }
     });
     this.add(titleLabel);
 
     backButton = new Arcadia.Button({
-        position: { x: -this.size.width / 2 + 140, y: -this.size.height / 2 + 60 },
-        size: { width: 220, height: 70 },
-        border: '10px black',
+        position: { x: -this.size.width / 2 + 70, y: -this.size.height / 2 + 30 },
+        size: { width: 110, height: 35 },
+        border: '5px black',
         color: '#665945',
-        shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)',
+        shadow: '8px 8px 0 rgba(0, 0, 0, 0.5)',
         label: new Arcadia.Label({
             text: '< title',
             color: 'white',
-            font: '48px uni_05_53',
-            position: { x: 0, y: -5 }
+            font: '24px uni_05_53',
+            position: { x: 0, y: -2.5 }
         }),
         action: function () {
             sona.play('button');
@@ -66,12 +66,9 @@ var RulesScene = function () {
     detailLabel = new Arcadia.Label({
         text: text.join(''),
         // alignment: 'left',
-        font: '36px uni_05_53',
-        shadow: '10px 10px 0 rgba(0, 0, 0, 0.5)',
-        position: {
-            x: 0,
-            y: 100
-        }
+        font: '18px uni_05_53',
+        shadow: '5px 5px 0 rgba(0, 0, 0, 0.5)',
+        position: { x: 0, y: 50 }
     });
     this.add(detailLabel);
 

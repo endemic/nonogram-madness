@@ -2,12 +2,16 @@
 
 ==================
 
-[ ] Change dimensions of game to 375x667
+[x] Change dimensions of game to 375x667
+ * Halve the dimensions of any in-game object -- easy!
 [ ] Test IAP
-[x] Selecting locked level then unselecting removes the red border
 [ ] Fix problem with referencing Grid within the TUTORIAL data structure
 [ ] Go back to old icon with green columns?
-[ ] Get rid of gulp, I don't trust its `cordova` job
+[ ] Update Ruby script to output web icons
+[x] Add functionality to 'reset data' button
+[ ] Add URLs for rating in the about.js scene
+[x] Selecting locked level then unselecting removes the red border
+[x] Get rid of gulp, I don't trust its `cordova` job
 [x] Remove the utf8 arrows in "back" buttons
 [x] You are able to play locked levels
 [x] Remove the confirmation modals for "reset" and "quit" in GameScene

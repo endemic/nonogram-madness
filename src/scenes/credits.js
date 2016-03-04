@@ -11,16 +11,16 @@ var CreditsScene = function () {
 
     title = new Arcadia.Label({
         position: { x: 0, y: -350 },
-        font: '96px uni_05_53',
-        shadow: '10px 10px 0 rgba(0, 0, 0, 0.5)',
+        font: '48px uni_05_53',
+        shadow: '5px 5px 0 rgba(0, 0, 0, 0.5)',
         text: 'Thanks\nFor\nPlaying!'
     });
     this.add(title);
 
     description = new Arcadia.Label({
         position: { x: 0, y: 0 },
-        font: '40px uni_05_53',
-        shadow: '10px 10px 0 rgba(0, 0, 0, 0.5)',
+        font: '20px uni_05_53',
+        shadow: '5px 5px 0 rgba(0, 0, 0, 0.5)',
         text: [
             'Programming by Nathan Demick',
             '(c) 2010-2016 Ganbaru Games',
@@ -33,10 +33,10 @@ var CreditsScene = function () {
         position: { x: 0, y: 400 },
         size: { width: 200, height: 90 },
         text: 'OK',
-        font: '48px uni_05_53',
+        font: '12px uni_05_53',
         color: '#665945',
-        border: '10px black',
-        shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)',
+        border: '5px black',
+        shadow: '8px 8px 0 rgba(0, 0, 0, 0.5)',
         action: function () {
             // Clear out saved level data here! start over like a champ
             // localStorage.setObject('completed', new Array(LEVELS.length));

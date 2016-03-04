@@ -25,20 +25,20 @@ var UnlockScene = function () {
 
     description = new Arcadia.Label({
         position: { x: 0, y: -150 },
-        font: '48px uni_05_53',
+        font: '24px uni_05_53',
         shadow: '10px 10px 0 rgba(0, 0, 0, 0.5)',
         text: text.join('\n')
     });
     this.add(description);
 
     yesButton = new Arcadia.Button({
-        position: { x: 0, y: 100 },
-        size: { width: 200, height: 90 },
+        position: { x: 0, y: 50 },
+        size: { width: 100, height: 45 },
         text: 'Yeah!',
-        font: '48px uni_05_53',
+        font: '12px uni_05_53',
         color: '#665945',
-        border: '10px black',
-        shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)',
+        border: '3px black',
+        shadow: '8px 8px 0 rgba(0, 0, 0, 0.5)',
         action: function () {
             sona.play('button');
             window.store.order(UnlockScene.PRODUCT_ID);
@@ -47,13 +47,13 @@ var UnlockScene = function () {
     this.add(yesButton);
 
     noButton = new Arcadia.Button({
-        position: { x: 0, y: 225 },
-        size: { width: 200, height: 90 },
+        position: { x: 0, y: 112 },
+        size: { width: 100, height: 45 },
         text: 'Nah.',
-        font: '48px uni_05_53',
+        font: '12px uni_05_53',
         color: '#665945',
-        border: '10px black',
-        shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)',
+        border: '3px black',
+        shadow: '8px 8px 0 rgba(0, 0, 0, 0.5)',
         action: function () {
             sona.play('button');
             Arcadia.changeScene(CreditsScene);
@@ -62,13 +62,13 @@ var UnlockScene = function () {
     this.add(noButton);
 
     restoreButton = new Arcadia.Button({
-        position: { x: 0, y: 425 },
-        size: { width: 500, height: 90 },
+        position: { x: 0, y: 212 },
+        size: { width: 250, height: 45 },
         text: 'Restore purchase',
-        font: '48px uni_05_53',
+        font: '12px uni_05_53',
         color: '#665945',
-        border: '10px black',
-        shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)',
+        border: '3px black',
+        shadow: '8px 8px 0 rgba(0, 0, 0, 0.5)',
         action: function () {
             sona.play('button');
             window.store.order(UnlockScene.PRODUCT_ID);

@@ -1,5 +1,5 @@
 (function () {
-    Storage.namespace = 'shikaku';
+    Storage.namespace = 'nonogram';
 
     var originalGetItem = Storage.prototype.getItem,
         originalSetItem = Storage.prototype.setItem;

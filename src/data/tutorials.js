@@ -1,6 +1,6 @@
 var action = Arcadia.ENV.mobile ? 'tap' : 'click';
 var actionGerund = Arcadia.ENV.mobile ? 'tapping' : 'clicking';
-var CELL_SIZE = 52;
+var CELL_SIZE = 26;
 var TUTORIALS = [
     /* LEVEL 1 */
     {
@@ -15,11 +15,11 @@ var TUTORIALS = [
         ],
         // Where hints are displayed to player
         hints: [
-            { position: { x: 11, y: 265 }, size: { width: CELL_SIZE, height: CELL_SIZE * 5 } },
-            { position: { x: 115, y: 163 }, size: { width: CELL_SIZE * 3, height: CELL_SIZE } },
-            { position: { x: 115, y: 370 }, size: { width: CELL_SIZE * 3, height: CELL_SIZE } },
-            { position: { x: 165, y: 293 }, size: { width: CELL_SIZE, height: CELL_SIZE * 2 } },
-            { position: { x: 115, y: 265 }, size: { width: CELL_SIZE, height: CELL_SIZE } }
+            { position: { x: 5, y: 133 }, size: { width: CELL_SIZE, height: CELL_SIZE * 5 } },
+            { position: { x: 57, y: 81 }, size: { width: CELL_SIZE * 3, height: CELL_SIZE } },
+            { position: { x: 57, y: 185 }, size: { width: CELL_SIZE * 3, height: CELL_SIZE } },
+            { position: { x: 83, y: 146 }, size: { width: CELL_SIZE, height: CELL_SIZE * 2 } },
+            { position: { x: 57, y: 133 }, size: { width: CELL_SIZE, height: CELL_SIZE } }
         ],
         // text displayed to player
         text: [
@@ -44,11 +44,11 @@ var TUTORIALS = [
         ],
         // Where hints are displayed to player
         hints: [
-            { position: { x: 11, y: 265 }, size: { width: CELL_SIZE, height: CELL_SIZE * 5 } },
-            { position: { x: 140, y: 370 }, size: { width: CELL_SIZE * 4, height: CELL_SIZE } },
-            { position: { x: 11 + CELL_SIZE * 1, y: 265 }, size: { width: CELL_SIZE, height: CELL_SIZE * 3 } },
-            { position: { x: 11 + CELL_SIZE * 2, y: 293 }, size: { width: CELL_SIZE, height: CELL_SIZE * 2 } },
-            { position: { x: 11 + CELL_SIZE * 3, y: 320 }, size: { width: CELL_SIZE, height: CELL_SIZE * 1 } }
+            { position: { x: 6, y: 133 }, size: { width: CELL_SIZE, height: CELL_SIZE * 5 } },
+            { position: { x: 70, y: 185 }, size: { width: CELL_SIZE * 4, height: CELL_SIZE } },
+            { position: { x: 6 + CELL_SIZE * 1, y: 133 }, size: { width: CELL_SIZE, height: CELL_SIZE * 3 } },
+            { position: { x: 6 + CELL_SIZE * 2, y: 146 }, size: { width: CELL_SIZE, height: CELL_SIZE * 2 } },
+            { position: { x: 6 + CELL_SIZE * 3, y: 161 }, size: { width: CELL_SIZE, height: CELL_SIZE * 1 } }
         ],
         // text displayed to player
         text: [
