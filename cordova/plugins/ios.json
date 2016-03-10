@@ -12,6 +12,9 @@
         },
         "cc.fovea.cordova.purchase": {
             "PACKAGE_NAME": "com.ganbarugames.nonogramjs"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "com.ganbarugames.nonogramjs"
         }
     },
     "dependent_plugins": {}

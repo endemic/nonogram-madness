@@ -2,7 +2,7 @@
 
 SOURCE_IMAGE = 'iTunesArtwork@2x.png'
 
-SIZES = {
+APP_ICONS = {
   40 => 'Icon-40.png',
   80 => 'Icon-40@2x.png',
   50 => 'Icon-50.png',
@@ -21,6 +21,18 @@ SIZES = {
   512 => 'iTunesArtwork.png'
 }
 
-SIZES.each do |dimension, filename|
+WEB_ICONS = {
+  96 => '96.png',
+  120 => '120.png',
+  144 => '144.png',
+  180 => '180.png',
+  192 => '192.png'
+}
+
+APP_ICONS.each do |dimension, filename|
   `convert #{SOURCE_IMAGE} -resize #{dimension}x#{dimension} #{filename}`
+end
+
+WEB_ICONS.each do |dimension, filename|
+  `convert #{SOURCE_IMAGE} -resize #{dimension}x#{dimension} ../../../assets/icons/#{filename}`
 end

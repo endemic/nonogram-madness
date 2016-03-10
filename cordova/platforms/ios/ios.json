@@ -11,6 +11,10 @@
                         {
                             "xml": "<feature name=\"InAppPurchase\"><param name=\"ios-package\" value=\"InAppPurchase\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"SplashScreen\"><param name=\"ios-package\" value=\"CDVSplashScreen\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -23,6 +27,9 @@
         },
         "cc.fovea.cordova.purchase": {
             "PACKAGE_NAME": "com.ganbarugames.nonogramjs"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "com.ganbarugames.nonogramjs"
         }
     },
     "dependent_plugins": {},
@@ -34,10 +41,19 @@
             "clobbers": [
                 "store"
             ]
+        },
+        {
+            "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
+            "id": "cordova-plugin-splashscreen.SplashScreen",
+            "pluginId": "cordova-plugin-splashscreen",
+            "clobbers": [
+                "navigator.splashscreen"
+            ]
         }
     ],
     "plugin_metadata": {
         "cordova-plugin-whitelist": "1.2.0",
-        "cc.fovea.cordova.purchase": "4.0.0"
+        "cc.fovea.cordova.purchase": "4.0.0",
+        "cordova-plugin-splashscreen": "3.1.0"
     }
 }
