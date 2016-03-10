@@ -97,7 +97,8 @@ http://ganbarugames.com\n\n \
     });
     this.add(dataResetButton);
 
-    if (Arcadia.ENV.cordova) {
+    // TODO: enable this
+    if (Arcadia.ENV.cordova && false) {
         rateButton = new Arcadia.Button({
             position: { x: 0, y: dataResetButton.position.y + 60 },
             size: { width: 210, height: 45 },
@@ -116,9 +117,9 @@ http://ganbarugames.com\n\n \
                 } else if (Arcadia.ENV.ios) {
                     store = 'the App Store';
                 }
-                if (window.confirm('Rate in ' + store + '?')) {
+                if (confirm('Rate in ' + store + '?')) {
                     // TODO: obtain real link
-                    window.open('somewhere', '_blank');
+                    open('itms-apps://itunes.apple.com/app/386461624', '_blank');
                 }
             }
         });

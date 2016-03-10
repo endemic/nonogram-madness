@@ -5,7 +5,7 @@ LevelSelectScene, Block, Preview, sona */
 var GameScene = function GameScene(options) {
     Arcadia.Scene.apply(this, arguments);
 
-    this.startMusic();
+    // this.startMusic();
 
     this.puzzleIndex = options.level;
     // TODO: remove
@@ -86,27 +86,30 @@ GameScene.FILL = 'fill';
 GameScene.MARK = 'mark';
 
 GameScene.prototype.update = function update(delta) {
-    var minutes,
-        seconds,
-        indices,
-        success,
-        self = this;
-
     Arcadia.Scene.prototype.update.call(this, delta);
 
     this.secondsLeft -= delta;
 
-    minutes = this.zeroPad(Math.round(this.secondsLeft / 60), 2);
-    seconds = this.zeroPad(Math.round(this.secondsLeft % 60), 2);
+    if (this.secondsLeft < 0) {
+        this.secondsLeft = 0;
+    }
+
+    var minutes = this.zeroPad(Math.round(this.secondsLeft / 60), 2);
+    var seconds = this.zeroPad(Math.round(this.secondsLeft % 60), 2);
 
     // TODO break this out into two labels, to prevent text jumping
     this.timerLabel.text = minutes + ':' + seconds;
 
+    if (this.secondsLeft === 0) {
+        alert('Out of time!');
+        Arcadia.changeScene(LevelSelectScene);
+    }
+
     if (this.showTutorial) {
         // check for player filling certain blocks
-        indices = TUTORIALS[this.puzzleIndex]['indices'][this.tutorialStep] || [];
-
-        success = indices.every(function (index) {
+        var self = this;
+        var indices = TUTORIALS[this.puzzleIndex]['indices'][this.tutorialStep] || [];
+        var success = indices.every(function (index) {
             return self.state[index] && self.state[index].type === GameScene.FILL;
         });
 
@@ -302,6 +305,7 @@ GameScene.prototype.checkWinCondition = function checkWinCondition() {
                     Arcadia.changeScene(GameScene, { level: incompleteLevel });
                 }
             } else {
+                sona.play('button');
                 Arcadia.changeScene(LevelSelectScene);
             }
         }, 1000);
