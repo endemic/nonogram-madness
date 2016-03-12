@@ -40,18 +40,18 @@ var TitleScene = function () {
             position: { x: 0, y: -5 }
         }),
         action: function () {
-            var completed,
-                incompleteLevel;
-
             sona.play('button');
             // self.stopMusic();
-            completed = localStorage.getObject('completed') || Array(LEVELS.length);
-            incompleteLevel = completed.indexOf(null);
+            var completedLevels = localStorage.getObject('completedLevels') || [];
+            while (completedLevels.length < LEVELS.length) {
+                completedLevels.push(null);
+            }
+            var incompleteLevel = completedLevels.indexOf(null);
 
             // TOOO: Extract this code from here & game scene
             if (incompleteLevel === -1) {
                 Arcadia.changeScene(LevelSelectScene);
-            } else if (Arcadia.isLocked && incompleteLevel >= Arcadia.FREE_LEVEL_COUNT) {
+            } else if (Arcadia.isLocked() && incompleteLevel >= Arcadia.FREE_LEVEL_COUNT) {
                 Arcadia.changeScene(UnlockScene);
             } else {
                 Arcadia.changeScene(GameScene, { level: incompleteLevel });

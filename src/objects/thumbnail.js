@@ -75,7 +75,7 @@ Thumbnail.prototype.drawPreview = function (levelIndex, completed) {
         this.alpha = 1;
     }
 
-    if (Arcadia.isLocked && levelIndex > Arcadia.FREE_LEVEL_COUNT) {
+    if (Arcadia.isLocked() && this.currentlyDrawnLevel >= Arcadia.FREE_LEVEL_COUNT) {
         this.border = '5px red';
     }
 
@@ -98,7 +98,7 @@ Thumbnail.prototype.highlight = function () {
 Thumbnail.prototype.lowlight = function () {
     this.border = '5px white';
 
-    if (Arcadia.isLocked && this.currentlyDrawnLevel > Arcadia.FREE_LEVEL_COUNT) {
+    if (Arcadia.isLocked() && this.currentlyDrawnLevel >= Arcadia.FREE_LEVEL_COUNT) {
         this.border = '5px red';
     }
 };

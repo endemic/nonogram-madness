@@ -20,6 +20,7 @@ var UnlockScene = function () {
         'solving nonograms so far.',
         'Would you like to',
         'unlock 105 more puzzles',
+        'PLUS random puzzles',
         'for only ' + window.PRODUCT_DATA.price + '?'
     ];
 
@@ -34,8 +35,8 @@ var UnlockScene = function () {
     yesButton = new Arcadia.Button({
         position: { x: 0, y: 50 },
         size: { width: 100, height: 45 },
-        text: 'Yeah!',
-        font: '12px uni_05_53',
+        text: 'yeah!',
+        font: '24px uni_05_53',
         color: '#665945',
         border: '3px black',
         shadow: '8px 8px 0 rgba(0, 0, 0, 0.5)',
@@ -49,8 +50,8 @@ var UnlockScene = function () {
     noButton = new Arcadia.Button({
         position: { x: 0, y: 112 },
         size: { width: 100, height: 45 },
-        text: 'Nah.',
-        font: '12px uni_05_53',
+        text: 'nah.',
+        font: '24px uni_05_53',
         color: '#665945',
         border: '3px black',
         shadow: '8px 8px 0 rgba(0, 0, 0, 0.5)',
@@ -64,8 +65,8 @@ var UnlockScene = function () {
     restoreButton = new Arcadia.Button({
         position: { x: 0, y: 212 },
         size: { width: 250, height: 45 },
-        text: 'Restore purchase',
-        font: '12px uni_05_53',
+        text: 'restore purchase',
+        font: '24px uni_05_53',
         color: '#665945',
         border: '3px black',
         shadow: '8px 8px 0 rgba(0, 0, 0, 0.5)',

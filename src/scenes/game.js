@@ -270,10 +270,8 @@ GameScene.prototype.markOrFill = function markOrFill(row, column) {
 };
 
 GameScene.prototype.checkWinCondition = function checkWinCondition() {
-    var success = true,
-        self = this,
-        completed,
-        incompleteLevel;
+    var success = true;
+    var self = this;
 
     this.clues.forEach(function (clue, index) {
         if (clue === 0 || !success) {
@@ -286,10 +284,13 @@ GameScene.prototype.checkWinCondition = function checkWinCondition() {
     });
 
     if (success) {
-        completed = localStorage.getObject('completed') || new Array(LEVELS.length);
-        completed[this.puzzleIndex] = true;
-        localStorage.setObject('completed', completed);
-        incompleteLevel = completed.indexOf(null);
+        var completedLevels = localStorage.getObject('completedLevels') || [];
+        while (completedLevels.length < LEVELS.length) {
+            completedLevels.push(null);
+        }
+        completedLevels[this.puzzleIndex] = true;
+        localStorage.setObject('completedLevels', completedLevels);
+        var incompleteLevel = completedLevels.indexOf(null);
 
         window.setTimeout(function () {
             sona.play('win');
@@ -299,7 +300,7 @@ GameScene.prototype.checkWinCondition = function checkWinCondition() {
 
                 if (incompleteLevel === -1) {
                     Arcadia.changeScene(LevelSelectScene);
-                } else if (Arcadia.isLocked && incompleteLevel >= Arcadia.FREE_LEVEL_COUNT) {
+                } else if (Arcadia.isLocked() && incompleteLevel >= Arcadia.FREE_LEVEL_COUNT) {
                     Arcadia.changeScene(UnlockScene);
                 } else {
                     Arcadia.changeScene(GameScene, { level: incompleteLevel });
@@ -533,6 +534,8 @@ GameScene.prototype.drawUi = function drawUi() {
             for (var i = 0; i < self.state.length; i += 1) {
                 self.state[i] = null;
             }
+
+            self.preview.clear();
         }
     }));
 

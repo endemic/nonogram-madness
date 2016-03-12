@@ -17,7 +17,10 @@ var LevelSelectScene = function (options) {
     this.perPage = 9;
     this.currentPage = Math.floor(this.selectedLevel / this.perPage);
     this.totalPages = Math.ceil(LEVELS.length / this.perPage);
-    this.completed = localStorage.getObject('completed') || Array(LEVELS.length);
+    this.completedLevels = localStorage.getObject('completedLevels') || [];
+    while (this.completedLevels.length < LEVELS.length) {
+        this.completedLevels.push(null);
+    }
 
     this.pageLabel = new Arcadia.Label({
         position: { x: 0, y: -145 },
@@ -77,7 +80,7 @@ var LevelSelectScene = function (options) {
                 }
             });
 
-            thumbnail.drawPreview(index, self.completed);
+            thumbnail.drawPreview(index, self.completedLevels);
 
             self.add(thumbnail);
             page.push(thumbnail);
@@ -117,7 +120,7 @@ var LevelSelectScene = function (options) {
     });
     this.add(backButton);
 
-    if (Arcadia.isLocked) {
+    if (Arcadia.isLocked()) {
         unlockButton = new Arcadia.Button({
             position: { x: this.size.width / 2 - 70, y: -this.size.height / 2 + 30 },
             size: { width: 110, height: 35 },
@@ -160,7 +163,7 @@ var LevelSelectScene = function (options) {
         }),
         action: function () {
             sona.play('button');
-            if (Arcadia.isLocked && self.selectedLevel >= Arcadia.FREE_LEVEL_COUNT) {
+            if (Arcadia.isLocked() && self.selectedLevel >= Arcadia.FREE_LEVEL_COUNT) {
                 Arcadia.changeScene(UnlockScene);
             } else {
                 Arcadia.changeScene(GameScene, { level: self.selectedLevel });
@@ -254,7 +257,7 @@ LevelSelectScene.prototype.next = function () {
             };
 
             levelIndex = self.currentPage * self.perPage + index;
-            shape.drawPreview(levelIndex, self.completed);
+            shape.drawPreview(levelIndex, self.completedLevels);
 
             delay = Math.floor(index / 3) * LevelSelectScene.TRANSITION_DELAY + 100;
 
@@ -321,7 +324,7 @@ LevelSelectScene.prototype.previous = function () {
             };
 
             levelIndex = self.currentPage * self.perPage + index;
-            shape.drawPreview(levelIndex, self.completed);
+            shape.drawPreview(levelIndex, self.completedLevels);
 
             delay = Math.floor((self.perPage - index - 1) / 3) * LevelSelectScene.TRANSITION_DELAY + 100;
 
@@ -357,7 +360,7 @@ LevelSelectScene.prototype.updatePageLabel = function () {
     this.puzzleLabel.text = 'Puzzle #' + (this.selectedLevel + 1);  // 0-based index
     this.difficultyLabel.text = 'Difficulty: ' + LEVELS[this.selectedLevel].difficulty;
 
-    if (this.completed[this.selectedLevel]) {
+    if (this.completedLevels[this.selectedLevel]) {
         this.puzzleNameLabel.text = LEVELS[this.selectedLevel].title;
     } else {
         this.puzzleNameLabel.text = '???';
@@ -366,7 +369,7 @@ LevelSelectScene.prototype.updatePageLabel = function () {
 
 LevelSelectScene.prototype.onPointEnd = function (points) {
     Arcadia.Scene.prototype.onPointEnd.call(this, points);
-    
+
     var self = this,
         cursor = {
             size: { width: 1, height: 1 },
