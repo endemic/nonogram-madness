@@ -27,7 +27,7 @@ var UnlockScene = function () {
     description = new Arcadia.Label({
         position: { x: 0, y: -150 },
         font: '24px uni_05_53',
-        shadow: '10px 10px 0 rgba(0, 0, 0, 0.5)',
+        shadow: '5px 5px 0 rgba(0, 0, 0, 0.5)',
         text: text.join('\n')
     });
     this.add(description);

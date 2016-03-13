@@ -45,6 +45,7 @@
 		E6E6ED39B5E744A8904A8352 /* FileUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = B53C2B890F164DA8A6B06268 /* FileUtility.m */; };
 		6C7F9F68959C4573B305806F /* CDVSplashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = E46049CF29B04F319B0AE639 /* CDVSplashScreen.m */; };
 		214164B3B2074239A53FFD87 /* CDVViewController+SplashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B24AA01A62C4432A9A04159 /* CDVViewController+SplashScreen.m */; };
+		DD58E90CC62A4846956C70EE /* CDVLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = E8D67004A7DA453993F2FE7A /* CDVLogger.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -119,6 +120,8 @@
 		9B24AA01A62C4432A9A04159 /* CDVViewController+SplashScreen.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVViewController+SplashScreen.m"; path = "cordova-plugin-splashscreen/CDVViewController+SplashScreen.m"; sourceTree = "<group>"; fileEncoding = 4; };
 		4E557CE811DF41F59F4F03D8 /* CDVSplashScreen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVSplashScreen.h"; path = "cordova-plugin-splashscreen/CDVSplashScreen.h"; sourceTree = "<group>"; fileEncoding = 4; };
 		FCF8C757B12047EE8E505B16 /* CDVViewController+SplashScreen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVViewController+SplashScreen.h"; path = "cordova-plugin-splashscreen/CDVViewController+SplashScreen.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		E8D67004A7DA453993F2FE7A /* CDVLogger.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVLogger.m"; path = "cordova-plugin-console/CDVLogger.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		1958F6E2EBB34B468A839FF4 /* CDVLogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVLogger.h"; path = "cordova-plugin-console/CDVLogger.h"; sourceTree = "<group>"; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -229,6 +232,8 @@
 				9B24AA01A62C4432A9A04159 /* CDVViewController+SplashScreen.m */,
 				4E557CE811DF41F59F4F03D8 /* CDVSplashScreen.h */,
 				FCF8C757B12047EE8E505B16 /* CDVViewController+SplashScreen.h */,
+				E8D67004A7DA453993F2FE7A /* CDVLogger.m */,
+				1958F6E2EBB34B468A839FF4 /* CDVLogger.h */,
 			);
 			name = Plugins;
 			path = "Nonogram Madness/Plugins";
@@ -418,6 +423,7 @@
 				E6E6ED39B5E744A8904A8352 /* FileUtility.m in Sources */,
 				6C7F9F68959C4573B305806F /* CDVSplashScreen.m in Sources */,
 				214164B3B2074239A53FFD87 /* CDVViewController+SplashScreen.m in Sources */,
+				DD58E90CC62A4846956C70EE /* CDVLogger.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

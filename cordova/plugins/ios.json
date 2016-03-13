@@ -15,6 +15,9 @@
         },
         "cordova-plugin-splashscreen": {
             "PACKAGE_NAME": "com.ganbarugames.nonogramjs"
+        },
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "com.ganbarugames.nonogram"
         }
     },
     "dependent_plugins": {}

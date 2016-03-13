@@ -77,6 +77,8 @@ Thumbnail.prototype.drawPreview = function (levelIndex, completed) {
 
     if (Arcadia.isLocked() && this.currentlyDrawnLevel >= Arcadia.FREE_LEVEL_COUNT) {
         this.border = '5px red';
+    } else {
+        this.border = '5px white';
     }
 
     var clues;

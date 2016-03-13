@@ -45,7 +45,7 @@
     <script src="javascript/nonogram-madness.min.js"></script>
 
     <script>
-        window.onload = function () {
+        document.addEventListener('deviceready', function (_) {
             window.sona = new Sona([
                 { url: 'assets/sounds/button.mp3', id: 'button' },
                 { url: 'assets/sounds/fill.mp3', id: 'fill' },
@@ -66,10 +66,10 @@
                 UnlockScene.initializeStore();
 
                 if (navigator.splashscreen) {
-                    navigator.splashscreen.hide();
+                  navigator.splashscreen.hide();
                 }
             });
-        };
+        }, false);
     </script>
     </head>
     <body>

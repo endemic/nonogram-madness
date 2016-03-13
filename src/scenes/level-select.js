@@ -382,8 +382,8 @@ LevelSelectScene.prototype.onPointEnd = function (points) {
         if (thumbnail.collidesWith(cursor) && thumbnail.alpha === 1) {
             sona.play('button');
 
-            thumbnail.highlight();
             self.previousThumbnail.lowlight();
+            thumbnail.highlight();
             self.previousThumbnail = thumbnail;
             self.selectedLevel = self.currentPage * self.perPage + index;
             localStorage.setItem('selectedLevel', self.selectedLevel);

@@ -15,6 +15,22 @@ module.exports = [
         "clobbers": [
             "navigator.splashscreen"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-console/www/console-via-logger.js",
+        "id": "cordova-plugin-console.console",
+        "pluginId": "cordova-plugin-console",
+        "clobbers": [
+            "console"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-console/www/logger.js",
+        "id": "cordova-plugin-console.logger",
+        "pluginId": "cordova-plugin-console",
+        "clobbers": [
+            "cordova.logger"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -22,7 +38,8 @@ module.exports.metadata =
 {
     "cordova-plugin-whitelist": "1.2.0",
     "cc.fovea.cordova.purchase": "4.0.0",
-    "cordova-plugin-splashscreen": "3.1.0"
+    "cordova-plugin-splashscreen": "3.1.0",
+    "cordova-plugin-console": "1.0.2"
 }
 // BOTTOM OF METADATA
 });

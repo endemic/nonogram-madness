@@ -125,7 +125,7 @@ Grid.prototype.highlight = function (x, y) {
 
     this.verticalHighlight.position = {
         x: -this.size.width / 2 + Grid.CLUE_AREA_SIZE + (x * Grid.CELL_SIZE) + Grid.CELL_SIZE / 2,
-        y: -this.size.height / 2 +  Grid.CLUE_AREA_SIZE / 2
+        y: -this.size.height / 2 + Grid.CLUE_AREA_SIZE / 2
     };
 };
 
@@ -170,7 +170,8 @@ Grid.prototype.drawClues = function () {
         horizontalCounter,
         verticalCounter,
         previousVertical,
-        previousHorizontal;
+        previousHorizontal,
+        verticalLabelPadding = 2;
 
     this.verticalClues = [];
     this.horizontalClues = [];
@@ -179,7 +180,7 @@ Grid.prototype.drawClues = function () {
         label = new Arcadia.Label({
             position: {
                 x: -this.size.width / 2 + Grid.CLUE_AREA_SIZE + (i * Grid.CELL_SIZE) + Grid.CELL_SIZE / 2,
-                y: -this.size.height / 2 + Grid.CLUE_AREA_SIZE / 2
+                y: -this.size.height / 2 + Grid.CLUE_AREA_SIZE / 2 + verticalLabelPadding
             },
             text: '2\n2\n2\n4\n5',
             color: 'black',

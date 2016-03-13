@@ -10,7 +10,7 @@ var CreditsScene = function () {
         description;
 
     title = new Arcadia.Label({
-        position: { x: 0, y: -350 },
+        position: { x: 0, y: -150 },
         font: '48px uni_05_53',
         shadow: '5px 5px 0 rgba(0, 0, 0, 0.5)',
         text: 'Thanks\nFor\nPlaying!'
@@ -30,10 +30,10 @@ var CreditsScene = function () {
     this.add(description);
 
     button = new Arcadia.Button({
-        position: { x: 0, y: 400 },
-        size: { width: 200, height: 90 },
+        position: { x: 0, y: 200 },
+        size: { width: 150, height: 70 },
         text: 'OK',
-        font: '12px uni_05_53',
+        font: '36px uni_05_53',
         color: '#665945',
         border: '5px black',
         shadow: '8px 8px 0 rgba(0, 0, 0, 0.5)',
