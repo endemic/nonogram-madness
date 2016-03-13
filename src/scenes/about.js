@@ -13,26 +13,23 @@ var AboutScene = function () {
 
     titleLabel = new Arcadia.Label({
         text: 'About',
-        font: '96px uni_05_53',
-        shadow: '10px 10px 0 rgba(0, 0, 0, 0.5)',
-        position: {
-            x: 0,
-            y: -450
-        }
+        font: '48px uni_05_53',
+        shadow: '5px 5px 0 rgba(0, 0, 0, 0.5)',
+        position: { x: 0, y: -225 }
     });
     this.add(titleLabel);
 
     backButton = new Arcadia.Button({
-        position: { x: -this.size.width / 2 + 140, y: -this.size.height / 2 + 60 },
-        size: { width: 220, height: 70 },
-        border: '10px black',
+        position: { x: -this.size.width / 2 + 70, y: -this.size.height / 2 + 30 },
+        size: { width: 110, height: 35 },
+        border: '5px black',
         color: '#665945',
-        shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)',
+        shadow: '8px 8px 0 rgba(0, 0, 0, 0.5)',
         label: new Arcadia.Label({
             text: '< title',
             color: 'white',
-            font: '48px uni_05_53',
-            position: { x: 0, y: -5 }
+            font: '24px uni_05_53',
+            position: { x: 0, y: -2.5 }
         }),
         action: function () {
             sona.play('button');
@@ -42,75 +39,76 @@ var AboutScene = function () {
     this.add(backButton);
 
     detailLabel = new Arcadia.Label({
-        text: '(c) 2015 Ganbaru Games\n\n \
-Designed and programmed\nby Nathan Demick\n\n \
+        text: 'Programming by Nathan Demick\n \
+(c) 2010 - 2016 Ganbaru Games\n \
+http://ganbarugames.com\n\n \
 "Nonogram" concept by\nNon Ishida & Tetsuya Nishio',
-        font: '36px uni_05_53',
-        shadow: '10px 10px 0 rgba(0, 0, 0, 0.5)',
-        position: {
-            x: 0,
-            y: -150
-        }
+        font: '18px uni_05_53',
+        shadow: '5px 5px 0 rgba(0, 0, 0, 0.5)',
+        position: { x: 0, y: -75 }
     });
     this.add(detailLabel);
 
-    sfxToggleButton = new Arcadia.Button({
-        position: { x: 0, y: 100 },
-        size: { width: 420, height: 90 },
-        color: '#665945',
-        border: '10px black',
-        shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)',
-        label: new Arcadia.Label({
-            text: (localStorage.getBoolean('playSfx') ? 'Sound ON' : 'Sound OFF'),
-            font: '64px uni_05_53',
-            position: { x: 0, y: -10 }
-        }),
-        action: function () {
-            sona.play('button');
+    /* Lawl not actually checking that localstorage bool */
+    // sfxToggleButton = new Arcadia.Button({
+    //     position: { x: 0, y: 50 },
+    //     size: { width: 210, height: 45 },
+    //     color: '#665945',
+    //     border: '5px black',
+    //     shadow: '8px 8px 0 rgba(0, 0, 0, 0.5)',
+    //     label: new Arcadia.Label({
+    //         text: (localStorage.getBoolean('playSfx') ? 'Sound on' : 'Sound off'),
+    //         font: '32px uni_05_53',
+    //         position: { x: 0, y: -3 }
+    //     }),
+    //     action: function () {
+    //         sona.play('button');
 
-            if (localStorage.getBoolean('playSfx')) {
-                localStorage.setBoolean('playSfx', false);
-                this.text = 'Sound OFF';
-            } else {
-                localStorage.setBoolean('playSfx', true);
-                this.text = 'Sound ON';
-            }
-        }
-    });
-    this.add(sfxToggleButton);
+    //         if (localStorage.getBoolean('playSfx')) {
+    //             localStorage.setBoolean('playSfx', false);
+    //             this.text = 'Sound off';
+    //         } else {
+    //             localStorage.setBoolean('playSfx', true);
+    //             this.text = 'Sound on';
+    //         }
+    //     }
+    // });
+    // this.add(sfxToggleButton);
 
     dataResetButton = new Arcadia.Button({
-        position: { x: 0, y: sfxToggleButton.position.y + 120 },
-        size: { width: 420, height: 90 },
+        // position: { x: 0, y: sfxToggleButton.position.y + 60 },
+        position: { x: 0, y: 60 },
+        size: { width: 210, height: 45 },
         color: '#665945',
-        border: '10px black',
-        shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)',
+        border: '5px black',
+        shadow: '8px 8px 0 rgba(0, 0, 0, 0.5)',
         label: new Arcadia.Label({
             text: 'Reset data',
-            font: '64px uni_05_53',
-            position: { x: 0, y: -10 }
+            font: '32px uni_05_53',
+            position: { x: 0, y: -3 }
         }),
         action: function () {
             sona.play('button');
 
             if (confirm('Reset all saved data?')) {
-                // TODO: figure out what this does
+                localStorage.setObject('completed', new Array(LEVELS.length));
             }
         }
     });
     this.add(dataResetButton);
 
-    if (Arcadia.ENV.cordova) {
+    // TODO: enable this
+    if (Arcadia.ENV.cordova && false) {
         rateButton = new Arcadia.Button({
-            position: { x: 0, y: dataResetButton.position.y + 120 },
-            size: { width: 420, height: 90 },
+            position: { x: 0, y: dataResetButton.position.y + 60 },
+            size: { width: 210, height: 45 },
             color: '#665945',
-            border: '10px black',
-            shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)',
+            border: '5px black',
+            shadow: '8px 8px 0 rgba(0, 0, 0, 0.5)',
             label: new Arcadia.Label({
                 text: 'Feedback',
-                font: '64px uni_05_53',
-                position: { x: 0, y: -10 }
+                font: '32px uni_05_53',
+                position: { x: 0, y: -5 }
             }),
             action: function () {
                 var store;
@@ -119,9 +117,9 @@ Designed and programmed\nby Nathan Demick\n\n \
                 } else if (Arcadia.ENV.ios) {
                     store = 'the App Store';
                 }
-                if (window.confirm('Rate in ' + store + '?')) {
+                if (confirm('Rate in ' + store + '?')) {
                     // TODO: obtain real link
-                    window.open('somewhere', '_blank');
+                    open('itms-apps://itunes.apple.com/app/386461624', '_blank');
                 }
             }
         });

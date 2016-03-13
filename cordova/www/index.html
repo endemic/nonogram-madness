@@ -6,10 +6,11 @@
 
     <style type="text/css">
       body {
-        margin: 0;
-        padding: 0;
-        background-size: 100% 100%;
-        cursor: pointer;
+          margin: 0;
+          padding: 0;
+          background: url('assets/images/background.png') #000;
+          background-size: auto 100%;
+          cursor: url('assets/images/cursor.cur'), default;
       }
       body,
       #arcadia,
@@ -20,12 +21,6 @@
           -moz-user-select: none;
           user-select: none;
       }
-      #arcadia canvas {
-        background-image: url('assets/images/background.png');
-        background-size: 100% 100%;
-        cursor: url('assets/images/cursor.cur'), default;
-      }
-
       @font-face {
         font-family: 'uni_05_53';
         src: url('assets/fonts/uni0553-webfont-webfont.eot');
@@ -50,28 +45,31 @@
     <script src="javascript/nonogram-madness.min.js"></script>
 
     <script>
-        window.onload = function () {
+        document.addEventListener('deviceready', function (_) {
             window.sona = new Sona([
                 { url: 'assets/sounds/button.mp3', id: 'button' },
                 { url: 'assets/sounds/fill.mp3', id: 'fill' },
                 { url: 'assets/sounds/mark.mp3', id: 'mark' },
-                { url: 'assets/sounds/win.mp3', id: 'g' },
+                { url: 'assets/sounds/win.mp3', id: 'win' },
                 { url: 'assets/sounds/error.mp3', id: 'error' },
-                { url: 'assets/sounds/invalid.mp3', id: 'invalid' },
-                { url: 'assets/music/1.mp3', id: 'bgm-one' },
-                { url: 'assets/music/2.mp3', id: 'bgm-two' },
-                { url: 'assets/music/tutorial.mp3', id: 'bgm-tutorial' }
+                { url: 'assets/sounds/invalid.mp3', id: 'invalid' }
             ]);
 
             window.sona.load(function () {
                 new Arcadia.Game({
-                    width: 750,
-                    height: 1334,
+                    width: 375,
+                    height: 667,
                     scene: TitleScene,
                     scaleToFit: true
                 });
+
+                UnlockScene.initializeStore();
+
+                if (navigator.splashscreen) {
+                  navigator.splashscreen.hide();
+                }
             });
-        };
+        }, false);
     </script>
     </head>
     <body>

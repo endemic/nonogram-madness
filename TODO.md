@@ -1,17 +1,41 @@
-# TODO
+TODO
+====
 
-==================
-
-[ ] Change dimensions of game to 375x667
-[ ] Test IAP
+[x] Add descriptive text to screenshots
+[ ] "Clear" button doesn't reset dimmed clues (who cares? who is going to use that button?)
+[x] Scrolling to a page of locked puzzles, then scrolling back to page one, all page one puzzles have red borders
+[x] Splash screen seems to be taking an awful long time
+[x] Screenshots
+[x] "Clear" button doesn't reset the preview
+[x] Tapping a level select preview a second time removes the orange highlight
+[x] Text shadow on unlock scene is too pronounced
+[x] Credits scene after "nah" on unlock scene is janked
+[x] Move vertical clues downward slightly
+[x] Test IAP
+[x] Going directly to next incomplete level doesn't seem to work on fresh install
+[x] Change dimensions of game to 375x667
+[x] Fix problem with referencing Grid within the TUTORIAL data structure
+[x] Update Ruby script to output web icons
+[x] running out of time doesn't end the game
+[x] clue #4 in tutorial 2 will allow progress if only the bottom block is filled
+[x] Change app bundle ID to `com.ganbarugames.nonogram`
+[x] White flash after splash screen in Cordova proj (add splashscreen plugin)
+[x] "fill" sfx seems strange
+[x] "win" jingle isn't playing in Cordova
+[x] Fix speed when resuming from background
+[x] Change app bundle name
+[x] Add functionality to 'reset data' button
 [x] Selecting locked level then unselecting removes the red border
-[ ] Fix problem with referencing Grid within the TUTORIAL data structure
-[ ] Go back to old icon with green columns?
-[ ] Get rid of gulp, I don't trust its `cordova` job
+[x] Get rid of gulp, I don't trust its `cordova` job
 [x] Remove the utf8 arrows in "back" buttons
 [x] You are able to play locked levels
 [x] Remove the confirmation modals for "reset" and "quit" in GameScene
 [x] Add "unlock" button to upper right of level select
+
+future
+======
+[ ] Add the modal object
+[ ] Add URLs for rating in the about.js scene (loads store, doesn't load app)
 
 [x] Finish the first tutorial
 	[x] tutorial layout

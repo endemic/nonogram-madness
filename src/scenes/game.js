@@ -5,7 +5,7 @@ LevelSelectScene, Block, Preview, sona */
 var GameScene = function GameScene(options) {
     Arcadia.Scene.apply(this, arguments);
 
-    this.startMusic();
+    // this.startMusic();
 
     this.puzzleIndex = options.level;
     // TODO: remove
@@ -32,7 +32,7 @@ var GameScene = function GameScene(options) {
         clues: this.clues,
         position: {
             x: 0,
-            y: this.size.height / 2 - Grid.MAX_SIZE / 2 - 140
+            y: this.size.height / 2 - Grid.MAX_SIZE / 2 - 70
         },
         zIndex: 5
     });
@@ -42,7 +42,7 @@ var GameScene = function GameScene(options) {
     this.errorMessages.factory = function () {
         return new Arcadia.Label({
             color: 'black',
-            font: '48px uni_05_53',
+            font: '24px uni_05_53',
             reset: function () {
                 this.alpha = 1;
             }
@@ -86,27 +86,30 @@ GameScene.FILL = 'fill';
 GameScene.MARK = 'mark';
 
 GameScene.prototype.update = function update(delta) {
-    var minutes,
-        seconds,
-        indices,
-        success,
-        self = this;
-
     Arcadia.Scene.prototype.update.call(this, delta);
 
     this.secondsLeft -= delta;
 
-    minutes = this.zeroPad(Math.round(this.secondsLeft / 60), 2);
-    seconds = this.zeroPad(Math.round(this.secondsLeft % 60), 2);
+    if (this.secondsLeft < 0) {
+        this.secondsLeft = 0;
+    }
+
+    var minutes = this.zeroPad(Math.round(this.secondsLeft / 60), 2);
+    var seconds = this.zeroPad(Math.round(this.secondsLeft % 60), 2);
 
     // TODO break this out into two labels, to prevent text jumping
     this.timerLabel.text = minutes + ':' + seconds;
 
+    if (this.secondsLeft === 0) {
+        alert('Out of time!');
+        Arcadia.changeScene(LevelSelectScene);
+    }
+
     if (this.showTutorial) {
         // check for player filling certain blocks
-        indices = TUTORIALS[this.puzzleIndex]['indices'][this.tutorialStep] || [];
-
-        success = indices.every(function (index) {
+        var self = this;
+        var indices = TUTORIALS[this.puzzleIndex]['indices'][this.tutorialStep] || [];
+        var success = indices.every(function (index) {
             return self.state[index] && self.state[index].type === GameScene.FILL;
         });
 
@@ -205,7 +208,7 @@ GameScene.prototype.markOrFill = function markOrFill(row, column) {
     index = row * this.puzzleSize + column;
     valid = this.clues[index] === 1;
     existingBlock = this.state[index];
-    offsetToCenter = 5;
+    offsetToCenter = 3;
 
     if (this.action === GameScene.FILL) {
         if (existingBlock) {
@@ -267,10 +270,8 @@ GameScene.prototype.markOrFill = function markOrFill(row, column) {
 };
 
 GameScene.prototype.checkWinCondition = function checkWinCondition() {
-    var success = true,
-        self = this,
-        completed,
-        incompleteLevel;
+    var success = true;
+    var self = this;
 
     this.clues.forEach(function (clue, index) {
         if (clue === 0 || !success) {
@@ -283,10 +284,13 @@ GameScene.prototype.checkWinCondition = function checkWinCondition() {
     });
 
     if (success) {
-        completed = localStorage.getObject('completed') || new Array(LEVELS.length);
-        completed[this.puzzleIndex] = true;
-        localStorage.setObject('completed', completed);
-        incompleteLevel = completed.indexOf(null);
+        var completedLevels = localStorage.getObject('completedLevels') || [];
+        while (completedLevels.length < LEVELS.length) {
+            completedLevels.push(null);
+        }
+        completedLevels[this.puzzleIndex] = true;
+        localStorage.setObject('completedLevels', completedLevels);
+        var incompleteLevel = completedLevels.indexOf(null);
 
         window.setTimeout(function () {
             sona.play('win');
@@ -302,6 +306,7 @@ GameScene.prototype.checkWinCondition = function checkWinCondition() {
                     Arcadia.changeScene(GameScene, { level: incompleteLevel });
                 }
             } else {
+                sona.play('button');
                 Arcadia.changeScene(LevelSelectScene);
             }
         }, 1000);
@@ -407,62 +412,62 @@ GameScene.prototype.drawUi = function drawUi() {
         fillIcon;
 
     timerBackground = new Arcadia.Shape({
-        size: { width: 340, height: 270 },
-        position: { x: -185, y: -390 },
-        border: '10px black',
-        shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)'
+        size: { width: 170, height: 135 },
+        position: { x: -92.5, y: -195 },
+        border: '5px black',
+        shadow: '8px 8px 0 rgba(0, 0, 0, 0.5)'
     });
     this.add(timerBackground);
 
     timeLeftLabel = new Arcadia.Label({
-        position: { x: 0, y: 50 },
+        position: { x: 0, y: 25 },
         text: 'time left',
         color: 'black',
-        font: '64px uni_05_53'
+        font: '32px uni_05_53'
     });
     timerBackground.add(timeLeftLabel);
 
     this.timerLabel = new Arcadia.Label({
-        position: { x: 0, y: -45 },
+        position: { x: 0, y: -22.5 },
         text: '30:00',
         color: 'black',
-        font: '88px uni_05_53'
+        font: '44px uni_05_53'
     });
     timerBackground.add(this.timerLabel);
 
     previewBackground = new Arcadia.Shape({
-        size: { width: 340, height: 270 },
-        position: { x: 185, y: -390 },
-        border: '10px black',
-        shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)'
+        size: { width: 170, height: 135 },
+        position: { x: 92.5, y: -195 },
+        border: '5px black',
+        shadow: '8px 8px 0 rgba(0, 0, 0, 0.5)'
     });
     this.add(previewBackground);
 
     previewLabel = new Arcadia.Label({
-        position: { x: 0, y: -110 },
+        position: { x: 0, y: -55 },
         text: 'preview',
         color: 'black',
-        font: '48px uni_05_53'
+        font: '24px uni_05_53'
     });
     previewBackground.add(previewLabel);
 
     this.preview = new Preview({
-        position: { x: 0, y: 20 },
+        position: { x: 0, y: 10 },
         puzzleSize: this.puzzleSize
     });
     previewBackground.add(this.preview);
 
     // Mark button
     this.markButton = new Arcadia.Button({
-        position: { x: -185, y: 600 },
-        size: { width: 340, height: 90 },
+        position: { x: -92.5, y: 300 },
+        size: { width: 170, height: 45 },
         color: '#665945',
-        border: '10px black',
-        shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)',
+        border: '5px black',
+        shadow: '8px 8px 0 rgba(0, 0, 0, 0.5)',
         label: new Arcadia.Label({
             text: 'mark',
-            font: '64px uni_05_53',
-            position: { x: 40, y: -10 }
+            font: '32px uni_05_53',
+            position: { x: 20, y: -5 }
         }),
         action: function () {
             sona.play('button');
@@ -472,9 +477,9 @@ GameScene.prototype.drawUi = function drawUi() {
         }
     });
     markIcon = new Arcadia.Shape({
-        size: { width: 50, height: 50 },
-        position: { x: -90, y: 0 },
-        border: '2px black'
+        size: { width: 25, height: 25 },
+        position: { x: -45, y: 0 },
+        border: '1px black'
     });
     markIcon.add(new Block({ type: 'mark' }));
     this.markButton.add(markIcon);
@@ -482,16 +487,16 @@ GameScene.prototype.drawUi = function drawUi() {
 
     // Fill button
     this.fillButton = new Arcadia.Button({
-        position: { x: 185, y: 600 },
-        size: { width: 340, height: 90 },
+        position: { x: 92.5, y: 300 },
+        size: { width: 170, height: 45 },
         color: '#665945',
-        border: '10px black',
-        shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)',
+        border: '5px black',
+        shadow: '8px 8px 0 rgba(0, 0, 0, 0.5)',
         label: new Arcadia.Label({
             text: 'fill',
-            font: '64px uni_05_53',
+            font: '32px uni_05_53',
             color: 'orange',
-            position: { x: 30, y: -10 }
+            position: { x: 15, y: -5 }
         }),
         action: function () {
             sona.play('button');
@@ -501,8 +506,8 @@ GameScene.prototype.drawUi = function drawUi() {
         }
     });
     fillIcon = new Arcadia.Shape({
-        size: { width: 52, height: 52 },
-        position: { x: -60, y: 0 }
+        size: { width: 26, height: 26 },
+        position: { x: -30, y: 0 }
     });
     fillIcon.add(new Block({ type: 'fill' }));
     this.fillButton.add(fillIcon);
@@ -510,15 +515,15 @@ GameScene.prototype.drawUi = function drawUi() {
 
     // "Clear" button
     this.add(new Arcadia.Button({
-        position: { x: 185, y: -600 },
-        size: { width: 340, height: 90 },
+        position: { x: 92.5, y: -300 },
+        size: { width: 170, height: 45 },
         color: '#665945',
-        border: '10px black',
-        shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)',
+        border: '5px black',
+        shadow: '8px 8px 0 rgba(0, 0, 0, 0.5)',
         label: new Arcadia.Label({
             text: 'clear',
-            font: '64px uni_05_53',
-            position: { x: 0, y: -10 }
+            font: '32px uni_05_53',
+            position: { x: 0, y: -5 }
         }),
         action: function () {
             sona.play('button');
@@ -529,20 +534,22 @@ GameScene.prototype.drawUi = function drawUi() {
             for (var i = 0; i < self.state.length; i += 1) {
                 self.state[i] = null;
             }
+
+            self.preview.clear();
         }
     }));
 
     // "Quit" button
     this.add(new Arcadia.Button({
-        position: { x: -185, y: -600 },
-        size: { width: 340, height: 90 },
+        position: { x: -92.5, y: -300 },
+        size: { width: 170, height: 45 },
         color: '#665945',
-        border: '10px black',
-        shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)',
+        border: '5px black',
+        shadow: '8px 8px 0 rgba(0, 0, 0, 0.5)',
         label: new Arcadia.Label({
             text: 'quit',
-            font: '64px uni_05_53',
-            position: { x: 0, y: -10 }
+            font: '32px uni_05_53',
+            position: { x: 0, y: -5 }
         }),
         action: function () {
             sona.play('button');
@@ -561,17 +568,17 @@ GameScene.prototype.drawUi = function drawUi() {
         this.deactivate(this.preview);
 
         this.tutorialLabelBackground = new Arcadia.Shape({
-            border: '10px black',
-            shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)',
-            size: { width: Grid.MAX_SIZE / 1.2, height: 330 },
-            position: { x: 0, y: -300 }
+            border: '5px black',
+            shadow: '8px 8px 0 rgba(0, 0, 0, 0.5)',
+            size: { width: Grid.MAX_SIZE / 1.2, height: 165 },
+            position: { x: 0, y: -150 }
         });
         this.add(this.tutorialLabelBackground);
 
         this.tutorialLabel = new Arcadia.Label({
             color: 'black',
             text: 'this text replaced by data in TUTORIALS global',
-            font: '36px uni_05_53'
+            font: '18px uni_05_53'
         });
         this.tutorialLabelBackground.add(this.tutorialLabel);
 

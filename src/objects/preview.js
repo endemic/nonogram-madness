@@ -11,7 +11,7 @@ var Preview = function (options) {
         height: Preview.SIZE
     };
 
-    this.border = '2px black';
+    this.border = '1px black';
 
     this.pixels = new Arcadia.Pool();
     this.pixels.factory = function () {
@@ -22,7 +22,7 @@ var Preview = function (options) {
 
 Preview.prototype = new Arcadia.Shape();
 
-Preview.SIZE = 180;
+Preview.SIZE = 90;
 
 Preview.prototype.clear = function () {
     this.pixels.deactivateAll();

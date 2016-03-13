@@ -14,39 +14,39 @@ var TitleScene = function () {
 
     titleLineOne = new Arcadia.Label({
         text: 'nonogram',
-        font: '128px uni_05_53',
-        shadow: '10px 10px 0 rgba(0, 0, 0, 0.5)',
-        position: { x: 0, y: -this.size.height / 2 + 275 }
+        font: '64px uni_05_53',
+        shadow: '5px 5px 0 rgba(0, 0, 0, 0.5)',
+        position: { x: 0, y: -this.size.height / 2 + 137.5 }
     });
     this.add(titleLineOne);
 
     titleLineTwo = new Arcadia.Label({
         text: 'madness',
-        font: '140px uni_05_53',
-        shadow: '10px 10px 0 rgba(0, 0, 0, 0.5)',
-        position: { x: 0, y: -this.size.height / 2 + 400 }
+        font: '70px uni_05_53',
+        shadow: '5px 5px 0 rgba(0, 0, 0, 0.5)',
+        position: { x: 0, y: -this.size.height / 2 + 200 }
     });
     this.add(titleLineTwo);
 
     playButton = new Arcadia.Button({
         position: { x: 0, y: 0 },
-        size: { width: 350, height: 90 },
+        size: { width: 175, height: 45 },
         color: '#665945',
-        border: '10px black',
-        shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)',
+        border: '5px black',
+        shadow: '8px 8px 0 rgba(0, 0, 0, 0.5)',
         label: new Arcadia.Label({
             text: 'play',
-            font: '64px uni_05_53',
-            position: { x: 0, y: -10 }
+            font: '32px uni_05_53',
+            position: { x: 0, y: -5 }
         }),
         action: function () {
-            var completed,
-                incompleteLevel;
-
             sona.play('button');
             // self.stopMusic();
-            completed = localStorage.getObject('completed') || Array(LEVELS.length);
-            incompleteLevel = completed.indexOf(null);
+            var completedLevels = localStorage.getObject('completedLevels') || [];
+            while (completedLevels.length < LEVELS.length) {
+                completedLevels.push(null);
+            }
+            var incompleteLevel = completedLevels.indexOf(null);
 
             // TOOO: Extract this code from here & game scene
             if (incompleteLevel === -1) {
@@ -61,15 +61,15 @@ var TitleScene = function () {
     this.add(playButton);
 
     rulesButton = new Arcadia.Button({
-        position: { x: 0, y: playButton.position.y + 120 },
-        size: { width: 350, height: 90 },
+        position: { x: 0, y: playButton.position.y + 60 },
+        size: { width: 175, height: 45 },
         color: '#665945',
-        border: '10px black',
-        shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)',
+        border: '5px black',
+        shadow: '8px 8px 0 rgba(0, 0, 0, 0.5)',
         label: new Arcadia.Label({
             text: 'rules',
-            font: '64px uni_05_53',
-            position: { x: 0, y: -10 }
+            font: '32px uni_05_53',
+            position: { x: 0, y: -5 }
         }),
         action: function () {
             sona.play('button');
@@ -84,8 +84,8 @@ var TitleScene = function () {
         position: { x: 0, y: rulesButton.position.y + 120 },
         size: { width: 350, height: 90 },
         color: '#665945',
-        border: '10px black',
-        shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)',
+        border: '5px black',
+        shadow: '8px 8px 0 rgba(0, 0, 0, 0.5)',
         label: new Arcadia.Label({
             text: 'options',
             font: '64px uni_05_53',
@@ -101,15 +101,15 @@ var TitleScene = function () {
     // this.add(optionsButton);
 
     aboutButton = new Arcadia.Button({
-        position: { x: 0, y: rulesButton.position.y + 120 },
-        size: { width: 350, height: 90 },
+        position: { x: 0, y: rulesButton.position.y + 60 },
+        size: { width: 175, height: 45 },
         color: '#665945',
-        border: '10px black',
-        shadow: '15px 15px 0 rgba(0, 0, 0, 0.5)',
+        border: '5px black',
+        shadow: '8px 8px 0 rgba(0, 0, 0, 0.5)',
         label: new Arcadia.Label({
             text: 'about',
-            font: '64px uni_05_53',
-            position: { x: 0, y: -10 }
+            font: '32px uni_05_53',
+            position: { x: 0, y: -5 }
         }),
         action: function () {
             sona.play('button');

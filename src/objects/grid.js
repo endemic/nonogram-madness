@@ -16,8 +16,8 @@ var Grid = function (options) {
     };
 
     this.color = 'white';
-    this.border = '2px black';
-    this.shadow = '10px 10px 0 rgba(0, 0, 0, 0.5)';
+    this.border = '1px black';
+    this.shadow = '0 5px 0 rgba(0, 0, 0, 0.5)';
 
     this.calculateBounds();
 
@@ -55,7 +55,7 @@ var Grid = function (options) {
         }
 
         // Draw grid
-        context.lineWidth = 2 * Arcadia.PIXEL_RATIO;
+        context.lineWidth = 1 * Arcadia.PIXEL_RATIO;
         context.strokeStyle = 'black';
         context.stroke();
     };
@@ -80,8 +80,8 @@ var Grid = function (options) {
 
 Grid.prototype = new Arcadia.Shape();
 
-Grid.MAX_SIZE = 750;
-Grid.CELL_SIZE = 52; // Cells go over ~70% of grid
+Grid.MAX_SIZE = 374;
+Grid.CELL_SIZE = 26; // Cells go over ~70% of grid
 Grid.CLUE_AREA_SIZE = Grid.MAX_SIZE - (Grid.CELL_SIZE * 10);
 Grid.HIGHLIGHT_ALPHA = 0.5;
 
@@ -125,7 +125,7 @@ Grid.prototype.highlight = function (x, y) {
 
     this.verticalHighlight.position = {
         x: -this.size.width / 2 + Grid.CLUE_AREA_SIZE + (x * Grid.CELL_SIZE) + Grid.CELL_SIZE / 2,
-        y: -this.size.height / 2 +  Grid.CLUE_AREA_SIZE / 2
+        y: -this.size.height / 2 + Grid.CLUE_AREA_SIZE / 2
     };
 };
 
@@ -170,7 +170,8 @@ Grid.prototype.drawClues = function () {
         horizontalCounter,
         verticalCounter,
         previousVertical,
-        previousHorizontal;
+        previousHorizontal,
+        verticalLabelPadding = 2;
 
     this.verticalClues = [];
     this.horizontalClues = [];
@@ -179,11 +180,11 @@ Grid.prototype.drawClues = function () {
         label = new Arcadia.Label({
             position: {
                 x: -this.size.width / 2 + Grid.CLUE_AREA_SIZE + (i * Grid.CELL_SIZE) + Grid.CELL_SIZE / 2,
-                y: -this.size.height / 2 +  Grid.CLUE_AREA_SIZE / 2
+                y: -this.size.height / 2 + Grid.CLUE_AREA_SIZE / 2 + verticalLabelPadding
             },
             text: '2\n2\n2\n4\n5',
             color: 'black',
-            font: '40px uni_05_53'
+            font: '20px uni_05_53'
         });
 
         this.add(label);
@@ -196,7 +197,7 @@ Grid.prototype.drawClues = function () {
             },
             text: '1 2 3 4 5',
             color: 'black',
-            font: '40px uni_05_53'
+            font: '20px uni_05_53'
         });
 
         this.add(label);
@@ -247,7 +248,7 @@ Grid.prototype.drawClues = function () {
         }
 
         if (horizontalClue === '') {
-            horizontalClue = '0';
+            horizontalClue = '0 ';
             this.horizontalClues[x].color = 'lightgrey';
         }
 
@@ -260,7 +261,7 @@ Grid.prototype.drawClues = function () {
             horizontalClue = ' ' + horizontalClue;
         }
 
-        while (verticalClue.length < 14) {
+        while (verticalClue.length < 12) {
             verticalClue = ' \n' + verticalClue;
         }
 
