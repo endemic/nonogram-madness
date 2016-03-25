@@ -17,7 +17,7 @@ var Grid = function (options) {
 
     this.color = 'white';
     this.border = '1px black';
-    this.shadow = '0 5px 0 rgba(0, 0, 0, 0.5)';
+    this.shadow = '5px 5px 0 rgba(0, 0, 0, 0.5)';
 
     this.calculateBounds();
 

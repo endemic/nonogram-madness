@@ -3,6 +3,8 @@ TODO
 
 [x] Add descriptive text to screenshots
 [ ] "Clear" button doesn't reset dimmed clues (who cares? who is going to use that button?)
+[ ] Mark icon is slightly off center
+[ ] Make scale of placing a filled button larger
 [x] Scrolling to a page of locked puzzles, then scrolling back to page one, all page one puzzles have red borders
 [x] Splash screen seems to be taking an awful long time
 [x] Screenshots
@@ -105,7 +107,7 @@ future
 
 - [ ] Updating label text doesn't seem to use correct line height
 - [ ] Update Arcadia to draw borders either entirely outside or entirely inside shapes
-- [x] Change buttons to use an 'respond to input' boolean property, instead of 
+- [x] Change buttons to use an 'respond to input' boolean property, instead of
 	  creating/destroying their own even listeners. The scene's "onPoint{whatever}"
 	  method gets called, and passes down the point object to all its children that
 	  'respond to input' and are active
