@@ -3,6 +3,7 @@ TODO
 
 [ ] "Clear" button doesn't reset dimmed clues (who cares? who is going to use that button?)
 [ ] Mark icon is slightly off center
+[x] Make scale of placing a filled button larger
 [ ] Make scale of placing a filled button larger
 [ ] Add a "success!" end puzzle modal
 	* Modal window subclass of Shape
