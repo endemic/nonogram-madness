@@ -4,15 +4,9 @@
 var TitleScene = function () {
     Arcadia.Scene.apply(this);
 
-    var titleLineOne,
-        titleLineTwo,
-        playButton,
-        rulesButton,
-        optionsButton,
-        aboutButton,
-        self = this;
+    var self = this;
 
-    titleLineOne = new Arcadia.Label({
+    var titleLineOne = new Arcadia.Label({
         text: 'nonogram',
         font: '64px uni_05_53',
         shadow: '5px 5px 0 rgba(0, 0, 0, 0.5)',
@@ -20,7 +14,7 @@ var TitleScene = function () {
     });
     this.add(titleLineOne);
 
-    titleLineTwo = new Arcadia.Label({
+    var titleLineTwo = new Arcadia.Label({
         text: 'madness',
         font: '70px uni_05_53',
         shadow: '5px 5px 0 rgba(0, 0, 0, 0.5)',
@@ -28,7 +22,7 @@ var TitleScene = function () {
     });
     this.add(titleLineTwo);
 
-    playButton = new Arcadia.Button({
+    var playButton = new Arcadia.Button({
         position: { x: 0, y: 0 },
         size: { width: 175, height: 45 },
         color: '#665945',
@@ -60,7 +54,7 @@ var TitleScene = function () {
     });
     this.add(playButton);
 
-    rulesButton = new Arcadia.Button({
+    var rulesButton = new Arcadia.Button({
         position: { x: 0, y: playButton.position.y + 60 },
         size: { width: 175, height: 45 },
         color: '#665945',
@@ -80,7 +74,7 @@ var TitleScene = function () {
     this.add(rulesButton);
 
     /*
-    optionsButton = new Arcadia.Button({
+    var optionsButton = new Arcadia.Button({
         position: { x: 0, y: rulesButton.position.y + 120 },
         size: { width: 350, height: 90 },
         color: '#665945',
@@ -100,7 +94,7 @@ var TitleScene = function () {
 */
     // this.add(optionsButton);
 
-    aboutButton = new Arcadia.Button({
+    var aboutButton = new Arcadia.Button({
         position: { x: 0, y: rulesButton.position.y + 60 },
         size: { width: 175, height: 45 },
         color: '#665945',

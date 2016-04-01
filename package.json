@@ -4,7 +4,7 @@
   "description": "Japanese logic puzzles",
   "main": "index.html",
   "scripts": {
-    "test": "echo \"Load SpecRunner.html in a browser\" && exit 1",
+    "test": "echo \"Error: no test specified\" && exit 1",
     "concat": "cat src/objects/*.js src/data/*.js src/lib/*.js src/scenes/*.js > dist/nonogram-madness.js",
     "compress": "./node_modules/.bin/uglifyjs dist/nonogram-madness.js --source-map dist/nonogram-madness.min.js.map --source-map-root http://ganbarugames.com/nonogram/javascript --output dist/nonogram-madness.min.js --mangle --compress",
     "copy_to_cordova": "cp dist/nonogram-madness.min.js cordova/www/javascript; cp node_modules/arcadia/dist/arcadia.js cordova/www/javascript; cp node_modules/sona/dist/sona.js cordova/www/javascript; cp -r assets/** cordova/www/assets",

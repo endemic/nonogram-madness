@@ -1,10 +1,18 @@
 TODO
 ====
 
-[x] Add descriptive text to screenshots
 [ ] "Clear" button doesn't reset dimmed clues (who cares? who is going to use that button?)
 [ ] Mark icon is slightly off center
 [ ] Make scale of placing a filled button larger
+[ ] Add a "success!" end puzzle modal
+	* Modal window subclass of Shape
+[ ] Add URLs for rating in the about.js scene (loads store, doesn't load app)
+[ ] Add music back in!
+  * Probably wrap the sona calls in a method which checks prefs
+  * Include buttons to toggle music/sfx
+[ ] Upgrade to newest Cordova
+
+[x] Add descriptive text to screenshots
 [x] Scrolling to a page of locked puzzles, then scrolling back to page one, all page one puzzles have red borders
 [x] Splash screen seems to be taking an awful long time
 [x] Screenshots
@@ -33,12 +41,6 @@ TODO
 [x] You are able to play locked levels
 [x] Remove the confirmation modals for "reset" and "quit" in GameScene
 [x] Add "unlock" button to upper right of level select
-
-future
-======
-[ ] Add the modal object
-[ ] Add URLs for rating in the about.js scene (loads store, doesn't load app)
-
 [x] Finish the first tutorial
 	[x] tutorial layout
 	[x] move board down towards buttons
@@ -54,7 +56,6 @@ future
 [x] Make "fill" button default
 [x] Add icons/splash screens to Cordova prj
 [x] Bug w/ prev button when starting on page 0
-
 [x] Add the "win" jingle -- keep the alert
 [x] Test Cordova project
 [x] Determine which levels are free (first 15)
@@ -93,14 +94,8 @@ future
 	  puts you on the right page/selected puzzle
 [x] Add zero-padding to minutes/seconds timer label
 [x] Dim prev/next buttons on level select if scene instantiates on first/last page
-
-## Future
-
 [x] Add tutorial; baked into first few puzzles
 [x] Add a 'tutorial data' object, which gives clues/text for each step
-[ ] Add a "success!" end puzzle modal
-	* Modal window subclass of Shape
-[ ] Add actual link to rate on various app stores
 [x] Buttons to go directly to the next puzzle, or back to level select
 
 ## Arcadia

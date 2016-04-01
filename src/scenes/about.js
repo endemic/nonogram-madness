@@ -4,14 +4,7 @@
 var AboutScene = function () {
     Arcadia.Scene.apply(this);
 
-    var titleLabel,
-        backButton,
-        detailLabel,
-        sfxToggleButton,
-        dataResetButton,
-        rateButton;
-
-    titleLabel = new Arcadia.Label({
+    var titleLabel = new Arcadia.Label({
         text: 'About',
         font: '48px uni_05_53',
         shadow: '5px 5px 0 rgba(0, 0, 0, 0.5)',
@@ -19,7 +12,7 @@ var AboutScene = function () {
     });
     this.add(titleLabel);
 
-    backButton = new Arcadia.Button({
+    var backButton = new Arcadia.Button({
         position: { x: -this.size.width / 2 + 70, y: -this.size.height / 2 + 30 },
         size: { width: 110, height: 35 },
         border: '5px black',
@@ -38,11 +31,16 @@ var AboutScene = function () {
     });
     this.add(backButton);
 
-    detailLabel = new Arcadia.Label({
-        text: 'Programming by Nathan Demick\n \
-(c) 2010 - 2016 Ganbaru Games\n \
-http://ganbarugames.com\n\n \
-"Nonogram" concept by\nNon Ishida & Tetsuya Nishio',
+    var creditsText = [
+        'Programming by Nathan Demick',
+        '(c) 2010 - 2016 Ganbaru Games',
+        'https://ganbarugames.com\n',
+        '"Nonogram" concept by',
+        'Non Ishida & Tetsuya Nishio'
+    ].join('\n');
+
+    var detailLabel = new Arcadia.Label({
+        text: creditsText,
         font: '18px uni_05_53',
         shadow: '5px 5px 0 rgba(0, 0, 0, 0.5)',
         position: { x: 0, y: -75 }
@@ -50,7 +48,7 @@ http://ganbarugames.com\n\n \
     this.add(detailLabel);
 
     /* Lawl not actually checking that localstorage bool */
-    // sfxToggleButton = new Arcadia.Button({
+    // var sfxToggleButton = new Arcadia.Button({
     //     position: { x: 0, y: 50 },
     //     size: { width: 210, height: 45 },
     //     color: '#665945',
@@ -75,7 +73,7 @@ http://ganbarugames.com\n\n \
     // });
     // this.add(sfxToggleButton);
 
-    dataResetButton = new Arcadia.Button({
+    var dataResetButton = new Arcadia.Button({
         // position: { x: 0, y: sfxToggleButton.position.y + 60 },
         position: { x: 0, y: 60 },
         size: { width: 210, height: 45 },
@@ -99,7 +97,7 @@ http://ganbarugames.com\n\n \
 
     // TODO: enable this
     if (Arcadia.ENV.cordova && false) {
-        rateButton = new Arcadia.Button({
+        var rateButton = new Arcadia.Button({
             position: { x: 0, y: dataResetButton.position.y + 60 },
             size: { width: 210, height: 45 },
             color: '#665945',

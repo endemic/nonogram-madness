@@ -24,7 +24,9 @@ var CreditsScene = function () {
         text: [
             'Programming by Nathan Demick',
             '(c) 2010-2016 Ganbaru Games',
-            'http://ganbarugames.com'
+            'https://ganbarugames.com\n',
+            '"Nonogram" concept by',
+            'Non Ishida & Tetsuya Nishio'
         ].join('\n')
     });
     this.add(description);
