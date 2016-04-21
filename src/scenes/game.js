@@ -147,14 +147,10 @@ GameScene.prototype.displayTutorial = function () {
 GameScene.prototype.onPointStart = function onPointStart(points) {
     Arcadia.Scene.prototype.onPointStart.call(this, points);
 
-    var values,
-        row,
-        column;
-
     // Determine if within grid bounds
-    values = this.puzzleGrid.getRowAndColumn(points[0]);
-    row = values[0];
-    column = values[1];
+    var values = this.puzzleGrid.getRowAndColumn(points[0]);
+    var row = values[0];
+    var column = values[1];
 
     if (row !== null && column !== null) {
         this.markOrFill(row, column);
@@ -168,13 +164,9 @@ GameScene.prototype.onPointStart = function onPointStart(points) {
 GameScene.prototype.onPointMove = function onPointMove(points) {
     Arcadia.Scene.prototype.onPointMove.call(this, points);
 
-    var values,
-        row,
-        column;
-
-    values = this.puzzleGrid.getRowAndColumn(points[0]);
-    row = values[0];
-    column = values[1];
+    var values = this.puzzleGrid.getRowAndColumn(points[0]);
+    var row = values[0];
+    var column = values[1];
 
     if (row === this.previousRow && column === this.previousColumn) {
         return;
@@ -219,7 +211,7 @@ GameScene.prototype.markOrFill = function markOrFill(row, column) {
             block = this.filledBlocks.activate();
             block.position.x = column * this.puzzleGrid.cellSize + this.puzzleGrid.bounds.left + block.size.width / 2 + offsetToCenter;
             block.position.y = row * this.puzzleGrid.cellSize + this.puzzleGrid.bounds.top + block.size.height / 2 + offsetToCenter;
-            block.scale = 1.5;
+            block.scale = 1.75;
             block.tween('scale', 1, 200);
             this.state[index] = block;
             this.preview.plot(column, row);

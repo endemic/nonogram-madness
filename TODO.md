@@ -2,6 +2,7 @@ TODO
 ====
 
 [ ] Mark icon is slightly off center
+[x] Make scale of placing a filled button larger
 [ ] Make scale of placing a filled button larger
 [ ] Add a "success!" end puzzle modal
 	* Modal window subclass of Shape
