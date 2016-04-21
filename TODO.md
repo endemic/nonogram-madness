@@ -1,16 +1,21 @@
 TODO
 ====
 
-[ ] "Clear" button doesn't reset dimmed clues (who cares? who is going to use that button?)
 [ ] Mark icon is slightly off center
 [ ] Make scale of placing a filled button larger
 [ ] Add a "success!" end puzzle modal
 	* Modal window subclass of Shape
 [ ] Add URLs for rating in the about.js scene (loads store, doesn't load app)
+[ ] Upgrade to newest Cordova
+[ ] Add "review this app" nag view -- after you complete half the puzzles
+[ ] "Clear" button doesn't reset dimmed clues (who cares? who is going to use that button?)
+[ ] publish update
+
+------------------------
+
 [ ] Add music back in!
   * Probably wrap the sona calls in a method which checks prefs
   * Include buttons to toggle music/sfx
-[ ] Upgrade to newest Cordova
 
 [x] Add descriptive text to screenshots
 [x] Scrolling to a page of locked puzzles, then scrolling back to page one, all page one puzzles have red borders
