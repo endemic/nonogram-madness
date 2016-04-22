@@ -6,16 +6,10 @@ var UnlockScene = function () {
 
     Arcadia.Scene.apply(this, arguments);
 
-    var noButton,
-        restoreButton,
-        yesButton,
-        description,
-        text;
-
     // Should never occur; for testing on desktop only
     window.PRODUCT_DATA = window.PRODUCT_DATA || { price: '$999' };
 
-    text = [
+    var text = [
         'I hope you\'ve enjoyed',
         'solving nonograms so far.',
         'Would you like to',
@@ -24,7 +18,7 @@ var UnlockScene = function () {
         'for only ' + window.PRODUCT_DATA.price + '?'
     ];
 
-    description = new Arcadia.Label({
+    var description = new Arcadia.Label({
         position: { x: 0, y: -150 },
         font: '24px uni_05_53',
         shadow: '5px 5px 0 rgba(0, 0, 0, 0.5)',
@@ -32,7 +26,7 @@ var UnlockScene = function () {
     });
     this.add(description);
 
-    yesButton = new Arcadia.Button({
+    var yesButton = new Arcadia.Button({
         position: { x: 0, y: 50 },
         size: { width: 100, height: 45 },
         text: 'yeah!',
@@ -47,7 +41,7 @@ var UnlockScene = function () {
     });
     this.add(yesButton);
 
-    noButton = new Arcadia.Button({
+    var noButton = new Arcadia.Button({
         position: { x: 0, y: 112 },
         size: { width: 100, height: 45 },
         text: 'nah.',
@@ -62,7 +56,7 @@ var UnlockScene = function () {
     });
     this.add(noButton);
 
-    restoreButton = new Arcadia.Button({
+    var restoreButton = new Arcadia.Button({
         position: { x: 0, y: 212 },
         size: { width: 250, height: 45 },
         text: 'restore purchase',

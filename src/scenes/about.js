@@ -4,6 +4,8 @@
 var AboutScene = function () {
     Arcadia.Scene.apply(this);
 
+    var BUTTON_MARGIN = 65;
+
     var titleLabel = new Arcadia.Label({
         text: 'About',
         font: '48px uni_05_53',
@@ -47,34 +49,7 @@ var AboutScene = function () {
     });
     this.add(detailLabel);
 
-    /* Lawl not actually checking that localstorage bool */
-    // var sfxToggleButton = new Arcadia.Button({
-    //     position: { x: 0, y: 50 },
-    //     size: { width: 210, height: 45 },
-    //     color: '#665945',
-    //     border: '5px black',
-    //     shadow: '8px 8px 0 rgba(0, 0, 0, 0.5)',
-    //     label: new Arcadia.Label({
-    //         text: (localStorage.getBoolean('playSfx') ? 'Sound on' : 'Sound off'),
-    //         font: '32px uni_05_53',
-    //         position: { x: 0, y: -3 }
-    //     }),
-    //     action: function () {
-    //         sona.play('button');
-
-    //         if (localStorage.getBoolean('playSfx')) {
-    //             localStorage.setBoolean('playSfx', false);
-    //             this.text = 'Sound off';
-    //         } else {
-    //             localStorage.setBoolean('playSfx', true);
-    //             this.text = 'Sound on';
-    //         }
-    //     }
-    // });
-    // this.add(sfxToggleButton);
-
     var dataResetButton = new Arcadia.Button({
-        // position: { x: 0, y: sfxToggleButton.position.y + 60 },
         position: { x: 0, y: 60 },
         size: { width: 210, height: 45 },
         color: '#665945',
@@ -89,40 +64,58 @@ var AboutScene = function () {
             sona.play('button');
 
             if (confirm('Reset all saved data?')) {
-                localStorage.setObject('completed', new Array(LEVELS.length));
+                var completed = [];
+                while (completed.length < LEVELS.length) {
+                    completed.push(null);
+                }
+                localStorage.setObject('completed', completed);
             }
         }
     });
     this.add(dataResetButton);
 
-    // TODO: enable this
-    if (Arcadia.ENV.cordova && false) {
+    if (Arcadia.ENV.cordova) {
         var rateButton = new Arcadia.Button({
-            position: { x: 0, y: dataResetButton.position.y + 60 },
-            size: { width: 210, height: 45 },
+            position: {x: 0, y: dataResetButton.position.y + BUTTON_MARGIN},
+            size: {width: 210, height: 45},
             color: '#665945',
             border: '5px black',
             shadow: '8px 8px 0 rgba(0, 0, 0, 0.5)',
             label: new Arcadia.Label({
                 text: 'Feedback',
                 font: '32px uni_05_53',
-                position: { x: 0, y: -5 }
+                position: {x: 0, y: -5}
             }),
             action: function () {
-                var store;
-                if (Arcadia.ENV.android) {
-                    store = 'Google Play';
-                } else if (Arcadia.ENV.ios) {
-                    store = 'the App Store';
-                }
-                if (confirm('Rate in ' + store + '?')) {
-                    // TODO: obtain real link
-                    open('itms-apps://itunes.apple.com/app/386461624', '_blank');
+                window.sona.play('button');
+
+                if (Arcadia.ENV.ios) {
+                    window.open('itms-apps://itunes.apple.com/app/id957209934');
                 }
             }
         });
-
         this.add(rateButton);
+
+        var moreGamesButton = new Arcadia.Button({
+            position: {x: 0, y: rateButton.position.y + BUTTON_MARGIN},
+            size: {width: 210, height: 45},
+            color: '#665945',
+            border: '5px black',
+            shadow: '8px 8px 0 rgba(0, 0, 0, 0.5)',
+            label: new Arcadia.Label({
+                text: 'More games',
+                font: '32px uni_05_53',
+                position: {x: 0, y: -5}
+            }),
+            action: function () {
+                window.sona.play('button');
+
+                if (Arcadia.ENV.ios) {
+                    window.open('itms-apps://itunes.com/apps/ganbarugames');
+                }
+            }
+        });
+        this.add(moreGamesButton);
     }
 };
 

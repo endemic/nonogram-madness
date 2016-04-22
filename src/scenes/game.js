@@ -5,6 +5,7 @@ LevelSelectScene, Block, Preview, sona */
 var GameScene = function GameScene(options) {
     Arcadia.Scene.apply(this, arguments);
 
+    options = options || {};
     // this.startMusic();
 
     this.puzzleIndex = options.level;
@@ -78,6 +79,8 @@ var GameScene = function GameScene(options) {
     if (this.showTutorial) {
         this.displayTutorial();
     }
+
+    this.win();
 };
 
 GameScene.prototype = new Arcadia.Scene();
@@ -189,18 +192,15 @@ GameScene.prototype.onPointEnd = function (points) {
 };
 
 GameScene.prototype.markOrFill = function markOrFill(row, column) {
-    var index,
-        valid,
-        block,
-        existingBlock,
-        offsetToCenter,
+    var block,
         message,
         self = this;
 
-    index = row * this.puzzleSize + column;
-    valid = this.clues[index] === 1;
-    existingBlock = this.state[index];
-    offsetToCenter = 3;
+    var index = row * this.puzzleSize + column;
+    var valid = this.clues[index] === 1;
+    var existingBlock = this.state[index];
+    var markOffset = 2;
+    var fillOffset = 3;
 
     if (this.action === GameScene.FILL) {
         if (existingBlock) {
@@ -209,8 +209,8 @@ GameScene.prototype.markOrFill = function markOrFill(row, column) {
         } else if (valid) {
             // Fill
             block = this.filledBlocks.activate();
-            block.position.x = column * this.puzzleGrid.cellSize + this.puzzleGrid.bounds.left + block.size.width / 2 + offsetToCenter;
-            block.position.y = row * this.puzzleGrid.cellSize + this.puzzleGrid.bounds.top + block.size.height / 2 + offsetToCenter;
+            block.position.x = column * this.puzzleGrid.cellSize + this.puzzleGrid.bounds.left + block.size.width / 2 + fillOffset;
+            block.position.y = row * this.puzzleGrid.cellSize + this.puzzleGrid.bounds.top + block.size.height / 2 + fillOffset;
             block.scale = 1.75;
             block.tween('scale', 1, 200);
             this.state[index] = block;
@@ -241,8 +241,8 @@ GameScene.prototype.markOrFill = function markOrFill(row, column) {
             // Mark
             this.actionLock = 'mark';
             block = this.markedBlocks.activate();
-            block.position.x = column * this.puzzleGrid.cellSize + this.puzzleGrid.bounds.left + block.size.width / 2 + offsetToCenter;
-            block.position.y = row * this.puzzleGrid.cellSize + this.puzzleGrid.bounds.top + block.size.height / 2 + offsetToCenter;
+            block.position.x = column * this.puzzleGrid.cellSize + this.puzzleGrid.bounds.left + block.size.width / 2 + markOffset;
+            block.position.y = row * this.puzzleGrid.cellSize + this.puzzleGrid.bounds.top + block.size.height / 2 + markOffset;
             block.scale = 1.3;
             block.tween('scale', 1, 200);
             this.state[index] = block;
@@ -276,33 +276,81 @@ GameScene.prototype.checkWinCondition = function checkWinCondition() {
     });
 
     if (success) {
-        var completedLevels = localStorage.getObject('completedLevels') || [];
-        while (completedLevels.length < LEVELS.length) {
-            completedLevels.push(null);
-        }
-        completedLevels[this.puzzleIndex] = true;
-        localStorage.setObject('completedLevels', completedLevels);
-        var incompleteLevel = completedLevels.indexOf(null);
-
-        window.setTimeout(function () {
-            sona.play('win');
-
-            if (window.confirm('Success! Next puzzle?')) {
-                sona.play('button');
-
-                if (incompleteLevel === -1) {
-                    Arcadia.changeScene(LevelSelectScene);
-                } else if (Arcadia.isLocked() && incompleteLevel >= Arcadia.FREE_LEVEL_COUNT) {
-                    Arcadia.changeScene(UnlockScene);
-                } else {
-                    Arcadia.changeScene(GameScene, { level: incompleteLevel });
-                }
-            } else {
-                sona.play('button');
-                Arcadia.changeScene(LevelSelectScene);
-            }
-        }, 1000);
+        this.win();
     }
+};
+
+GameScene.prototype.win = function () {
+    var completedLevels = localStorage.getObject('completedLevels') || [];
+    while (completedLevels.length < LEVELS.length) {
+        completedLevels.push(null);
+    }
+    completedLevels[this.puzzleIndex] = true;
+    // localStorage.setObject('completedLevels', completedLevels);
+
+    // "window" with a preview object
+    var modal = new Arcadia.Shape({
+        position: {x: 0, y: -this.size.height},
+        size: {width: this.size.width / 1.5, height: this.size.width},
+        border: '5px black',
+        shadow: '8px 8px 0 rgba(0, 0, 0, 0.5)',
+        zIndex: 0
+    });
+    modal.enablePointEvents = true; // allow touch input to be passed to child button
+    this.add(modal);
+
+    var thumbnail = new Thumbnail({
+        size: {width: 175, height: 175},
+        position: {x: 0, y: -55}
+    });
+    thumbnail.drawPreview(this.puzzleIndex, completedLevels);
+    thumbnail.highlight();
+    // thumbnail.border = '5px black';
+    modal.add(thumbnail);
+
+    var label = new Arcadia.Label({
+        position: {x: 0, y: 65},
+        text: LEVELS[this.puzzleIndex].title,
+        color: 'black',
+        font: '32px uni_05_53'
+    });
+    modal.add(label);
+
+    var incompleteLevel = completedLevels.indexOf(null);
+    var nagShown = localStorage.getBoolean('nagShown');
+    var NAG_FOR_REVIEW_THRESHOLD = 0.4;
+
+    var nextButton = new Arcadia.Button({
+        size: { width: 170, height: 45 },
+        position: {x: 0, y: 130},
+        color: '#665945',
+        border: '5px black',
+        shadow: '8px 8px 0 rgba(0, 0, 0, 0.5)',
+        label: new Arcadia.Label({
+            text: 'next',
+            font: '32px uni_05_53',
+            position: { x: 0, y: -5 }
+        }),
+        action: function () {
+            sona.play('button');
+
+            if (incompleteLevel === -1) {
+                Arcadia.changeScene(LevelSelectScene);
+            } else if (Arcadia.isLocked() && incompleteLevel >= Arcadia.FREE_LEVEL_COUNT) {
+                Arcadia.changeScene(UnlockScene);
+            } else if (Arcadia.ENV.cordova && percentComplete > NAG_FOR_REVIEW_THRESHOLD && !nagShown) {
+                Arcadia.changeScene(ReviewNagScene, {level: incompleteLevel});
+            } else {
+                Arcadia.changeScene(GameScene, {level: incompleteLevel});
+            }
+        }
+    });
+    modal.add(nextButton);
+
+    window.setTimeout(function () {
+        sona.play('win');
+        modal.tween('position', {x: 0, y: 0}, 750);
+    }, 1000);
 };
 
 
@@ -520,14 +568,26 @@ GameScene.prototype.drawUi = function drawUi() {
         action: function () {
             sona.play('button');
 
-            // Reset state
+            // Remove marked/filled blocks
             self.filledBlocks.deactivateAll();
             self.markedBlocks.deactivateAll();
+
+            // Reset state
             for (var i = 0; i < self.state.length; i += 1) {
                 self.state[i] = null;
             }
 
+            // Clear preview
             self.preview.clear();
+
+            // Remove any "dimmed" clues
+            self.puzzleGrid.horizontalClues.forEach(function (clue) {
+                clue.color = 'black';
+            });
+
+            self.puzzleGrid.verticalClues.forEach(function (clue) {
+                clue.color = 'black';
+            });
         }
     }));
 

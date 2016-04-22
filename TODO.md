@@ -1,15 +1,13 @@
 TODO
 ====
 
-[ ] Mark icon is slightly off center
+[x] Mark icon is slightly off center
 [x] Make scale of placing a filled button larger
-[ ] Make scale of placing a filled button larger
-[ ] Add a "success!" end puzzle modal
-	* Modal window subclass of Shape
-[ ] Add URLs for rating in the about.js scene (loads store, doesn't load app)
+[x] Add URLs for rating in the about.js scene (loads store, doesn't load app)
+[x] Add "review this app" nag view -- after you complete half the puzzles
+[x] "Clear" button doesn't reset dimmed clues (who cares? who is going to use that button?)
+[x] Add a "success!" end puzzle modal with a "next" button
 [ ] Upgrade to newest Cordova
-[ ] Add "review this app" nag view -- after you complete half the puzzles
-[ ] "Clear" button doesn't reset dimmed clues (who cares? who is going to use that button?)
 [ ] publish update
 
 ------------------------
