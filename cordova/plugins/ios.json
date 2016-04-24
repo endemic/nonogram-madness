@@ -7,14 +7,14 @@
         "files": {}
     },
     "installed_plugins": {
-        "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.ganbarugames.nonogramjs"
-        },
         "cc.fovea.cordova.purchase": {
             "PACKAGE_NAME": "com.ganbarugames.nonogramjs"
         },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.ganbarugames.nonogram"
+        },
         "cordova-plugin-splashscreen": {
-            "PACKAGE_NAME": "com.ganbarugames.nonogramjs"
+            "PACKAGE_NAME": "com.ganbarugames.nonogram"
         },
         "cordova-plugin-console": {
             "PACKAGE_NAME": "com.ganbarugames.nonogram"

@@ -20,6 +20,27 @@
 -->
 # Release Notes
 
+### 3.2.2 (Apr 15, 2016)
+* CB-10979 Fix splashscreen **iOS** native tests. Added `jshintignore` for tests/ios
+* CB-10895 Transparent Splashscreen view sometimes remains
+* CB-10562 `hide()` not working in latest splashscreen plug in 3.1.0 in **iOS**
+* CB-10688 Plugin Splashscreen Readme must have examples.
+* CB-10864 Run **iOS** native tests on Travis
+
+### 3.2.1 (Mar 09, 2016)
+* [CB-10764](https://issues.apache.org/jira/browse/CB-10764) Remove emoji in cordova-plugin-splashscreen
+* [CB-10650](https://issues.apache.org/jira/browse/CB-10650) Non-index content.src causes Splashscreen to be not displayed on **Browser**
+* [CB-10636](https://issues.apache.org/jira/browse/CB-10636) Add JSHint for plugins
+* [CB-10606](https://issues.apache.org/jira/browse/CB-10606) fix deprecation warning for interfaceOrientation on **iOS**
+* chore: edit package.json license to match SPDX id
+
+### 3.2.0 (Feb 09, 2016)
+* [CB-10422](https://issues.apache.org/jira/browse/CB-10422) Splashscreen displays black screen with no image on Android
+* [CB-10412](https://issues.apache.org/jira/browse/CB-10412) AutoHideSplashScreen "false" isn't taken in account on iOS
+* [CB-9516](https://issues.apache.org/jira/browse/CB-9516) Android SplashScreen - Spinner Does Not Display
+* [CB-9094](https://issues.apache.org/jira/browse/CB-9094) Smarter autohide logic on Android
+* [CB-8396](https://issues.apache.org/jira/browse/CB-8396) Add AutoHideSplashScreen logic to Android's Splashscreen
+
 ### 3.1.0 (Jan 15, 2016)
 * CB-9538 Implementing `FadeSplashScreen` feature for **Android**
 * CB-9240 Cordova splash screen plugin **iPad** landscape mode issue

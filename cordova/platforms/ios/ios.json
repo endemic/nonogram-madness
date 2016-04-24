@@ -26,14 +26,14 @@
         }
     },
     "installed_plugins": {
-        "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.ganbarugames.nonogramjs"
-        },
         "cc.fovea.cordova.purchase": {
             "PACKAGE_NAME": "com.ganbarugames.nonogramjs"
         },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.ganbarugames.nonogram"
+        },
         "cordova-plugin-splashscreen": {
-            "PACKAGE_NAME": "com.ganbarugames.nonogramjs"
+            "PACKAGE_NAME": "com.ganbarugames.nonogram"
         },
         "cordova-plugin-console": {
             "PACKAGE_NAME": "com.ganbarugames.nonogram"
@@ -75,9 +75,9 @@
         }
     ],
     "plugin_metadata": {
-        "cordova-plugin-whitelist": "1.2.0",
         "cc.fovea.cordova.purchase": "4.0.0",
-        "cordova-plugin-splashscreen": "3.1.0",
-        "cordova-plugin-console": "1.0.2"
+        "cordova-plugin-whitelist": "1.2.2",
+        "cordova-plugin-splashscreen": "3.2.2",
+        "cordova-plugin-console": "1.0.3"
     }
 }
