@@ -6,8 +6,6 @@
     var ReviewNagScene = function (options) {
         Arcadia.Scene.apply(this, arguments);
 
-        Arcadia.cycleBackground();
-
         options = options || {};
 
         // Never show again
@@ -33,7 +31,7 @@
         var yesButton = new Arcadia.Button({
             position: { x: 0, y: 50 },
             size: { width: 100, height: 45 },
-            text: 'sure thing',
+            text: 'yeah!',
             font: '24px uni_05_53',
             color: '#665945',
             border: '3px black',
@@ -55,7 +53,7 @@
         var noButton = new Arcadia.Button({
             position: { x: 0, y: 112 },
             size: { width: 100, height: 45 },
-            text: 'don\'t bother me',
+            text: 'nah.',
             font: '24px uni_05_53',
             color: '#665945',
             border: '3px black',

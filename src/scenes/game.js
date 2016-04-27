@@ -79,8 +79,6 @@ var GameScene = function GameScene(options) {
     if (this.showTutorial) {
         this.displayTutorial();
     }
-
-    this.win();
 };
 
 GameScene.prototype = new Arcadia.Scene();
@@ -150,6 +148,10 @@ GameScene.prototype.displayTutorial = function () {
 GameScene.prototype.onPointStart = function onPointStart(points) {
     Arcadia.Scene.prototype.onPointStart.call(this, points);
 
+    if (this.gameOver) {
+        return;
+    }
+
     // Determine if within grid bounds
     var values = this.puzzleGrid.getRowAndColumn(points[0]);
     var row = values[0];
@@ -166,6 +168,10 @@ GameScene.prototype.onPointStart = function onPointStart(points) {
 
 GameScene.prototype.onPointMove = function onPointMove(points) {
     Arcadia.Scene.prototype.onPointMove.call(this, points);
+
+    if (this.gameOver) {
+        return;
+    }
 
     var values = this.puzzleGrid.getRowAndColumn(points[0]);
     var row = values[0];
@@ -186,7 +192,7 @@ GameScene.prototype.onPointMove = function onPointMove(points) {
 
 GameScene.prototype.onPointEnd = function (points) {
     Arcadia.Scene.prototype.onPointEnd.call(this, points);
-
+    
     this.puzzleGrid.highlight(null, null);
     this.actionLock = 'none';
 };
@@ -281,12 +287,14 @@ GameScene.prototype.checkWinCondition = function checkWinCondition() {
 };
 
 GameScene.prototype.win = function () {
+    this.gameOver = true;
+
     var completedLevels = localStorage.getObject('completedLevels') || [];
     while (completedLevels.length < LEVELS.length) {
         completedLevels.push(null);
     }
     completedLevels[this.puzzleIndex] = true;
-    // localStorage.setObject('completedLevels', completedLevels);
+    localStorage.setObject('completedLevels', completedLevels);
 
     // "window" with a preview object
     var modal = new Arcadia.Shape({
@@ -300,7 +308,7 @@ GameScene.prototype.win = function () {
     this.add(modal);
 
     var thumbnail = new Thumbnail({
-        size: {width: 175, height: 175},
+        size: {width: 175, height: 170},
         position: {x: 0, y: -55}
     });
     thumbnail.drawPreview(this.puzzleIndex, completedLevels);
@@ -310,12 +318,15 @@ GameScene.prototype.win = function () {
 
     var label = new Arcadia.Label({
         position: {x: 0, y: 65},
-        text: LEVELS[this.puzzleIndex].title,
+        text: LEVELS[this.puzzleIndex].title.replace(' ', '\n'),
         color: 'black',
         font: '32px uni_05_53'
     });
     modal.add(label);
 
+    var percentComplete = completedLevels.filter(function (entry) {
+        return entry === true;
+    }).length / completedLevels.length;
     var incompleteLevel = completedLevels.indexOf(null);
     var nagShown = localStorage.getBoolean('nagShown');
     var NAG_FOR_REVIEW_THRESHOLD = 0.4;
