@@ -7,8 +7,7 @@ TODO
 [x] Add "review this app" nag view -- after you complete half the puzzles
 [x] "Clear" button doesn't reset dimmed clues (who cares? who is going to use that button?)
 [x] Add a "success!" end puzzle modal with a "next" button
-[ ] Upgrade to newest Cordova
-[ ] publish update
+[x] Upgrade to newest Cordova
 
 ------------------------
 
