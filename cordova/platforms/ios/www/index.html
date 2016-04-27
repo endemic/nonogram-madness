@@ -38,7 +38,7 @@
     <script src="cordova.js"></script>
 
     <!-- Framework -->
-    <script src="javascript/arcadia.js"></script>
+    <script src="javascript/arcadia.min.js"></script>
     <script src="javascript/sona.js"></script>
 
     <!-- Game -->
@@ -66,7 +66,9 @@
                 UnlockScene.initializeStore();
 
                 if (navigator.splashscreen) {
-                  navigator.splashscreen.hide();
+                  window.setTimeout(function () {
+                    navigator.splashscreen.hide();
+                  }, 0);
                 }
             });
         }, false);
