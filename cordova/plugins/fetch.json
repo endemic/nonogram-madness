@@ -1,4 +1,12 @@
 {
+    "cc.fovea.cordova.purchase": {
+        "source": {
+            "type": "registry",
+            "id": "cc.fovea.cordova.purchase"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
     "cordova-plugin-whitelist": {
         "source": {
             "type": "registry",
@@ -19,14 +27,6 @@
         "source": {
             "type": "registry",
             "id": "cordova-plugin-splashscreen@2.0.0"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "cc.fovea.cordova.purchase": {
-        "source": {
-            "type": "registry",
-            "id": "cc.fovea.cordova.purchase"
         },
         "is_top_level": true,
         "variables": {}

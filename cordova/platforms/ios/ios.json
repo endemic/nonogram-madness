@@ -9,15 +9,15 @@
                 "parents": {
                     "/*": [
                         {
+                            "xml": "<feature name=\"InAppPurchase\"><param name=\"ios-package\" value=\"InAppPurchase\" /></feature>",
+                            "count": 1
+                        },
+                        {
                             "xml": "<feature name=\"Console\"><param name=\"ios-package\" value=\"CDVLogger\" /></feature>",
                             "count": 1
                         },
                         {
                             "xml": "<feature name=\"SplashScreen\"><param name=\"ios-package\" value=\"CDVSplashScreen\" /><param name=\"onload\" value=\"true\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"InAppPurchase\"><param name=\"ios-package\" value=\"InAppPurchase\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -26,6 +26,9 @@
         }
     },
     "installed_plugins": {
+        "cc.fovea.cordova.purchase": {
+            "PACKAGE_NAME": "com.ganbarugames.nonogramjs"
+        },
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.ganbarugames.nonogram"
         },
@@ -34,13 +37,18 @@
         },
         "cordova-plugin-splashscreen": {
             "PACKAGE_NAME": "com.ganbarugames.nonogram"
-        },
-        "cc.fovea.cordova.purchase": {
-            "PACKAGE_NAME": "com.ganbarugames.nonogram"
         }
     },
     "dependent_plugins": {},
     "modules": [
+        {
+            "file": "plugins/cc.fovea.cordova.purchase/www/store-ios.js",
+            "id": "cc.fovea.cordova.purchase.InAppPurchase",
+            "pluginId": "cc.fovea.cordova.purchase",
+            "clobbers": [
+                "store"
+            ]
+        },
         {
             "file": "plugins/cordova-plugin-console/www/console-via-logger.js",
             "id": "cordova-plugin-console.console",
@@ -64,20 +72,12 @@
             "clobbers": [
                 "navigator.splashscreen"
             ]
-        },
-        {
-            "file": "plugins/cc.fovea.cordova.purchase/www/store-ios.js",
-            "id": "cc.fovea.cordova.purchase.InAppPurchase",
-            "pluginId": "cc.fovea.cordova.purchase",
-            "clobbers": [
-                "store"
-            ]
         }
     ],
     "plugin_metadata": {
+        "cc.fovea.cordova.purchase": "4.0.0",
         "cordova-plugin-whitelist": "1.2.2",
         "cordova-plugin-console": "1.0.3",
-        "cordova-plugin-splashscreen": "2.0.0",
-        "cc.fovea.cordova.purchase": "4.0.0"
+        "cordova-plugin-splashscreen": "2.0.0"
     }
 }
