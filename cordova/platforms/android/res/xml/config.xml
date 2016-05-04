@@ -37,7 +37,7 @@
     <splash density="port-xhdpi" src="resources/splashscreens/android/splash-port-xhdpi.png" />
     <splash density="port-xxhdpi" src="resources/splashscreens/android/splash-port-xxhdpi.png" />
     <splash density="port-xxxhdpi" src="resources/splashscreens/android/splash-port-xxxhdpi.png" />
-    <name>Nonogram Madness</name>
+    <name>Nonograms</name>
     <description>
         Japanese logic puzzles.
     </description>

@@ -82,6 +82,12 @@ var GameScene = function GameScene(options) {
 
     // Load AdMob content
     if (AdMob) {
+        window.onAdFailLoad = function () {
+            self.adLoaded = false;
+        };
+        document.removeEventListener('onAdFailLoad', window.onAdFailLoad);
+        document.addEventListener('onAdFailLoad', window.onAdFailLoad);
+
         AdMob.prepareInterstitial({
             adId: 'ca-app-pub-8045350589241869/3797503433',
             autoShow: false
