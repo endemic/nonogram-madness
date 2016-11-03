@@ -16,9 +16,16 @@
         "cordova-plugin-splashscreen": {
             "PACKAGE_NAME": "com.ganbarugames.nonogram"
         },
-        "cc.fovea.cordova.purchase": {
+        "cordova-plugin-admobpro": {
+            "PACKAGE_NAME": "com.ganbarugames.nonogram"
+        },
+        "cordova-plugin-inappbrowser": {
             "PACKAGE_NAME": "com.ganbarugames.nonogram"
         }
     },
-    "dependent_plugins": {}
+    "dependent_plugins": {
+        "cordova-plugin-extension": {
+            "PACKAGE_NAME": "com.ganbarugames.nonogram"
+        }
+    }
 }

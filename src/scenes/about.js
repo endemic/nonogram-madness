@@ -91,6 +91,8 @@ var AboutScene = function () {
 
                 if (Arcadia.ENV.ios) {
                     window.open('itms-apps://itunes.apple.com/app/id957209934');
+                } else if (Arcadia.ENV.android && cordova.InAppBrowser) {
+                    cordova.InAppBrowser.open('market://details?id=com.ganbarugames.nonogram', '_system');
                 }
             }
         });
@@ -112,6 +114,8 @@ var AboutScene = function () {
 
                 if (Arcadia.ENV.ios) {
                     window.open('itms-apps://itunes.com/apps/ganbarugames');
+                } else if (Arcadia.ENV.android && cordova.InAppBrowser) {
+                    cordova.InAppBrowser.open('market://search?q=pub:Ganbaru+Games', '_system');
                 }
             }
         });
